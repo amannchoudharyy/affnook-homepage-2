@@ -4,7 +4,7 @@
   position: relative;
   overflow: hidden;
   padding: calc(var(--header-offset) + var(--header-height) + 40px + env(safe-area-inset-top, 0px))
-    var(--gutter) clamp(160px, 22vw, 320px);
+    var(--gutter) clamp(56px, 6vw, 96px);
   text-align: center;
   isolation: isolate;
 }

@@ -24,6 +24,16 @@ route. Visual review uses screenshots at mobile, tablet and desktop widths for e
 - `npm run test:e2e` (Chromium desktop + mobile emulation)
 - Manual: keyboard walk-through, reduced-motion, JavaScript disabled, screenshots
 
+## Intentionally skipped tests
+
+Playwright reports some tests as skipped by design; none are skipped because they fail.
+
+| Spec                                                         | Skipped in                      | Reason                                                                       |
+| ------------------------------------------------------------ | ------------------------------- | ---------------------------------------------------------------------------- |
+| `screenshots.spec.ts`                                        | all runs unless `SCREENSHOTS=1` | Produces review images, not assertions                                       |
+| `responsive.spec.ts`, stage width matrix, `contrast.spec.ts` | mobile project                  | They set their own viewport sizes, so running them twice adds nothing        |
+| `header-desktop.spec.ts`                                     | mobile project                  | Desktop navigation is not shown on a phone; the mobile menu has its own spec |
+
 ## Release targets (measured on a deployed staging URL)
 
 - Lighthouse mobile: Performance ≥ 90; Accessibility, Best Practices, SEO ≥ 95
@@ -33,7 +43,8 @@ route. Visual review uses screenshots at mobile, tablet and desktop widths for e
 
 Record command, date, commit, environment and result. "Not run" is recorded as such.
 
-| Date       | Commit    | Check                                                                                                                          | Environment                                         | Result |
-| ---------- | --------- | ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------- | ------ |
-| 2026-10-19 | e1747ba   | format, lint, typecheck, unit (12), build, e2e (57 passed / 27 skipped)                                                        | local, Chromium 1440 + Pixel 7 emulation            | Pass   |
-| 2026-10-19 | (Phase 1) | format, lint, typecheck, unit (17), build, e2e (87 passed / 73 skipped by design), screenshots 3 audiences × 7 widths reviewed | local prod build, Chromium 1440 + Pixel 7 emulation | Pass   |
+| Date       | Commit    | Check                                                                                                                                                                                                                                         | Environment                                         | Result |
+| ---------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- | ------ |
+| 2026-10-19 | e1747ba   | format, lint, typecheck, unit (12), build, e2e (57 passed / 27 skipped)                                                                                                                                                                       | local, Chromium 1440 + Pixel 7 emulation            | Pass   |
+| 2026-10-19 | (Phase 1) | format, lint, typecheck, unit (17), build, e2e (87 passed / 73 skipped by design), screenshots 3 audiences × 7 widths reviewed                                                                                                                | local prod build, Chromium 1440 + Pixel 7 emulation | Pass   |
+| 2026-10-19 | (Phase 2) | format, lint, typecheck, unit (21), build, e2e (143 passed / 115 skipped by design), CLS ≤ 0.0008 all routes, muted-H1 contrast ≥ 3.59:1, 39/39 external links 200, screenshots 3 audiences × 7 widths + Figma-width stage close-ups reviewed | local prod build, Chromium 1440 + Pixel 7 emulation | Pass   |

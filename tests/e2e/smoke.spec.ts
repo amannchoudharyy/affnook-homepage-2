@@ -31,9 +31,10 @@ for (const route of ROUTES) {
     });
 
     test('has no automatically detectable WCAG A/AA violations', async ({ page }) => {
+      // Reduced motion renders every element in its final state, so contrast is measured on
+      // settled colours rather than on frames caught mid-animation.
+      await page.emulateMedia({ reducedMotion: 'reduce' });
       await page.goto(route.path);
-      // Let entrance animations finish so contrast is measured on the final state.
-      await page.waitForTimeout(2500);
       const results = await new AxeBuilder({ page })
         .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
         .analyze();

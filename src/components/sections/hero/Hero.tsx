@@ -6,11 +6,12 @@ import { CTA_LINKS } from '@/content/links';
 
 import styles from './Hero.module.css';
 import { SplitHeadline } from './SplitHeadline';
+import { ProductStage } from './stage/ProductStage';
 
 /**
  * Hero (Figma "Hero" 1512×1520): ambient glows + drifting data landscape, award chip,
- * audience headline, CTAs and the audience switcher. The audience product stage
- * (dashboard + floating cards) is added below the copy in the next phase.
+ * audience headline, CTAs, the audience switcher and the audience-specific product stage
+ * (dashboard window + floating cards).
  */
 export function Hero({ audience }: { audience: Audience }) {
   return (
@@ -96,6 +97,7 @@ export function Hero({ audience }: { audience: Audience }) {
           <img src="/images/hero/landscape.svg" alt="" width={1573} height={760} />
         </div>
       </div>
+      <ProductStage audience={audience.id} />
       <div className={styles.bottomFade} aria-hidden="true" />
     </section>
   );

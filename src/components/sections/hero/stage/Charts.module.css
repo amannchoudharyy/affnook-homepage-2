@@ -1,0 +1,766 @@
+/* Charts and lists inside the hero dashboards. Values from the Figma frames. */
+
+/* ---------------------------------------------------------------- operators */
+
+.operatorsWindow {
+  --kpi-h: 100px;
+}
+
+.opsGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 572fr) minmax(0, 336fr);
+  gap: 16px;
+}
+
+.lineChart {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.plot {
+  position: relative;
+  height: 298px;
+  margin-top: 10px;
+}
+
+.plot svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.point {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(140, 134, 255, 0.2);
+  transform: translate(50%, -50%);
+}
+
+.point i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-brand-indigo-soft);
+}
+
+.tooltip {
+  position: absolute;
+  top: 14px;
+  right: 10px;
+  display: grid;
+  gap: 2px;
+  padding: 8px 12px;
+  border: 1px solid var(--color-line-strong);
+  border-radius: 10px;
+  background: rgba(6, 10, 31, 0.92);
+  color: var(--color-text-muted);
+  font-weight: var(--weight-demibold);
+  white-space: nowrap;
+}
+
+.tooltip strong {
+  color: var(--color-text-primary);
+  font-weight: var(--weight-demibold);
+}
+
+.months {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  color: var(--color-text-muted);
+  font-weight: var(--weight-demibold);
+}
+
+.donut {
+  display: grid;
+  gap: 32px;
+}
+
+.ring {
+  position: relative;
+  width: 176px;
+  height: 176px;
+  margin: 10px 0 0 20px;
+}
+
+.ring svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.arc {
+  fill: none;
+  stroke: var(--tone);
+  stroke-dasharray: var(--len) 100;
+}
+
+.ringLabel {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.ringLabel strong {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.ringLabel > span {
+  color: var(--color-text-muted);
+  font-weight: var(--weight-demibold);
+}
+
+.donutLegend {
+  display: grid;
+  gap: 11px;
+  margin: 0;
+  padding: 0 0 0 4px;
+  list-style: none;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.donutLegend li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.donutLegend li > i {
+  margin-right: 2px;
+}
+
+/* Shared label/value/meter rows (top markets, revenue by brand) */
+
+.barList,
+.revenue,
+.promoList {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.barList {
+  gap: 15px;
+}
+
+.barList li,
+.revenue li,
+.promoList li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px 12px;
+}
+
+.barList li > :last-child,
+.revenue li > :last-child,
+.promoList li > :last-child {
+  grid-column: 1 / -1;
+}
+
+.barLabel {
+  overflow: hidden;
+  color: var(--color-text-secondary);
+  font-weight: var(--weight-demibold);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.barValue {
+  color: var(--color-text-primary);
+  font-weight: var(--weight-demibold);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------------- brands */
+
+.sideNarrow {
+  --sidebar-w: 200px;
+}
+
+.funnel {
+  display: grid;
+  gap: 18px;
+  padding-top: 4px;
+}
+
+.funnelRow {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr);
+  align-items: center;
+}
+
+.funnelLabel {
+  color: var(--color-text-muted);
+  font-weight: var(--weight-demibold);
+}
+
+.funnelTrack {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.funnelTrack strong {
+  font-weight: var(--weight-demibold);
+  white-space: nowrap;
+}
+
+.funnelBar {
+  display: flex;
+  flex: none;
+  gap: 2px;
+  width: calc((100% - 64px) * var(--w));
+  height: 28px;
+}
+
+.funnelBar i {
+  flex-basis: 0;
+  min-width: 4px;
+  border-radius: 6px;
+  background: var(--tone);
+  opacity: 0.85;
+}
+
+.heatmap {
+  display: grid;
+  grid-template-columns: 102px repeat(6, minmax(0, 1fr));
+  gap: 6px 8px;
+  align-items: center;
+}
+
+.heatHead {
+  color: var(--color-text-muted);
+  font-weight: var(--weight-demibold);
+}
+
+.heatLabel {
+  color: var(--color-text-muted);
+  font-weight: var(--weight-demibold);
+}
+
+.heatCell {
+  height: 24px;
+  border-radius: 5px;
+  background: rgba(0, 209, 127, var(--o));
+}
+
+.floatAside {
+  color: var(--color-text-muted);
+  font-weight: var(--weight-demibold);
+}
+
+.promoList {
+  gap: 13px;
+}
+
+.code {
+  justify-self: start;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: var(--tone-bg);
+  color: var(--tone);
+  font-weight: var(--weight-demibold);
+}
+
+.status {
+  display: grid;
+}
+
+.status > span {
+  grid-area: 1 / 1;
+  justify-self: end;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  font-weight: var(--weight-demibold);
+}
+
+.statusScheduled {
+  background: rgba(255, 198, 0, 0.14);
+  color: var(--color-accent-gold);
+}
+
+.statusPaid {
+  background: rgba(0, 209, 127, 0.14);
+  color: var(--color-accent-mint);
+  visibility: hidden;
+}
+
+.amount {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.payoutDetail {
+  margin: 10px 0 0;
+  color: var(--color-text-muted);
+  font-weight: var(--weight-demibold);
+}
+
+.payoutMeter {
+  display: block;
+  margin-top: 14px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chips li {
+  padding: 3px 7px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-secondary);
+  font-weight: var(--weight-demibold);
+}
+
+/* ----------------------------------------------------------------- networks */
+
+.netGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 452fr) minmax(0, 336fr);
+  gap: 16px;
+}
+
+.mutedTitle > :first-child > p {
+  color: var(--color-text-secondary);
+}
+
+.tree {
+  position: relative;
+  display: grid;
+  gap: 24px;
+}
+
+.treeRoot {
+  justify-self: start;
+  padding: 7px 12px;
+  border-radius: 10px;
+  background: var(--color-brand-indigo);
+  color: var(--color-white);
+  font-weight: var(--weight-demibold);
+}
+
+.tiers {
+  position: relative;
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding: 0 0 0 36px;
+  list-style: none;
+}
+
+/* Vertical trunk from the root pill down to the last tier. */
+.tiers::before {
+  content: '';
+  position: absolute;
+  top: -24px;
+  bottom: 44px;
+  left: 16px;
+  width: 2px;
+  background: var(--color-line-strong);
+  transform-origin: top;
+}
+
+.tier {
+  position: relative;
+  display: grid;
+  gap: 12px;
+  padding: 13px;
+  border: 1px solid var(--color-line-default);
+  border-radius: 12px;
+  background: var(--color-bg-raised);
+}
+
+/* Branch from the trunk to each tier card. */
+.tier::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -20px;
+  width: 19px;
+  height: 2px;
+  background: var(--color-line-strong);
+}
+
+.tierHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.tierHead strong {
+  font-size: 14px;
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+}
+
+.tierPill {
+  padding: 3px 8px;
+  border: 1px solid color-mix(in srgb, var(--tone) 50%, transparent);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--tone) 16%, transparent);
+  color: var(--tone);
+  font-weight: var(--weight-demibold);
+  white-space: nowrap;
+}
+
+.tierShare {
+  margin-left: auto;
+  color: var(--color-text-secondary);
+  font-weight: var(--weight-demibold);
+  white-space: nowrap;
+}
+
+.tierPlan {
+  color: var(--color-text-muted);
+  font-weight: var(--weight-demibold);
+}
+
+.revenue {
+  gap: 26px;
+  padding: 4px 0 28px;
+  border-bottom: 1px solid var(--color-line-default);
+}
+
+.footPill,
+.autoPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border: 1px solid rgba(0, 209, 127, 0.5);
+  border-radius: var(--radius-pill);
+  background: rgba(0, 209, 127, 0.12);
+  color: var(--color-accent-mint);
+  font-weight: var(--weight-demibold);
+  white-space: nowrap;
+}
+
+.footPill {
+  max-width: 100%;
+  margin-top: 18px;
+  padding: 5px 10px;
+  white-space: normal;
+}
+
+.autoPill {
+  padding: 3px 10px;
+  background: rgba(0, 209, 127, 0.14);
+}
+
+.fields {
+  display: grid;
+  margin: 0;
+}
+
+.fields > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 36px;
+  border-top: 1px solid var(--color-line-default);
+}
+
+.fields > div:first-child {
+  border-top: 0;
+}
+
+.fields dt {
+  color: var(--color-text-muted);
+  font-weight: var(--weight-demibold);
+}
+
+.fields dd {
+  margin: 0;
+  font-weight: var(--weight-demibold);
+  text-align: right;
+}
+
+.toggle {
+  position: relative;
+  display: block;
+  width: 36px;
+  height: 20px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.toggle::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-text-secondary);
+}
+
+/* ------------------------------------------------------------------- motion */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Lines draw left → right (prototype 1.2s); area and point fade in after. */
+  :global(html.js) .lines {
+    animation: reveal-x 1.4s var(--ease-out) 1.2s both;
+  }
+
+  :global(html.js) .area {
+    animation: fade-in 1s ease 1.6s both;
+  }
+
+  :global(html.js) .point,
+  :global(html.js) .tooltip {
+    animation: fade-in 0.8s ease 2.3s both;
+  }
+
+  :global(html.js) .point {
+    animation:
+      fade-in 0.8s ease 2.3s both,
+      halo 2.4s ease-out 3.1s infinite;
+  }
+
+  /* Donut arcs sweep in one after another. */
+  :global(html.js) .arc {
+    animation: sweep 1.6s var(--ease-out) calc(1000ms + var(--delay)) both;
+  }
+
+  :global(html.js) .funnelBar {
+    transform-origin: left center;
+    animation: grow-x 1.2s var(--ease-out) calc(1000ms + var(--delay)) both;
+  }
+
+  :global(html.js) .heatCell {
+    animation: fade-in 0.9s ease calc(1000ms + var(--delay)) both;
+  }
+
+  /* Tier tree: trunk draws top → down, cards slide in. */
+  :global(html.js) .tiers::before {
+    animation: grow-y 1.2s var(--ease-out) 1.2s both;
+  }
+
+  :global(html.js) .tier {
+    animation: slide-in 0.9s var(--ease-out) calc(1000ms + var(--delay)) both;
+  }
+
+  :global(html.js) .fields > div {
+    animation: fade-in 0.7s ease calc(1300ms + var(--delay)) both;
+  }
+
+  :global(html.js) .autoPill,
+  :global(html.js) .footPill {
+    animation: pulse 2.4s ease-in-out 2.4s infinite;
+  }
+
+  /* Payout: progress fills, then the status flips to Paid. */
+  :global(html.js) .statusScheduled {
+    animation: hide-at-end 0.01s linear 3.4s both;
+  }
+
+  :global(html.js) .statusPaid {
+    animation: show-at-end 0.3s ease 3.4s both;
+  }
+}
+
+@keyframes reveal-x {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes halo {
+  0% {
+    box-shadow: 0 0 0 0 rgba(140, 134, 255, 0.45);
+  }
+
+  70%,
+  100% {
+    box-shadow: 0 0 0 12px rgba(140, 134, 255, 0);
+  }
+}
+
+@keyframes sweep {
+  from {
+    stroke-dasharray: 0 100;
+  }
+}
+
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes grow-y {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+}
+
+@keyframes pulse {
+  50% {
+    box-shadow: 0 0 0 4px rgba(0, 209, 127, 0.12);
+  }
+}
+
+@keyframes hide-at-end {
+  to {
+    visibility: hidden;
+  }
+}
+
+@keyframes show-at-end {
+  from {
+    visibility: visible;
+    opacity: 0;
+  }
+
+  to {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+/* --------------------------------------------------------------- reflow */
+
+@container main (max-width: 760px) {
+  .opsGrid,
+  .netGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .donut {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+  }
+
+  .ring {
+    margin: 0;
+  }
+}
+
+@container main (max-width: 520px) {
+  .plot {
+    height: 200px;
+  }
+
+  .tooltip {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .donut {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: 20px;
+  }
+
+  .ring {
+    width: 150px;
+    height: 150px;
+  }
+
+  .ringLabel strong {
+    font-size: 20px;
+  }
+
+  .donutLegend {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    gap: 8px 12px;
+    font-size: 13px;
+  }
+
+  /* Funnel: label above its bar so the bar keeps a readable length. */
+  .funnelRow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+  }
+
+  .funnelBar {
+    height: 22px;
+  }
+
+  .heatmap {
+    grid-template-columns: 56px repeat(6, minmax(0, 1fr));
+    gap: 5px;
+    font-size: 12px;
+  }
+
+  .heatCell {
+    height: 20px;
+  }
+
+  .tiers {
+    padding-left: 24px;
+  }
+
+  .tiers::before {
+    left: 8px;
+  }
+
+  .tier::before {
+    left: -16px;
+    width: 15px;
+  }
+
+  .tierHead {
+    flex-wrap: wrap;
+  }
+
+  .tierShare {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+@container main (max-width: 340px) {
+  .donutLegend {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

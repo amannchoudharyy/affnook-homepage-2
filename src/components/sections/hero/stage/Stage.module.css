@@ -1,0 +1,292 @@
+/*
+ * Product stage composition (Figma "Product stage — …", 1512×780).
+ *
+ * ≥1280px: Figma composition — window and floating cards positioned per audience using
+ *          percentages of the 1512px stage so they scale with the viewport.
+ * <1280px: window full width; floating cards reflow into a grid below it.
+ *
+ * Motion (prototype + Figma layer notes), all scoped to html.js:
+ *  - per-audience entrance (Operators: rise; Brands: from left / cards from right;
+ *    Networks: from right / cards drop in on the left)
+ *  - scroll-linked tilt of the window and parallax of the cards via CSS scroll-driven
+ *    animations (no JavaScript scroll handlers)
+ *  - slow "bob" of the cards; all paused while the stage is off screen
+ */
+
+.figure {
+  margin: 0;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  max-width: 1512px;
+  margin: clamp(36px, 5vw, 56px) auto 0;
+  perspective: 1800px;
+  --stage-delay: 1300ms;
+}
+
+.tilt {
+  transform-origin: 50% 0;
+}
+
+.windowIn {
+  position: relative;
+  z-index: 1;
+}
+
+.floats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.float {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+}
+
+.floatIn,
+.bob {
+  height: 100%;
+}
+
+.bob > * {
+  height: 100%;
+}
+
+/* ------------------------------------------------- desktop composition (Figma) */
+
+@media (min-width: 1280px) {
+  /* The stage spans the full viewport (up to the 1512px design width), not the gutter. */
+  .stage {
+    width: min(1512px, 100vw);
+    height: 780px;
+    margin-left: calc(50% - min(756px, 50vw));
+  }
+
+  .tilt {
+    position: absolute;
+    top: 0;
+  }
+
+  .floats {
+    display: block;
+    margin: 0;
+  }
+
+  .float {
+    position: absolute;
+    width: clamp(260px, 21.2%, 320px);
+  }
+
+  /* Operators: 1200px window centred; Top markets bottom-left, Live activity right. */
+  .operators .tilt {
+    left: 10.32%;
+    width: 79.37%;
+  }
+
+  .operators .float1 {
+    top: 520px;
+    left: 2.65%;
+    width: clamp(260px, 19.84%, 300px);
+  }
+
+  .operators .float2 {
+    top: 448px;
+    left: 79.1%;
+    width: clamp(260px, 19.84%, 300px);
+  }
+
+  /* Brands: 1060px window left; Promo codes and Payout run stacked on the right. */
+  .brands .tilt {
+    left: 6.35%;
+    width: 70.11%;
+  }
+
+  .brands .float1 {
+    top: 40px;
+    left: 77.78%;
+  }
+
+  .brands .float2 {
+    top: 320px;
+    left: 77.78%;
+  }
+
+  /* Networks: 1060px window right; Commission rule and Postback log on the left. */
+  .networks .tilt {
+    left: 23.54%;
+    width: 70.11%;
+  }
+
+  .networks .float1 {
+    top: 64px;
+    left: 3.7%;
+  }
+
+  .networks .float2 {
+    top: 330px;
+    left: 3.7%;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .floats {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    margin-top: 12px;
+  }
+}
+
+/* ------------------------------------------------------------------ motion */
+
+@media (prefers-reduced-motion: no-preference) {
+  :global(html.js) .windowIn {
+    animation: rise 1.6s var(--ease-out) 0.7s both;
+  }
+
+  :global(html.js) .floatIn {
+    animation: fade-up 1.2s var(--ease-out) 1.3s both;
+  }
+
+  :global(html.js) .float2 .floatIn {
+    animation-delay: 1.45s;
+  }
+
+  :global(html.js) .brands .windowIn {
+    animation-name: from-left;
+  }
+
+  :global(html.js) .brands .floatIn {
+    animation-name: from-right;
+    animation-delay: 1.1s;
+  }
+
+  :global(html.js) .brands .float2 .floatIn {
+    animation-delay: 1.3s;
+  }
+
+  :global(html.js) .networks .windowIn {
+    animation-name: from-right;
+  }
+
+  :global(html.js) .networks .floatIn {
+    animation-name: drop-in;
+    animation-delay: 1.1s;
+  }
+
+  :global(html.js) .networks .float2 .floatIn {
+    animation-delay: 1.3s;
+  }
+
+  /* Pause everything inside the stage while it is off screen. */
+  .stage[data-offscreen] *,
+  .stage[data-offscreen] *::before,
+  .stage[data-offscreen] *::after {
+    animation-play-state: paused !important;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 1280px) {
+  :global(html.js) .bob {
+    animation: bob 6s ease-in-out infinite;
+  }
+
+  :global(html.js) .float2 .bob {
+    animation-delay: -3s;
+  }
+
+  @supports (animation-timeline: view()) {
+    /* Window starts tilted back and flattens as it scrolls into view. */
+    :global(html.js) .tilt {
+      animation: tilt linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 45%;
+    }
+
+    /* Cards drift at different rates (Figma: parallax 0.9× / 1.1×). */
+    :global(html.js) .float {
+      --par: 30px;
+      animation: parallax linear both;
+      animation-timeline: view();
+    }
+
+    :global(html.js) .operators .float2 {
+      --par: 56px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 768px) and (max-width: 1279.98px) {
+  @supports (animation-timeline: view()) {
+    :global(html.js) .tilt {
+      animation: tilt linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 40%;
+    }
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+}
+
+@keyframes from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-80px);
+  }
+}
+
+@keyframes from-right {
+  from {
+    opacity: 0;
+    transform: translateX(80px);
+  }
+}
+
+@keyframes drop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+}
+
+@keyframes bob {
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes tilt {
+  from {
+    transform: rotateX(20deg) scale(0.93);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+@keyframes parallax {
+  from {
+    transform: translateY(var(--par));
+  }
+
+  to {
+    transform: translateY(calc(var(--par) * -1));
+  }
+}
