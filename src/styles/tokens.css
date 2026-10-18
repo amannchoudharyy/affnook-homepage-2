@@ -1,0 +1,56 @@
+/*
+ * Design tokens.
+ * Colour values are the Figma variables from file m9O0fqjhbMCf9BjfRuu1aC
+ * (collection used by the three homepage frames). Spacing, radius and type
+ * scale tokens are added as sections are implemented and measured in Figma.
+ */
+
+:root {
+  /* Brand */
+  --color-brand-indigo: #4f46db;
+  --color-brand-indigo-soft: #8c86ff;
+
+  /* Accents */
+  --color-accent-mint: #00d17f;
+  --color-accent-orchid: #ed74bc;
+  --color-accent-gold: #ffc600;
+  --color-status-error: #ff513a;
+
+  /* Backgrounds */
+  --color-bg-base: #060a1f;
+  --color-bg-sunken: #040716;
+  --color-bg-surface: #0a1638;
+  --color-bg-raised: #111e4b;
+
+  /* Lines */
+  --color-line-default: #1d2b5f;
+  --color-line-strong: #2e3f80;
+
+  /* Text */
+  --color-text-primary: #f3f5ff;
+  --color-text-secondary: #aeb6d9;
+  --color-text-muted: #7a84b0;
+  --color-text-on-light: #060a1f;
+  --color-white: #ffffff;
+
+  /* Typography. The display face (TT Firs Neue) is pending a webfont licence;
+     until licensed files are supplied the stack falls back to system fonts. */
+  --font-display: 'TT Firs Neue', var(--font-fallback);
+  --font-body: 'TT Firs Neue', var(--font-fallback);
+  --font-fallback:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Layout: Figma desktop frames are 1512px wide. */
+  --container-max: 1512px;
+  --gutter: clamp(16px, 4vw, 64px);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-slow: 600ms;
+
+  /* Focus */
+  --focus-ring: 0 0 0 3px var(--color-brand-indigo-soft);
+}

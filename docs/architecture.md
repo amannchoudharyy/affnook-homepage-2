@@ -1,0 +1,87 @@
+# Architecture
+
+## Goals
+
+- One homepage design, three audiences (Operators, Brands, Affiliate networks), without
+  duplicating page layouts.
+- All content visible and navigable without JavaScript; motion is an enhancement only.
+- Responsive from 320px to 2560px, keyboard accessible, respects `prefers-reduced-motion`.
+- Minimal client-side JavaScript.
+
+## Rendering model
+
+The app uses the Next.js App Router. Components are **React Server Components by default**:
+they run at build time and ship HTML, not JavaScript. Only components that need browser
+behaviour (the animated audience transition, carousel, tabs, FAQ disclosure, mobile menu,
+scroll-triggered motion) are marked `'use client'`, and each is kept as small as possible
+("client islands").
+
+All three routes are statically prerendered.
+
+## Audience model
+
+```
+src/app/page.tsx                    → <AudienceHomePage audience="operators" />
+src/app/brands/page.tsx             → <AudienceHomePage audience="brands" />
+src/app/affiliate-networks/page.tsx → <AudienceHomePage audience="networks" />
+```
+
+- `src/content/audiences.ts` is the registry: id, label, route, hero and SEO copy. The
+  `AudienceId` type (`'operators' | 'brands' | 'networks'`) is used throughout so a missing
+  variant is a compile error.
+- `AudienceHomePage` composes the shared sections in Figma order and passes the audience id down.
+- Sections whose structure is the same for every audience read audience-specific copy from the
+  content layer. Sections whose structure genuinely differs (hero product stage, Problem, Proof,
+  How it works) get a variant component per audience behind one shared section wrapper.
+- The audience switcher is a list of ordinary links (`aria-current="page"` on the active one),
+  so switching works without JavaScript and every variant has its own URL.
+
+## Styling
+
+- CSS Modules, one stylesheet per component, co-located with it.
+- `src/styles/tokens.css` holds design tokens as CSS custom properties. Colour tokens come from
+  the Figma variables; spacing and type tokens are added as sections are measured.
+- Mobile-first, fluid layouts (`clamp()`, `minmax()`, container max-width) rather than scaled
+  desktop compositions. No official mobile/tablet designs exist; responsive interpretations are
+  recorded in [decisions.md](decisions.md).
+
+## Motion
+
+- CSS transitions/keyframes where sufficient; small hooks (IntersectionObserver-based) for
+  scroll-triggered effects. No animation library unless a specific effect requires one.
+- Content is never hidden waiting for JavaScript: initial styles are the final, visible state,
+  and entrance animations are only armed once JavaScript has run.
+- `prefers-reduced-motion: reduce` disables decorative loops, parallax and auto-advancing UI.
+- Continuous animations pause when off-screen. Native scrolling is never intercepted.
+
+## Assets and fonts
+
+- Images and illustrations are exported from Figma, optimised, and stored under `public/`.
+  No runtime references to Figma URLs; no large base64 payloads in source.
+- JetBrains Mono is self-hosted via `next/font`. The display face (TT Firs Neue) will be loaded
+  via `next/font/local` once licensed webfont files are available; system fonts are used until
+  then.
+
+## SEO and environments
+
+`src/lib/site.ts` decides whether a build is indexable (`SITE_ENV=production` and an `https`
+`SITE_URL`). `src/lib/seo.ts` builds per-route metadata: title, description, self-referencing
+canonical, Open Graph/Twitter and robots. `robots.ts` and an `X-Robots-Tag` header block
+crawling on every non-production build.
+
+## Integrations
+
+Forms, newsletter, CRM and analytics are out of scope for the current milestone. CTAs are plain
+links; components are structured so a form or tracking layer can be added later without
+reshaping the sections.
+
+## Testing
+
+| Layer   | Tool                                          | Covers                                              |
+| ------- | --------------------------------------------- | --------------------------------------------------- |
+| Unit    | Vitest + Testing Library                      | content registry, environment/SEO logic, components |
+| Browser | Playwright (Chromium desktop and mobile)      | routes, switcher, no-JS rendering, overflow matrix  |
+| A11y    | @axe-core/playwright                          | automated WCAG 2.2 A/AA checks per route            |
+| Static  | TypeScript, ESLint (incl. jsx-a11y), Prettier | types, code and formatting rules                    |
+
+CI (`.github/workflows/ci.yml`) runs all of the above on every push and pull request.
