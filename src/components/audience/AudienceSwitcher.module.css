@@ -1,38 +1,111 @@
+/* Figma "Audience switcher": pill, 6px padding, 4px gap, 44px items. */
+
 .switcher {
-  display: inline-block;
   max-width: 100%;
 }
 
 .list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  position: relative;
+  display: inline-flex;
+  gap: 4px;
+  max-width: 100%;
   margin: 0;
   padding: 6px;
   list-style: none;
   border: 1px solid var(--color-line-default);
-  border-radius: 16px;
-  background: var(--color-bg-surface);
+  border-radius: var(--radius-pill);
+  background: rgba(10, 22, 56, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .link {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
-  padding: 0 16px;
-  border-radius: 12px;
+  gap: 8px;
+  height: 44px;
+  padding: 0 20px 0 18px;
+  border-radius: var(--radius-pill);
   color: var(--color-text-secondary);
+  font: var(--weight-medium) 14px/1.2 var(--font-body);
   text-decoration: none;
+  white-space: nowrap;
   transition:
-    background-color var(--duration-fast) var(--ease-out),
-    color var(--duration-fast) var(--ease-out);
+    color 0.4s ease,
+    background-color 0.4s ease;
 }
 
 .link:hover {
   color: var(--color-text-primary);
 }
 
+.icon {
+  flex: none;
+}
+
+/* Before hydration (or without JS) the current link carries the indigo fill itself. */
 .link[aria-current='page'] {
   background: var(--color-brand-indigo);
   color: var(--color-white);
+}
+
+/* Once measured, a single sliding indicator replaces the per-link fill. */
+.list[data-ready] .link[aria-current='page'] {
+  background: transparent;
+  color: var(--color-text-secondary);
+}
+
+.list[data-ready] .link[data-selected] {
+  color: var(--color-white);
+}
+
+.indicator {
+  display: none;
+}
+
+.list[data-ready] .indicator {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 0;
+  z-index: 0;
+  display: block;
+  width: var(--ind-w);
+  border-radius: var(--radius-pill);
+  background: var(--color-brand-indigo);
+  box-shadow: 0 8px 24px -8px rgba(79, 70, 219, 0.9);
+  transform: translateX(var(--ind-x));
+  transition:
+    transform 0.7s var(--ease-out),
+    width 0.7s var(--ease-out);
+}
+
+@media (max-width: 480px) {
+  .list {
+    gap: 2px;
+    padding: 5px;
+  }
+
+  .list[data-ready] .indicator {
+    top: 5px;
+    bottom: 5px;
+  }
+
+  .link {
+    gap: 0;
+    padding: 0 12px;
+    font-size: 13px;
+  }
+
+  .icon {
+    display: none;
+  }
+}
+
+@media (max-width: 340px) {
+  .link {
+    padding: 0 9px;
+  }
 }

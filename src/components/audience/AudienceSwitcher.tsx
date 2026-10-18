@@ -1,35 +1,82 @@
-import Link from 'next/link';
+'use client';
 
+import Link from 'next/link';
+import { useLayoutEffect, useRef, useState, type CSSProperties, type MouseEvent } from 'react';
+
+import { AudienceIcon } from '@/components/ui/icons';
 import { listAudiences, type AudienceId } from '@/content/audiences';
+import { isModifiedClick, useAudienceNavigation } from '@/lib/audience-transition';
 
 import styles from './AudienceSwitcher.module.css';
 
 interface AudienceSwitcherProps {
   current: AudienceId;
-  /** Accessible name for the navigation landmark. */
-  label?: string;
+  /** id of the visible label element ("See Affnook for"). */
+  labelledBy: string;
 }
 
 /**
- * Audience switcher rendered as ordinary links to the three audience routes, so
- * it works without JavaScript. Visual design and the animated transition are
- * layered on in the hero phase.
+ * Segmented audience switcher (Figma "Audience switcher").
+ *
+ * Server-rendered as ordinary links with `aria-current="page"`, so it works without
+ * JavaScript. Once hydrated, a sliding indicator (prototype behaviour) moves to the chosen
+ * audience while the page cross-fades to the new route.
  */
-export function AudienceSwitcher({ current, label = 'See Affnook for' }: AudienceSwitcherProps) {
+export function AudienceSwitcher({ current, labelledBy }: AudienceSwitcherProps) {
+  const listRef = useRef<HTMLUListElement>(null);
+  const [selected, setSelected] = useState<AudienceId>(current);
+  const [indicator, setIndicator] = useState<{ x: number; w: number } | null>(null);
+  const navigate = useAudienceNavigation();
+
+  useLayoutEffect(() => {
+    const list = listRef.current;
+    if (!list) return;
+    const measure = () => {
+      const active = list.querySelector<HTMLElement>(`[data-audience="${selected}"]`);
+      if (active) setIndicator({ x: active.offsetLeft, w: active.offsetWidth });
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(list);
+    return () => observer.disconnect();
+  }, [selected]);
+
+  function handleClick(event: MouseEvent<HTMLAnchorElement>, id: AudienceId, href: string) {
+    if (isModifiedClick(event)) return;
+    event.preventDefault();
+    if (id === current) return;
+    setSelected(id);
+    navigate(href);
+  }
+
+  const style = indicator
+    ? ({ '--ind-x': `${indicator.x}px`, '--ind-w': `${indicator.w}px` } as CSSProperties)
+    : undefined;
+
   return (
-    <nav aria-label={label} className={styles.switcher}>
-      <ul className={styles.list}>
+    <nav aria-labelledby={labelledBy} className={styles.switcher}>
+      <ul
+        ref={listRef}
+        className={styles.list}
+        data-ready={indicator ? '' : undefined}
+        style={style}
+      >
         {listAudiences().map((audience) => (
           <li key={audience.id}>
             <Link
               href={audience.path}
               className={styles.link}
+              data-audience={audience.id}
+              data-selected={audience.id === selected || undefined}
               aria-current={audience.id === current ? 'page' : undefined}
+              onClick={(event) => handleClick(event, audience.id, audience.path)}
             >
+              <AudienceIcon audience={audience.id} className={styles.icon} />
               {audience.label}
             </Link>
           </li>
         ))}
+        <li className={styles.indicator} aria-hidden="true" />
       </ul>
     </nav>
   );

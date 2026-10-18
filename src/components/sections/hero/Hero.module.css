@@ -1,0 +1,314 @@
+/* Figma "Hero" (1512 wide). Copy column 1160px at y=128; 28px vertical rhythm. */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: calc(var(--header-offset) + var(--header-height) + 40px + env(safe-area-inset-top, 0px))
+    var(--gutter) clamp(160px, 22vw, 320px);
+  text-align: center;
+  isolation: isolate;
+}
+
+/* ---------------------------------------------------------------- backdrop */
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Glows are positioned on a fixed 1512px stage centred in the viewport, mirroring Figma. */
+.stage {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1512px;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+.glow {
+  position: absolute;
+  max-width: none;
+  height: auto;
+  animation: breathe 8s ease-in-out infinite;
+}
+
+/* Ellipse position in Figma minus the blur padding baked into each SVG export. */
+.glowIndigo {
+  left: 6px;
+  top: -160px;
+  width: 1500px;
+}
+
+.glowMint {
+  left: 840px;
+  top: 600px;
+  width: 840px;
+  animation-delay: -5s;
+}
+
+.glowOrchid {
+  left: -120px;
+  top: 660px;
+  width: 800px;
+  animation-delay: -3s;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+
+  50% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+}
+
+/* Data landscape: lines drift sideways on a 20s loop. The SVG is ~4% wider than the
+   frame, which gives the horizontal travel without exposing an edge. */
+.landscapeAnchor {
+  position: relative;
+  z-index: -1;
+  height: 0;
+  pointer-events: none;
+}
+
+.landscape {
+  position: absolute;
+  top: clamp(24px, 6vw, 96px);
+  left: 50%;
+  width: 100vw;
+  height: clamp(280px, 50vw, 760px);
+  overflow: hidden;
+  transform: translateX(-50%);
+}
+
+.landscape img {
+  position: absolute;
+  top: 0;
+  left: -4.01%;
+  width: 104.01%;
+  max-width: none;
+  height: 100%;
+  animation: drift 20s ease-in-out infinite alternate;
+}
+
+@keyframes drift {
+  to {
+    transform: translateX(3.85%);
+  }
+}
+
+.bottomFade {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 220px;
+  background: linear-gradient(to bottom, transparent, var(--color-bg-base));
+}
+
+/* -------------------------------------------------------------------- copy */
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  max-width: 1160px;
+  margin-inline: auto;
+}
+
+.award {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+  min-height: 44px;
+  padding: 6px 16px 6px 6px;
+  border: 1px solid var(--color-line-default);
+  border-radius: var(--radius-pill);
+  background: var(--color-fill-subtle);
+  color: var(--color-text-secondary);
+  font: var(--weight-medium) 14px/1.2 var(--font-body);
+  text-decoration: none;
+  transition: border-color 0.4s ease;
+}
+
+.award:hover {
+  border-color: var(--color-accent-gold);
+}
+
+.awardBadge {
+  flex: none;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent-gold);
+  color: var(--color-text-on-light);
+  font: var(--weight-demibold) 12px/1.2 var(--font-body);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.awardArrow {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  color: var(--color-text-muted);
+  transition: transform 0.4s var(--ease-out);
+}
+
+.award:hover .awardArrow {
+  transform: translate(2px, -2px);
+}
+
+.title {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 1.25rem + 5.2vw, 5.5rem);
+  font-weight: var(--weight-demibold);
+  line-height: 0.96;
+  letter-spacing: -0.03em;
+}
+
+.titleLine {
+  display: block;
+  text-wrap: balance;
+}
+
+.titleMuted {
+  color: var(--color-text-muted);
+}
+
+/* Each word clips its characters so they can rise from below the baseline. */
+.word {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+  vertical-align: top;
+}
+
+.char {
+  display: inline-block;
+}
+
+.subhead {
+  max-width: 720px;
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: clamp(1.0625rem, 0.95rem + 0.45vw, 1.25rem);
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.audience {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  max-width: 100%;
+  padding-top: 20px;
+}
+
+.audienceLabel {
+  margin: 0;
+  color: var(--color-text-muted);
+  font: var(--weight-demibold) 12px/1.2 var(--font-body);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------- entrance motion */
+/* Armed only when JS is present; pure CSS so content never waits on hydration. */
+
+@media (prefers-reduced-motion: no-preference) {
+  :global(html.js) .reveal {
+    animation: rise-in 1.2s var(--ease-out) var(--d, 0ms) both;
+  }
+
+  :global(html.js) .char {
+    animation: char-rise 1.25s var(--ease-out) calc(var(--i) * 22ms + 150ms) both;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
+
+@keyframes char-rise {
+  from {
+    transform: translate3d(0, 115%, 0) rotate(8deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow,
+  .landscape img {
+    animation: none;
+  }
+}
+
+/* -------------------------------------------------------------- responsive */
+
+@media (max-width: 767.98px) {
+  .copy {
+    gap: 22px;
+  }
+
+  .actions {
+    width: 100%;
+  }
+
+  .actions > * {
+    flex: 1 1 220px;
+  }
+}
+
+@media (max-width: 480px) {
+  .award {
+    gap: 8px;
+    padding-right: 12px;
+    font-size: 13px;
+  }
+
+  .awardBadge {
+    font-size: 11px;
+  }
+}
+
+/* Keep the award chip on one line on the narrowest phones. */
+@media (max-width: 360px) {
+  .award {
+    gap: 6px;
+    padding-right: 10px;
+    font-size: 12px;
+  }
+
+  .awardBadge {
+    padding: 3px 8px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+
+  .awardArrow {
+    display: none;
+  }
+}

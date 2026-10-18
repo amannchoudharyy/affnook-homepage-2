@@ -41,16 +41,45 @@
     ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* Layout: Figma desktop frames are 1512px wide. */
-  --container-max: 1512px;
-  --gutter: clamp(16px, 4vw, 64px);
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-demibold: 600;
 
-  /* Motion */
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Layout: Figma desktop frames are 1512px wide with a 1320px content column. */
+  --container-max: 1320px;
+  --gutter: clamp(16px, 5vw, 48px);
+  --header-offset: 24px;
+  --header-height: 64px;
+
+  /* Surfaces */
+  --color-overlay-glass: rgba(10, 22, 56, 0.6);
+  --color-overlay-glass-strong: rgba(8, 15, 42, 0.82);
+  --color-menu-surface: #0b1538;
+  --color-fill-subtle: rgba(255, 255, 255, 0.04);
+  --color-fill-hover: rgba(255, 255, 255, 0.05);
+  --color-border-on-indigo: rgba(255, 255, 255, 0.14);
+  --color-brand-indigo-hover: #5a52e8;
+  --radius-pill: 999px;
+  --shadow-menu: 0 30px 70px -20px rgba(0, 0, 0, 0.85);
+
+  /* Motion (easing curves from the approved motion prototype) */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
   --duration-fast: 150ms;
   --duration-base: 300ms;
   --duration-slow: 600ms;
 
   /* Focus */
   --focus-ring: 0 0 0 3px var(--color-brand-indigo-soft);
+
+  /* Stacking */
+  --z-header: 110;
+  --z-progress: 120;
+}
+
+@media (max-width: 480px) {
+  :root {
+    --header-offset: 16px;
+    --header-height: 58px;
+  }
 }

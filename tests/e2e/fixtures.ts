@@ -16,3 +16,5 @@ export const ROUTES = [
 
 /** Agreed responsive QA widths (CSS px). */
 export const QA_WIDTHS = [320, 360, 390, 768, 1024, 1280, 1440, 1920, 2560] as const;
+
+export const pathRegExp = (path: string) => new RegExp(`${path === '/' ? '/' : path}$`);

@@ -33,5 +33,7 @@ route. Visual review uses screenshots at mobile, tablet and desktop widths for e
 
 Record command, date, commit, environment and result. "Not run" is recorded as such.
 
-| Date | Commit | Check | Environment | Result |
-| ---- | ------ | ----- | ----------- | ------ |
+| Date       | Commit    | Check                                                                                                                          | Environment                                         | Result |
+| ---------- | --------- | ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------- | ------ |
+| 2026-10-19 | e1747ba   | format, lint, typecheck, unit (12), build, e2e (57 passed / 27 skipped)                                                        | local, Chromium 1440 + Pixel 7 emulation            | Pass   |
+| 2026-10-19 | (Phase 1) | format, lint, typecheck, unit (17), build, e2e (87 passed / 73 skipped by design), screenshots 3 audiences × 7 widths reviewed | local prod build, Chromium 1440 + Pixel 7 emulation | Pass   |
