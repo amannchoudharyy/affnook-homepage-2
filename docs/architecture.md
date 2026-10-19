@@ -36,6 +36,25 @@ src/app/affiliate-networks/page.tsx → <AudienceHomePage audience="networks" />
 - The audience switcher is a list of ordinary links (`aria-current="page"` on the active one),
   so switching works without JavaScript and every variant has its own URL.
 
+## Code map
+
+```
+src/app/                      layout (header, footer, skip link, js flag), one page.tsx per audience,
+                              robots.ts, sitemap.ts
+src/components/page/          AudienceHomePage — composes the sections in Figma order
+src/components/layout/        SiteHeader (HeaderShell, DesktopNav, MobileMenu), SiteFooter
+src/components/sections/      hero/ (+ stage/ product dashboards), logos/, problem/, stakes/
+src/components/audience/      AudienceSwitcher, AudienceLink, AudienceSwapReset
+src/components/motion/        client islands: CountUp, LiveFeed, MotionRegion, Reveal, ScrubWords
+src/components/ui/            ButtonLink, Eyebrow, SectionHeading, icons
+src/components/brand/         Logo, GiantLogo (path data from Figma)
+src/content/                  audiences, navigation, links, dashboards (sample data), sections
+src/lib/                      site/SEO helpers, audience transition, motion helpers
+```
+
+Client components are limited to the files under `motion/`, `audience/`, the header shell, the
+dashboard feeds and the header menus; everything else renders on the server.
+
 ## Styling
 
 - CSS Modules, one stylesheet per component, co-located with it.
@@ -47,8 +66,12 @@ src/app/affiliate-networks/page.tsx → <AudienceHomePage audience="networks" />
 
 ## Motion
 
-- CSS transitions/keyframes where sufficient; small hooks (IntersectionObserver-based) for
-  scroll-triggered effects. No animation library unless a specific effect requires one.
+- CSS transitions/keyframes where sufficient; small IntersectionObserver-based islands for
+  scroll-triggered effects (`Reveal`, `ScrubWords`, `CountUp`, `LiveFeed`, `MotionRegion`).
+  Scroll-linked tilt, parallax, progress bar and footer wordmark use CSS scroll-driven
+  animations. No animation library.
+- Reveal and word-highlight effects arm only after hydration, and reveal anything already on
+  screen immediately.
 - Content is never hidden waiting for JavaScript: initial styles are the final, visible state,
   and entrance animations are only armed once JavaScript has run.
 - `prefers-reduced-motion: reduce` disables decorative loops, parallax and auto-advancing UI.

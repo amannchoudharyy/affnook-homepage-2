@@ -14,9 +14,12 @@ JavaScript. Interactivity and motion are added on top as small client components
 
 ## Status
 
-Foundation stage. The routes, content model, design tokens, SEO handling and test tooling are
-in place; the homepage sections are being implemented in phases. See
-[docs/architecture.md](docs/architecture.md) and [docs/decisions.md](docs/decisions.md).
+In development for QA/staging. Implemented for all three audiences: header and navigation,
+hero with the audience-specific product dashboards, logos + awards, problem, stakes and footer.
+Sections 5–13 (Turn, Affnook MCP, Proof, How it works, Customization, Testimonials, Objections +
+FAQ, Resources, Final CTA) are in progress. The live per-section status is in
+[docs/qa.md](docs/qa.md); see also [docs/architecture.md](docs/architecture.md) and
+[docs/decisions.md](docs/decisions.md).
 
 **Not in scope for the current milestone** (planned for the production phase): lead forms,
 newsletter subscription, CRM integration and any backend submission logic. CTAs link to approved
