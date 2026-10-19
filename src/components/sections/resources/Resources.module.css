@@ -1,0 +1,194 @@
+/* Figma "Resources" (1512 × 720, base background, hairline top). */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(72px, 8vw, 120px) 0 clamp(64px, 6vw, 80px);
+  border-top: 1px solid var(--color-line-default);
+  background: var(--color-bg-base);
+}
+
+.inner {
+  position: relative;
+  width: 100%;
+  max-width: calc(var(--container-max) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.head h2 {
+  margin-top: 20px;
+}
+
+.all {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-bottom: 4px;
+  color: var(--color-text-primary);
+  font-size: 14px;
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+}
+
+.all:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin: clamp(40px, 5vw, 76px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.grid li {
+  display: flex;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 320px;
+  overflow: hidden;
+  border: 1px solid var(--color-line-default);
+  border-radius: 24px;
+  background: rgba(10, 22, 56, 0.6);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    transform 0.6s var(--ease-out),
+    border-color 0.4s ease;
+}
+
+.card:hover {
+  border-color: var(--color-line-strong);
+}
+
+.art {
+  position: relative;
+  display: block;
+  height: 140px;
+  overflow: hidden;
+}
+
+.art img {
+  position: absolute;
+  top: 0;
+  left: -4%;
+  width: 108%;
+  height: 100%;
+  /* Oversized for the drift; the global img reset would cap it at 100%. */
+  max-width: none;
+}
+
+.body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 23px 27px 27px;
+}
+
+.tag {
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--tone) 14%, transparent);
+  color: var(--tone);
+  font-size: 12px;
+  font-weight: var(--weight-demibold);
+  line-height: 1.2;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 20px;
+  font-weight: var(--weight-demibold);
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+}
+
+.read {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 8px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  font-weight: var(--weight-medium);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .card:hover {
+    transform: translateY(-8px);
+  }
+
+  /* Pattern drifts slowly sideways (paused off screen by the section's Reveal). */
+  :global(html.js) .art img {
+    animation: pattern-drift 18s ease-in-out infinite alternate;
+    transition: transform 1.2s var(--ease-out);
+  }
+
+  .card:hover .art img {
+    scale: 1.08;
+  }
+}
+
+@keyframes pattern-drift {
+  to {
+    transform: translateX(-3.5%);
+  }
+}
+
+@media (max-width: 1023.98px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .grid li:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 639.98px) {
+  .head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .card {
+    min-height: 0;
+  }
+
+  .art {
+    height: 112px;
+  }
+
+  .body {
+    padding: 20px 22px 22px;
+  }
+}

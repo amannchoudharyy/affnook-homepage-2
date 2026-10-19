@@ -66,3 +66,61 @@ for (const route of ROUTES) {
     });
   }
 }
+
+/* Final CTA: same check for its muted second headline line over the CTA glow (≥ 40px). */
+for (const route of ROUTES) {
+  for (const width of [390, 1440, 1920]) {
+    test(`final CTA muted headline contrast ${route.path} @ ${width}`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(route.path, { waitUntil: 'networkidle' });
+      const section = page.locator('main section[aria-labelledby^="cta-title"]');
+      await section.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+      await page.waitForLoadState('networkidle');
+      await expect
+        .poll(() =>
+          section
+            .locator('img')
+            .evaluateAll((imgs) =>
+              imgs.every(
+                (i) => (i as HTMLImageElement).complete && (i as HTMLImageElement).naturalWidth > 0,
+              ),
+            ),
+        )
+        .toBe(true);
+      const line = section.locator('h2 > span').nth(1);
+      const box = (await line.boundingBox())!;
+      await page.addStyleTag({
+        content:
+          'section[aria-labelledby^="cta-title"] h2, section[aria-labelledby^="cta-title"] h2 * { color: transparent !important; } ' +
+          'main img[src*="glow"] { animation: none !important; opacity: 1 !important; transform: scale(1.06) !important; }',
+      });
+      const png = await page.screenshot({ clip: box });
+      const brightest = await page.evaluate(async (b64) => {
+        const img = new Image();
+        img.src = `data:image/png;base64,${b64}`;
+        await img.decode();
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d')!;
+        ctx.drawImage(img, 0, 0);
+        const data = ctx.getImageData(0, 0, img.width, img.height).data;
+        let best = [0, 0, 0];
+        let bestSum = -1;
+        for (let i = 0; i < data.length; i += 4) {
+          const sum = data[i]! + data[i + 1]! + data[i + 2]!;
+          if (sum > bestSum) {
+            bestSum = sum;
+            best = [data[i]!, data[i + 1]!, data[i + 2]!];
+          }
+        }
+        return best;
+      }, png.toString('base64'));
+      const contrast = ratio([0x7a, 0x84, 0xb0], brightest);
+      console.log(
+        `CTA ${route.path} @ ${width}: rgb(${brightest.join(',')}) → ${contrast.toFixed(2)}:1`,
+      );
+      expect(contrast).toBeGreaterThanOrEqual(3);
+    });
+  }
+}

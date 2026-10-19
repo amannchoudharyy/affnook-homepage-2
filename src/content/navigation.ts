@@ -137,7 +137,7 @@ export const FOOTER_COLUMNS: readonly FooterColumn[] = [
       { label: 'Contact sales', href: af('/contact-sales/') },
       { label: '24/7 support', href: af('/24-7-support/') },
       { label: 'Product updates', href: af('/product-updates') },
-      { label: 'Career', href: null },
+      { label: 'Career', href: af('/career/') },
     ],
   },
 ];

@@ -14,11 +14,7 @@ JavaScript. Interactivity and motion are added on top as small client components
 
 ## Status
 
-In development for QA/staging. Implemented for all three audiences: header and navigation,
-hero with the audience-specific product dashboards, logos + awards, problem, stakes, Turn
-("Affnook as your guide"), the Affnook MCP assistant demo, Proof (case studies), How it works
-with capability tabs, and footer. Sections 9–13 (Customization, Testimonials, Objections + FAQ,
-Resources, Final CTA) are in progress. Staging deployment steps: [docs/deployment.md](docs/deployment.md). The live per-section status is in
+In development for QA/staging. All 14 homepage sections are implemented for all three audiences (Operators, Brands, Affiliate networks): header and navigation, hero with product dashboards, logos + awards, problem, stakes, Turn, Affnook MCP demo, Proof, How it works + capability tabs, Customization, Testimonials, Objections + FAQ, Resources, Final CTA and footer. Forms, newsletter and CRM integrations are deferred to the production phase. Staging deployment steps: [docs/deployment.md](docs/deployment.md). The live per-section status is in
 [docs/qa.md](docs/qa.md); see also [docs/architecture.md](docs/architecture.md) and
 [docs/decisions.md](docs/decisions.md).
 

@@ -22,8 +22,9 @@ test('essential content is visible and switching works without JavaScript', asyn
       ),
     ).toBe('none');
     const main = page.locator('main');
-    await expect(main.getByRole('link', { name: /Book a free demo/ })).toBeVisible();
-    await expect(main.getByRole('link', { name: /Take the tour/ })).toBeVisible();
+    const hero = main.locator('section[aria-labelledby="hero-title"]');
+    await expect(hero.getByRole('link', { name: /Book a free demo/ })).toBeVisible();
+    await expect(hero.getByRole('link', { name: /Take the tour/ })).toBeVisible();
     await expect(main.locator('p').first()).toBeVisible();
     await expect(page.locator('footer')).toBeVisible();
   }

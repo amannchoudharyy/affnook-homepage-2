@@ -46,20 +46,23 @@ src/components/layout/        SiteHeader (HeaderShell, DesktopNav, MobileMenu), 
 src/components/sections/      hero/ (+ stage/ product dashboards), logos/, problem/, stakes/,
                               turn/, mcp/ (scripted assistant demo), proof/ (case
                               carousel, before/after slider), how/ (step explorer,
-                              flow diagram, capability tabs)
+                              flow diagram, capability tabs), customization/,
+                              testimonials/, objections/ (FAQ explorer), resources/,
+                              final-cta/
 src/components/audience/      AudienceSwitcher, AudienceLink, AudienceSwapReset
 src/components/motion/        client islands: CountUp, LiveFeed, MotionRegion, Reveal, ScrubWords,
                               StagedSequence
 src/components/ui/            ButtonLink, Eyebrow, SectionHeading, icons
 src/components/brand/         Logo, GiantLogo (path data from Figma)
 src/content/                  audiences, navigation, links, dashboards (sample data), sections,
-                              guide (Turn + MCP), proof (cases), how (steps, tabs)
+                              guide (Turn + MCP), proof (cases), how (steps, tabs),
+                              closing (sections 9–13)
 src/lib/                      site/SEO helpers, audience transition, motion helpers
 ```
 
 Client components are limited to the files under `motion/`, `audience/`, the header shell, the
-dashboard feeds, the MCP assistant demo, the case carousel and slider, the step explorer, the capability tabs
-and the header menus; everything else renders on the server.
+dashboard feeds, the MCP assistant demo, the case carousel and slider, the step explorer, the capability tabs,
+the FAQ explorer and the header menus; everything else renders on the server.
 
 ## Styling
 

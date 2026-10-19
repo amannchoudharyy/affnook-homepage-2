@@ -20,9 +20,14 @@ const SECTIONS: [string, string][] = [
   ['main section[aria-labelledby^="mcp-title"]', 'mcp'],
   ['main section[aria-labelledby^="proof-title"]', 'proof'],
   ['main section[aria-labelledby^="how-title"]', 'how'],
+  ['main section[aria-labelledby^="custom-title"]', 'custom'],
+  ['main section[aria-labelledby^="testimonials-title"]', 'testimonials'],
+  ['main section[aria-labelledby^="faq-title"]', 'faq'],
+  ['main section[aria-labelledby^="resources-title"]', 'resources'],
+  ['main section[aria-labelledby^="cta-title"]', 'cta'],
 ];
 /** Narrow-width close-ups of the sections added in the current phase (reflow review). */
-const REFLOW: [string, string][] = SECTIONS.slice(-2);
+const REFLOW: [string, string][] = SECTIONS.slice(-5);
 const REFLOW_WIDTHS = [320, 390, 768, 1024];
 
 test.skip(!process.env.SCREENSHOTS, 'Set SCREENSHOTS=1 to capture review screenshots');
@@ -53,6 +58,15 @@ for (const route of ROUTES) {
   test(`capture ${route.id} sections @ 1512 (Figma width)`, async ({ page }) => {
     await page.setViewportSize({ width: 1512, height: 982 });
     await page.goto(route.path, { waitUntil: 'networkidle' });
+    // Scroll through once so lazy-loaded images (below the fold) are fetched.
+    await page.evaluate(async () => {
+      for (let y = 0; y < document.documentElement.scrollHeight; y += 800) {
+        window.scrollTo(0, y);
+        await new Promise((r) => setTimeout(r, 60));
+      }
+      window.scrollTo(0, 0);
+    });
+    await page.waitForLoadState('networkidle');
     for (const [selector, name] of SECTIONS) {
       // Page coordinates (a full-page clip ignores the current scroll position).
       const box = await page.locator(selector).evaluate((el) => {

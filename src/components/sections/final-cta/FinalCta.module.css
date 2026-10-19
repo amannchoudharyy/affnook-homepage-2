@@ -1,0 +1,182 @@
+/* Figma "Final CTA — one screen" (1512 × 982, base background, glows + data landscape). */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-bg-base);
+}
+
+.scene {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: min(100svh, 982px);
+  padding: clamp(96px, 12vw, 200px) var(--gutter) clamp(160px, 18vw, 260px);
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.glow {
+  position: absolute;
+  max-width: none;
+}
+
+/* Figma: indigo 1000×560 at (256, 260) → 1400×960 export; mint 420×260 at (1040, 640). */
+.glowIndigo {
+  top: 6%;
+  left: calc(50% - 700px);
+  width: 1400px;
+  height: 960px;
+}
+
+.glowMint {
+  top: 49%;
+  left: calc(50% + 124px);
+  width: 740px;
+  height: 580px;
+}
+
+/* Figma: 520px tall from y=520 of the 982px frame, running off the bottom edge. */
+.landscape {
+  position: absolute;
+  top: 53%;
+  right: 0;
+  left: 0;
+  height: 520px;
+  overflow: hidden;
+}
+
+.landscape img {
+  position: absolute;
+  inset: 0 0 0 -4%;
+  width: 104%;
+  height: 100%;
+  /* Oversized for the drift; the global img reset would cap it at 100%. */
+  max-width: none;
+}
+
+.copy {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  width: 100%;
+  max-width: 1100px;
+  text-align: center;
+}
+
+.title {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 1.4rem + 4.6vw, 5.5rem);
+  font-weight: var(--weight-demibold);
+  line-height: 0.96;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.line {
+  display: block;
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+.text {
+  max-width: 640px;
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: clamp(1.0625rem, 0.95rem + 0.45vw, 1.25rem);
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.checks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 28px;
+  margin: 0;
+  padding: 12px 0 0;
+  list-style: none;
+}
+
+.checks li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  font-weight: var(--weight-medium);
+  line-height: 1.2;
+}
+
+.checks svg {
+  flex: none;
+  color: var(--color-accent-mint);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :global(html.js) .glow {
+    animation: cta-breathe 8s ease-in-out infinite;
+  }
+
+  :global(html.js) .glowMint {
+    animation-delay: -4s;
+  }
+
+  :global(html.js) .landscape img {
+    animation: cta-drift 20s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes cta-breathe {
+  0%,
+  100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes cta-drift {
+  to {
+    transform: translateX(3.8%);
+  }
+}
+
+@media (max-width: 767.98px) {
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .checks {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .glowIndigo {
+    top: 0;
+  }
+}

@@ -1,0 +1,409 @@
+/* Figma "Objections + FAQ" (1512 × 1420, base background). */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(72px, 9vw, 140px) 0 clamp(72px, 8vw, 120px);
+  background: var(--color-bg-base);
+}
+
+.inner {
+  --color-text-muted: #7f89b5;
+
+  position: relative;
+  width: 100%;
+  max-width: calc(var(--container-max) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.inner > h2 {
+  margin-top: 20px;
+}
+
+/* --------------------------------------------------------------- objections */
+
+.objections {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin: clamp(40px, 5vw, 64px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.objection {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  min-height: 380px;
+  padding: 43px 35px 35px;
+  overflow: hidden;
+  border: 1px solid var(--color-line-default);
+  border-radius: 28px;
+  background: rgba(10, 22, 56, 0.6);
+  transition: transform 0.6s var(--ease-out);
+}
+
+.bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 4px;
+  background: var(--tone);
+  transform-origin: left;
+}
+
+.tag {
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--tone) 14%, transparent);
+  color: var(--tone);
+  font-size: 12px;
+  font-weight: var(--weight-demibold);
+  line-height: 1.2;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.objQuestion {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem);
+  font-weight: var(--weight-demibold);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.points {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+  padding: 8px 0;
+  list-style: none;
+}
+
+.points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--color-text-secondary);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.tick {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--tone) 14%, transparent);
+  color: var(--tone);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 24px;
+  margin-top: auto;
+  padding-top: 8px;
+  color: var(--color-text-primary);
+  font-size: 14px;
+  font-weight: var(--weight-medium);
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------------- FAQ */
+
+.faq {
+  margin-top: clamp(64px, 7vw, 100px);
+}
+
+.faqTitle {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: clamp(2.25rem, 1.8rem + 1.4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+.faqBody {
+  display: grid;
+  grid-template-columns: minmax(0, 280px) minmax(0, 960px);
+  justify-content: space-between;
+  gap: 40px;
+  margin-top: 32px;
+}
+
+.categories {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 16px;
+}
+
+.category {
+  min-height: 44px;
+  padding: 14px 18px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background: none;
+  color: var(--color-text-secondary);
+  font: var(--weight-medium) 14px/1.2 var(--font-body);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.category:hover {
+  color: var(--color-text-primary);
+}
+
+.category[aria-selected='true'] {
+  border-color: var(--color-line-strong);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-text-primary);
+}
+
+.panelTitle {
+  margin: 0 0 8px;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  font-weight: var(--weight-demibold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* With JavaScript the active tab names the panel, so the title is for screen readers only. */
+:global(html.js) .panelTitle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.accordion {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  border-bottom: 1px solid var(--color-line-default);
+}
+
+.qHeading {
+  margin: 0;
+}
+
+.question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  padding: 28px 8px;
+  border: 0;
+  background: none;
+  color: var(--color-text-secondary);
+  font: var(--weight-demibold) clamp(1.0625rem, 0.95rem + 0.4vw, 1.25rem) / 1.3 var(--font-body);
+  letter-spacing: -0.005em;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    color 0.3s ease,
+    padding 0.3s var(--ease-out);
+}
+
+/* Figma: 12px between an open question and its answer. */
+.item[data-open] .question {
+  padding-bottom: 12px;
+}
+
+.question:hover,
+.item[data-open] .question {
+  color: var(--color-text-primary);
+}
+
+/* Plus that turns into a minus on an indigo disc when open (Figma toggle). */
+.toggle {
+  position: relative;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--color-line-strong);
+  border-radius: 50%;
+  background: var(--color-fill-subtle);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.toggle::before,
+.toggle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 1.6px;
+  margin: -0.8px 0 0 -6px;
+  border-radius: 1px;
+  background: currentColor;
+  transition: transform 0.3s var(--ease-out);
+}
+
+.toggle::after {
+  transform: rotate(90deg);
+}
+
+.item[data-open] .toggle {
+  border-color: var(--color-brand-indigo);
+  background: var(--color-brand-indigo);
+  color: var(--color-white);
+}
+
+.item[data-open] .toggle::after {
+  transform: rotate(0deg);
+}
+
+/* Answer: height animates via grid rows (0fr → 1fr). */
+.answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s var(--ease-out);
+}
+
+.item[data-open] .answer {
+  grid-template-rows: 1fr;
+}
+
+.answerInner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.answerInner p {
+  max-width: 760px;
+  margin: 0 8px 28px;
+  color: var(--color-text-secondary);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+/* Collapsed answers are hidden from assistive tech too (after the open transition). */
+:global(html.js) .item:not([data-open]) .answerInner {
+  visibility: hidden;
+  transition: visibility 0s 0.3s;
+}
+
+/* No JavaScript: show every category and answer. */
+:global(html:not(.js)) .categories {
+  display: none;
+}
+
+:global(html:not(.js)) .faqBody {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+:global(html:not(.js)) .panel[hidden] {
+  display: block;
+}
+
+:global(html:not(.js)) .panel + .panel {
+  margin-top: 32px;
+}
+
+:global(html:not(.js)) .answer {
+  grid-template-rows: 1fr;
+}
+
+/* ------------------------------------------------------------------- motion */
+
+@media (prefers-reduced-motion: no-preference) {
+  .objection:hover {
+    transform: translateY(-6px);
+  }
+
+  :global([data-reveal='armed']) .bar {
+    transition: transform 1.2s var(--ease-out) calc(var(--d, 0ms) + 300ms);
+  }
+
+  :global([data-reveal='armed']) .objection:not([data-in]) .bar {
+    transform: scaleX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .answer,
+  .toggle::after {
+    transition: none;
+  }
+}
+
+/* --------------------------------------------------------------- responsive */
+
+@media (max-width: 1023.98px) {
+  .objections {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .objection {
+    min-height: 0;
+  }
+
+  .faqBody {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .categories {
+    flex-flow: row wrap;
+    padding-top: 0;
+  }
+
+  .category[aria-selected='false'] {
+    border-color: var(--color-line-default);
+  }
+}
+
+@media (max-width: 599.98px) {
+  .objection {
+    padding: 32px 22px 24px;
+    border-radius: 22px;
+  }
+
+  .question {
+    padding: 22px 4px;
+  }
+
+  .item[data-open] .question {
+    padding-bottom: 10px;
+  }
+
+  .answerInner p {
+    margin: 0 4px 22px;
+    font-size: 15px;
+  }
+}

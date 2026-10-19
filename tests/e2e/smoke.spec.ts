@@ -53,6 +53,14 @@ for (const route of ROUTES) {
         }
       });
       await page.goto(route.path, { waitUntil: 'networkidle' });
+      // Scroll through so lazy-loaded images below the fold are requested too.
+      await page.evaluate(async () => {
+        for (let y = 0; y < document.documentElement.scrollHeight; y += 700) {
+          window.scrollTo(0, y);
+          await new Promise((r) => setTimeout(r, 50));
+        }
+      });
+      await page.waitForLoadState('networkidle');
       const brokenImages = await page.evaluate(() =>
         [...document.images]
           .filter((img) => !img.complete || img.naturalWidth === 0)
@@ -82,7 +90,7 @@ test('robots.txt disallows crawling outside production', async ({ request }) => 
 
 test('primary CTAs point to approved destinations', async ({ page }) => {
   await page.goto('/');
-  const hero = page.locator('main');
+  const hero = page.locator('main section[aria-labelledby="hero-title"]');
   await expect(hero.getByRole('link', { name: /Book a free demo/ })).toHaveAttribute(
     'href',
     'https://affnook.com/book-free-demo/',

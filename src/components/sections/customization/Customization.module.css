@@ -1,0 +1,523 @@
+/* Figma "Customization — bento" (1512 × 1060, sunken background, follows How it works). */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(24px, 3vw, 40px) 0 clamp(72px, 8vw, 120px);
+  background: var(--color-bg-sunken);
+}
+
+.inner {
+  --color-text-muted: #7f89b5;
+
+  position: relative;
+  width: 100%;
+  max-width: calc(var(--container-max) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.inner > h2 {
+  margin-top: 24px;
+}
+
+/* Two rows: 784 + 512 and 512 + 784 (Figma), expressed as a 512 / 248 / 512 grid. */
+.bento {
+  display: grid;
+  grid-template-columns: minmax(0, 512fr) minmax(0, 248fr) minmax(0, 512fr);
+  gap: 24px;
+  margin-top: clamp(40px, 5vw, 64px);
+}
+
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 340px;
+  padding: 31px;
+  overflow: hidden;
+  border: 1px solid var(--color-line-default);
+  border-radius: 28px;
+  background: rgba(10, 22, 56, 0.7);
+  transition:
+    transform 0.5s var(--ease-out),
+    border-color 0.4s ease;
+}
+
+.tile:hover {
+  border-color: var(--color-line-strong);
+}
+
+.formulaTile,
+.domainTile {
+  min-height: 380px;
+}
+
+.formulaTile {
+  grid-column: 1 / 3;
+}
+
+.domainTile {
+  grid-column: 3;
+}
+
+.fxTile {
+  grid-column: 1;
+}
+
+.dashTile {
+  grid-column: 2 / 4;
+}
+
+.tileTitle {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem);
+  font-weight: var(--weight-demibold);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.tileText {
+  margin: 8px 0 0;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* --- formula --- */
+
+.formula {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: auto 0 0;
+  padding-top: 40px;
+}
+
+.term {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.op {
+  color: var(--color-text-muted);
+  font-size: 28px;
+  font-weight: var(--weight-demibold);
+  line-height: 1;
+}
+
+.chip {
+  padding: 12px 18px;
+  border: 1px solid color-mix(in srgb, var(--tone) 50%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--tone) 14%, transparent);
+  color: var(--tone);
+  font-size: 14px;
+  font-weight: var(--weight-medium);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.chip[data-tone='white'] {
+  --tone: var(--color-text-secondary);
+}
+
+.note {
+  margin: 22px 0 54px;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-weight: var(--weight-demibold);
+  line-height: 1.2;
+}
+
+/* --- tracking domain --- */
+
+.urlBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: auto 0 0;
+  padding: 14px 18px 14px 16px;
+  border: 1px solid var(--color-line-strong);
+  border-radius: 14px;
+  background: var(--color-bg-raised);
+  color: var(--color-text-primary);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.lock {
+  flex: none;
+  display: grid;
+  color: var(--color-accent-mint);
+}
+
+.url {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.caret {
+  flex: none;
+  width: 2px;
+  height: 15px;
+  margin-left: -6px;
+  background: var(--color-brand-indigo-soft);
+  opacity: 0;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 14px 0 64px;
+  padding: 0;
+  list-style: none;
+}
+
+.tags li {
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--tone-bg);
+  color: var(--tone);
+  font-size: 13px;
+  font-weight: var(--weight-demibold);
+  line-height: 1.2;
+}
+
+/* --- FX rates --- */
+
+.rates {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: auto 0 0;
+  padding: 40px 0 0;
+  list-style: none;
+}
+
+.rates li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 0 9px 0 15px;
+  border: 1px solid var(--color-line-default);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.pair {
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  font-weight: var(--weight-medium);
+  white-space: pre;
+}
+
+.rate {
+  margin-left: auto;
+  color: var(--color-text-primary);
+  font-size: 13px;
+  font-weight: var(--weight-demibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.setBy {
+  padding: 4px 8px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 198, 0, 0.14);
+  color: var(--color-accent-gold);
+  font-size: 13px;
+  font-weight: var(--weight-demibold);
+  white-space: nowrap;
+}
+
+/* --- dashboard widgets + drag demo --- */
+
+.widgets {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 220fr) minmax(0, 220fr) minmax(0, 248fr);
+  gap: 16px;
+  margin-top: auto;
+  padding-top: 40px;
+}
+
+.widget {
+  display: flex;
+  flex-direction: column;
+  height: 150px;
+  padding: 13px;
+  border: 1px solid var(--color-line-strong);
+  border-radius: 14px;
+  background: var(--color-bg-raised);
+}
+
+.widgetLabel {
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-weight: var(--weight-demibold);
+  line-height: 1.2;
+}
+
+.bars {
+  display: flex;
+  flex: 1;
+  align-items: flex-end;
+  gap: 6px;
+  max-height: 76px;
+  margin-top: auto;
+}
+
+.bars i {
+  flex: 1;
+  height: var(--h);
+  border-radius: 3px;
+  background: var(--tone);
+  opacity: calc(0.3 + var(--k) * 0.14);
+  transform-origin: bottom;
+}
+
+.dragged {
+  position: absolute;
+  top: 10px;
+  left: 53%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(200px, 44%);
+  padding: 12px;
+  border: 1.5px solid var(--color-brand-indigo-soft);
+  border-radius: 14px;
+  background: var(--color-bg-raised);
+  box-shadow: 0 30px 30px rgba(0, 0, 0, 0.5);
+  transform: rotate(4deg);
+}
+
+.draggedLabel {
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  font-weight: var(--weight-demibold);
+  line-height: 1.2;
+}
+
+.draggedValue {
+  color: var(--color-text-primary);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+/* ------------------------------------------------------------------ motion */
+
+@media (prefers-reduced-motion: no-preference) {
+  .tile:hover {
+    transform: translateY(-6px);
+  }
+
+  /* Formula chips fall in and snap into the equation once the tile is revealed. */
+  :global([data-reveal='armed']) .chip,
+  :global([data-reveal='armed']) .op {
+    transition:
+      transform 1s var(--ease-out),
+      opacity 0.8s var(--ease-out);
+    transition-delay: calc(var(--i) * 110ms + 250ms);
+  }
+
+  :global([data-reveal='armed']) .formulaTile:not([data-in]) .chip {
+    opacity: 0;
+    transform: translate3d(0, var(--ty), 0) rotate(var(--rot));
+  }
+
+  :global([data-reveal='armed']) .formulaTile:not([data-in]) .op {
+    opacity: 0;
+  }
+
+  /* Tracking link types out one character per step (a clip, so nothing reflows), then the
+     caret blinks a few times at the end of the line. */
+  :global([data-reveal='armed']) .domainTile[data-in] .url {
+    animation: type-url 1.6s steps(var(--n)) 0.4s both;
+  }
+
+  :global([data-reveal='armed']) .domainTile[data-in] .caret {
+    animation: caret-blink 1s steps(2) 2s 5;
+  }
+
+  /* FX rows and widget bars rise in. */
+  :global([data-reveal='armed']) .rates li {
+    transition:
+      opacity 0.6s var(--ease-out),
+      transform 0.8s var(--ease-out);
+  }
+
+  :global([data-reveal='armed']) .bars i {
+    transition: transform 0.8s var(--ease-out);
+  }
+
+  :global([data-reveal='armed']) .rates li {
+    transition-delay: calc(var(--i) * 120ms + 300ms);
+  }
+
+  :global([data-reveal='armed']) .bars i {
+    transition-delay: calc(var(--w) * 150ms + var(--k) * 70ms + 300ms);
+  }
+
+  :global([data-reveal='armed']) .fxTile:not([data-in]) .rates li {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+
+  :global([data-reveal='armed']) .dashTile:not([data-in]) .bars i {
+    transform: scaleY(0);
+  }
+
+  /* Drag demo: the widget is picked up, carried across and dropped, on a loop (paused
+     off screen by the section's Reveal). */
+  :global(html.js) .dragged {
+    animation: drag-demo 6s var(--ease-in-out) 1s infinite;
+  }
+}
+
+@keyframes type-url {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes caret-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes drag-demo {
+  0%,
+  12% {
+    transform: translate3d(0, 0, 0) rotate(4deg);
+  }
+
+  40%,
+  55% {
+    transform: translate3d(-58%, 18px, 0) rotate(-3deg);
+  }
+
+  85%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(4deg);
+  }
+}
+
+/* -------------------------------------------------------------- responsive */
+
+@media (max-width: 1023.98px) {
+  .bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .formulaTile,
+  .dashTile {
+    grid-column: 1 / -1;
+  }
+
+  .domainTile {
+    grid-column: 1;
+  }
+
+  .fxTile {
+    grid-column: 2;
+  }
+
+  .tile,
+  .formulaTile,
+  .domainTile {
+    min-height: 0;
+  }
+
+  .note,
+  .tags {
+    margin-bottom: 8px;
+  }
+}
+
+@media (max-width: 639.98px) {
+  .bento {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .domainTile,
+  .fxTile {
+    grid-column: 1;
+  }
+
+  .tile {
+    padding: 22px;
+    border-radius: 22px;
+  }
+
+  .formula {
+    gap: 8px;
+    padding-top: 28px;
+  }
+
+  .term {
+    gap: 8px;
+  }
+
+  .op {
+    font-size: 22px;
+  }
+
+  .chip {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .urlBar {
+    font-size: 12px;
+  }
+
+  .widgets {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .widget {
+    height: 120px;
+    padding: 10px;
+  }
+
+  .widgetLabel {
+    font-size: 12px;
+  }
+
+  .bars {
+    gap: 3px;
+  }
+
+  .dragged {
+    left: 40%;
+    width: 56%;
+  }
+
+  .draggedValue {
+    font-size: 20px;
+  }
+}

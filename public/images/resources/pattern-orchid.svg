@@ -1,0 +1,16 @@
+<svg preserveAspectRatio="none" width="424" height="140" viewBox="0 0 424 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Pattern" clip-path="url(#clip0_0_15)">
+<rect width="424" height="140" fill="#ED74BC" fill-opacity="0.08"/>
+<path id="Line" opacity="0.25" d="M-20 53.8561C-10 52.8 20 50.5 40 47.6C60 44.6 80 39.4 100 36C120 32.7 140 28.7 160 27.3C180 25.8 200 25.8 220 27.3C240 28.7 260 32.7 280 36.1C300 39.5 320 44.6 340 47.6C360 50.6 390 52.8 400 53.9" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke="#ED74BC"/>
+<path id="Line_2" opacity="0.33" d="M-20 63.8019C-10 61.9 20 55.4 40 52.2C60 49 80 45.5 100 44.6C120 43.6 140 44.3 160 46.2C180 48.2 200 52.5 220 56C240 59.5 260 64.5 280 67.2C300 69.9 320 72 340 72C360 72 390 67.9 400 67.1" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke="#ED74BC"/>
+<path id="Line_3" opacity="0.41" d="M-20 68.4134C-10 67.4 20 62.6 40 62.1C60 61.6 80 63.1 100 65.4C120 67.8 140 72.5 160 76C180 79.6 200 84.3 220 86.6C240 88.9 260 90.4 280 89.9C300 89.3 320 86.5 340 83.5C360 80.6 390 73.9 400 72" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke="#ED74BC"/>
+<path id="Line_4" opacity="0.49" d="M-20 80C-10 80.8 20 82.2 40 84.9C60 87.5 80 92.5 100 96C120 99.5 140 103.9 160 105.8C180 107.7 200 108.4 220 107.4C240 106.4 260 103 280 99.8C300 96.6 320 91.3 340 88.1C360 84.9 390 81.8 400 80.6" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke="#ED74BC"/>
+<path id="Line_5" opacity="0.57" d="M-20 104.458C-10 106.4 20 112.6 40 116C60 119.4 80 123.3 100 124.8C120 126.2 140 126.2 160 124.7C180 123.2 200 119.3 220 115.9C240 112.5 260 107.3 280 104.4C300 101.4 320 98.6 340 98.1C360 97.6 390 100.9 400 101.5" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke="#ED74BC"/>
+<path id="Line_6" opacity="0.65" d="M-20 135.85C-10 137.1 20 142.5 40 143.4C60 144.4 80 143.7 100 141.8C120 139.8 140 135.4 160 131.9C180 128.4 200 123.4 220 120.8C240 118.1 260 116 280 116C300 116 320 118.2 340 120.9C360 123.6 390 130.2 400 132.1" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" stroke="#ED74BC"/>
+</g>
+<defs>
+<clipPath id="clip0_0_15">
+<rect width="424" height="140" fill="white"/>
+</clipPath>
+</defs>
+</svg>
