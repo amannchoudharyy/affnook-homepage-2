@@ -93,7 +93,14 @@
     box-shadow 0.45s ease;
 }
 
-.primary:hover .arc {
+/* Figma "CTA / Why … choose Affnook": translucent arc with a light arrow. */
+.secondary .arc {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-text-primary);
+}
+
+.primary:hover .arc,
+.secondary:hover .arc {
   background: var(--color-accent-gold);
   color: #1a1200;
   box-shadow: 0 0 0 4px rgba(255, 198, 0, 0.22);
@@ -140,5 +147,14 @@
   .nav .arc {
     width: 34px;
     height: 34px;
+  }
+}
+
+/* Smallest phones: long arc labels ("Why networks choose Affnook") must fit 288px. */
+@media (max-width: 374.98px) {
+  .withArc:not(.nav) {
+    gap: 12px;
+    padding-left: 20px;
+    font-size: 14px;
   }
 }

@@ -1,8 +1,10 @@
 import { AudienceSwapReset } from '@/components/audience/AudienceSwapReset';
 import { Hero } from '@/components/sections/hero/Hero';
+import { Mcp } from '@/components/sections/mcp/Mcp';
 import { LogosAwards } from '@/components/sections/logos/LogosAwards';
 import { Problem } from '@/components/sections/problem/Problem';
 import { Stakes } from '@/components/sections/stakes/Stakes';
+import { Turn } from '@/components/sections/turn/Turn';
 import { getAudience, type AudienceId } from '@/content/audiences';
 
 /**
@@ -20,6 +22,8 @@ export function AudienceHomePage({ audience: id }: { audience: AudienceId }) {
       <LogosAwards />
       <Problem audience={audience.id} />
       <Stakes audience={audience.id} />
+      <Turn audience={audience.id} />
+      <Mcp audience={audience.id} />
     </main>
   );
 }

@@ -16,7 +16,12 @@ const SECTIONS: [string, string][] = [
   ['main section[aria-labelledby="logos-title"]', 'logos'],
   ['main section[aria-labelledby^="problem-title"]', 'problem'],
   ['main section[aria-labelledby^="stakes-title"]', 'stakes'],
+  ['main section[aria-labelledby^="turn-title"]', 'turn'],
+  ['main section[aria-labelledby^="mcp-title"]', 'mcp'],
 ];
+/** Narrow-width close-ups of the sections added in the current phase (reflow review). */
+const REFLOW: [string, string][] = SECTIONS.slice(-2);
+const REFLOW_WIDTHS = [320, 390, 768, 1024];
 
 test.skip(!process.env.SCREENSHOTS, 'Set SCREENSHOTS=1 to capture review screenshots');
 test.skip(({ isMobile }) => isMobile, 'Desktop project only');
@@ -30,6 +35,18 @@ for (const route of ROUTES) {
       await page.screenshot({ path: `${OUT}/${route.id}-${width}.png`, fullPage: true });
     });
   }
+
+  test(`capture ${route.id} reflow close-ups`, async ({ page }) => {
+    for (const width of REFLOW_WIDTHS) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(route.path, { waitUntil: 'networkidle' });
+      for (const [selector, name] of REFLOW) {
+        await page
+          .locator(selector)
+          .screenshot({ path: `${OUT}/${route.id}-${name}-${width}.png` });
+      }
+    }
+  });
 
   test(`capture ${route.id} sections @ 1512 (Figma width)`, async ({ page }) => {
     await page.setViewportSize({ width: 1512, height: 982 });

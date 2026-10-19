@@ -6,11 +6,13 @@ import styles from './Section.module.css';
 
 interface SectionHeadingProps {
   id: string;
-  lines: readonly [string, string];
+  /** One line, or two where the second is rendered in text/muted. */
+  lines: readonly [string] | readonly [string, string];
   /** Light the words up one by one as the heading scrolls through the viewport. */
   scrub?: boolean;
   align?: 'start' | 'center';
-  size?: 'lg' | 'md';
+  /** lg: 64px demibold (default) · display: 56px bold (Figma MCP) · md: 30px. */
+  size?: 'lg' | 'display' | 'md';
   className?: string;
 }
 
@@ -44,7 +46,7 @@ export function SectionHeading({
               </Fragment>
             ))}
           </span>
-          {i === 0 ? ' ' : null}
+          {i < lines.length - 1 ? ' ' : null}
         </Fragment>
       ))}
     </h2>
