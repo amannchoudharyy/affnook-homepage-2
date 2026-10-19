@@ -23,7 +23,7 @@ interface StageProps {
  */
 export function Stage({ audience, label, window, floats }: StageProps) {
   return (
-    <figure className={styles.figure}>
+    <figure id="product-stage" className={styles.figure}>
       <figcaption className="visually-hidden">{label}</figcaption>
       <MotionRegion className={`${styles.stage} ${styles[audience]}`} aria-hidden="true">
         <div className={styles.tilt}>

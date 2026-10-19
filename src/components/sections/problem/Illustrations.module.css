@@ -1,0 +1,705 @@
+/* Problem-card illustrations. Geometry follows the Figma frames; layout is flexible so
+   the illustrations reflow on narrow cards instead of being scaled down. */
+
+.box {
+  /* Same accessibility adjustment as the hero dashboards: Figma text/muted is 4.38:1 on
+     the raised surfaces used here; this value reaches ≥4.69:1. */
+  --color-text-muted: #7f89b5;
+
+  position: relative;
+  overflow: hidden;
+  height: var(--illo-h, 220px);
+  border: 1px solid var(--color-line-default);
+  border-radius: 14px;
+  background: rgba(4, 7, 22, 0.6);
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  font-weight: var(--weight-demibold);
+  line-height: 1.2;
+}
+
+.skeleton {
+  display: block;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.chip,
+.flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid color-mix(in srgb, var(--tone) 50%, transparent);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-raised);
+  color: var(--tone);
+  white-space: nowrap;
+}
+
+.chip i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--tone);
+}
+
+.flag {
+  padding: 3px 9px;
+  /* 8% tint (Figma 14%) keeps red/mint/gold flag text ≥4.5:1 on the raised surface. */
+  background: color-mix(in srgb, var(--tone) 8%, var(--color-bg-raised));
+}
+
+.connectors {
+  flex: 1 1 32px;
+  min-width: 24px;
+  height: 100%;
+  overflow: visible;
+}
+
+.connectors path {
+  fill: none;
+  stroke: var(--color-line-strong);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+  vector-effect: non-scaling-stroke;
+}
+
+/* ------------------------------------------------------------- panels (01) */
+
+.panels .panel {
+  position: absolute;
+  width: 61%;
+  height: 112px;
+  overflow: hidden;
+  border: 1px solid var(--color-line-strong);
+  border-radius: 10px;
+  background: var(--color-bg-raised);
+  box-shadow: 0 30px 30px -10px rgba(0, 0, 0, 0.5);
+  transition: transform 1.2s var(--ease-out);
+}
+
+.panels .panel:nth-child(1) {
+  top: 23px;
+  left: 8%;
+}
+
+.panels .panel:nth-child(2) {
+  top: 53px;
+  left: 22%;
+}
+
+.panels .panel:nth-child(3) {
+  top: 83px;
+  left: 37%;
+}
+
+.panelBar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 22px;
+  margin-bottom: 17px;
+  padding: 0 8px;
+  background: var(--tone-bg);
+  color: var(--tone);
+}
+
+.panelBar i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-text-muted);
+}
+
+.panelBar i:last-of-type {
+  margin-right: 8px;
+}
+
+.panel .skeleton {
+  margin: 0 0 8px 11px;
+}
+
+/* Panels start stacked and fan out when the card is revealed (prototype). */
+:global([data-reveal='armed'] [data-reveal]:not([data-in])) .panels .panel {
+  transform: translate(18%, 10px);
+}
+
+/* ------------------------------------------------------------ "?" bars (02) */
+
+.qbars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 16px;
+  padding-bottom: 40px;
+}
+
+.qline,
+.qbase {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+}
+
+.qline {
+  top: 67px;
+  border-top: 1px dashed var(--color-text-muted);
+}
+
+.qbase {
+  bottom: 40px;
+  height: 1px;
+  background: var(--color-line-strong);
+}
+
+.qbar {
+  position: relative;
+  width: 36px;
+  height: var(--h);
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--tone) 70%, transparent);
+}
+
+.qbar em {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  color: var(--color-text-muted);
+  font-size: 20px;
+  font-style: normal;
+  transform: translateX(-50%);
+}
+
+/* ---------------------------------------------------------------- setup (03) */
+
+.setup {
+  display: flex;
+  flex-direction: column;
+  padding: 19px;
+}
+
+.setupHead {
+  display: flex;
+  justify-content: space-between;
+}
+
+.setupHead em {
+  color: var(--color-accent-gold);
+  font-style: normal;
+}
+
+.setupBar {
+  display: block;
+  overflow: hidden;
+  height: 6px;
+  margin: 13px 0 18px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.setupBar i {
+  display: block;
+  width: 10px;
+  height: 100%;
+  border-radius: 3px;
+  background: var(--color-accent-gold);
+}
+
+.checklist {
+  display: grid;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--color-text-muted);
+}
+
+.checklist li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.checklist li::before {
+  content: '';
+  flex: none;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--color-line-strong);
+  border-radius: 4px;
+}
+
+/* -------------------------------------------------------------- dots (04) */
+
+.dotsBox {
+  padding: 21px;
+}
+
+.dots {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  place-items: center;
+  height: 100%;
+}
+
+.dots i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(122, 132, 176, 0.35);
+}
+
+.dots i[data-hot] {
+  background: var(--color-status-error);
+  box-shadow: 0 0 0 7px rgba(255, 81, 58, 0.18);
+}
+
+.tag {
+  position: absolute;
+  padding: 4px 10px;
+  border: 1px solid rgba(255, 81, 58, 0.5);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-raised);
+  color: var(--color-status-error);
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------- tabs (B01) */
+
+.tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 15px;
+}
+
+.tabRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.tab {
+  padding: 6px 12px;
+  border: 1px solid var(--color-line-default);
+  border-radius: 8px;
+  background: var(--color-bg-raised);
+}
+
+.tab:nth-child(2) {
+  border-color: var(--color-brand-indigo);
+  background: var(--color-brand-indigo);
+  color: var(--color-white);
+}
+
+.chipCorner {
+  position: absolute;
+  right: 15px;
+  bottom: 13px;
+}
+
+/* ---------------------------------------------------------- deposit (B02) */
+
+.deposit {
+  display: flex;
+  align-items: center;
+  padding: 13px 15px;
+}
+
+.partners {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.partners li,
+.depositTarget,
+.matrixCol li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid var(--color-line-default);
+  border-radius: 8px;
+  background: var(--color-bg-raised);
+  white-space: nowrap;
+}
+
+.partners i,
+.depositTarget i,
+.matrixCol i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--tone);
+}
+
+.deposit .connectors {
+  height: 72px;
+}
+
+.depositTarget {
+  position: relative;
+  border-color: rgba(0, 209, 127, 0.5);
+  color: var(--color-text-primary);
+}
+
+.depositTarget em {
+  position: absolute;
+  bottom: -30px;
+  left: -14px;
+  color: var(--color-accent-gold);
+  font-size: 20px;
+  font-style: normal;
+}
+
+/* ------------------------------------------------------------ sheet (B03) */
+
+.sheet {
+  display: grid;
+  align-content: start;
+  padding: 11px 15px;
+}
+
+.sheetHead,
+.sheetRow,
+.sheetTotal {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: 8px;
+  padding: 3px 0;
+}
+
+.sheetHead,
+.sheetTotal {
+  color: var(--color-text-muted);
+}
+
+.sheetHead {
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--color-line-default);
+}
+
+.sheetTotal {
+  margin-top: 1px;
+  padding-top: 3px;
+  border-top: 1px solid var(--color-line-default);
+}
+
+.sheetTotal span:last-child {
+  color: var(--color-accent-gold);
+}
+
+.sheetRow:first-of-type {
+  padding-top: 6px;
+}
+
+.sheetError {
+  justify-self: start;
+  margin: -3px 0 -3px -6px;
+  padding: 2px 6px;
+  border: 1px solid rgba(255, 81, 58, 0.6);
+  border-radius: 4px;
+  background: rgba(255, 81, 58, 0.14);
+  color: var(--color-status-error);
+}
+
+/* ------------------------------------------------------------ fraud (B04) */
+
+.fraudList {
+  display: grid;
+  align-content: center;
+  gap: 8px;
+  padding: 13px 15px;
+}
+
+.fraudRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 28px;
+  padding: 0 4px 0 12px;
+  border: 1px solid var(--color-line-default);
+  border-radius: 8px;
+  background: var(--color-bg-raised);
+}
+
+/* ------------------------------------------------------------ rules (N01) */
+
+.rules {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 9px 15px 15px;
+}
+
+.rulesHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 2px;
+  color: var(--color-text-muted);
+}
+
+.rule {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 34px;
+  padding: 0 11px;
+  border: 1px solid var(--color-line-default);
+  border-radius: 8px;
+  background: var(--color-bg-raised);
+}
+
+.rule strong {
+  color: var(--color-text-primary);
+  font-weight: var(--weight-demibold);
+  white-space: nowrap;
+}
+
+.rule[data-editing] {
+  border-color: rgba(255, 198, 0, 0.6);
+}
+
+.rule[data-editing] strong {
+  color: var(--color-accent-gold);
+}
+
+.rule[data-editing] strong::after {
+  content: '|';
+  margin-left: 1px;
+  color: var(--color-accent-gold);
+}
+
+/* ----------------------------------------------------------- matrix (N02) */
+
+.matrix {
+  display: flex;
+  align-items: center;
+  padding: 21px 15px;
+}
+
+/* Three 26px pills whose centres sit 52px apart (13, 65, 117), matching the connector
+   SVGs, which use the same 130px box (viewBox offset by 13). */
+.matrixCol {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 130px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.matrixCol li {
+  height: 26px;
+  padding: 0 10px;
+}
+
+.matrix .connectors {
+  height: 130px;
+}
+
+.publishers {
+  display: grid;
+  grid-template-columns: repeat(6, 5px);
+  gap: 11px 8px;
+  margin-left: 4px;
+}
+
+.publishers i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(140, 134, 255, 0.55);
+}
+
+/* ---------------------------------------------------- reconciliation (N03) */
+
+.recon {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 14px;
+  padding: 15px;
+}
+
+.reconRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+}
+
+.reconCard {
+  display: grid;
+  gap: 8px;
+  padding: 11px 13px;
+  border: 1px solid var(--color-line-default);
+  border-radius: 10px;
+  background: var(--color-bg-raised);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.reconCard strong {
+  color: var(--color-text-primary);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.notEqual {
+  color: var(--color-status-error);
+  font-size: 20px;
+  font-style: normal;
+}
+
+/* ------------------------------------------------------------------ motion */
+
+@media (prefers-reduced-motion: no-preference) {
+  :global(html.js) .qbar {
+    animation: q-bob 3.2s ease-in-out var(--dl) infinite;
+  }
+
+  :global(html.js) .setupBar i {
+    animation: restart 3.6s var(--ease-out) infinite;
+  }
+
+  :global(html.js) .dots i[data-hot] {
+    animation: hot 2s ease-out var(--dl) infinite;
+  }
+
+  :global(html.js) .tag {
+    animation: bob 4s ease-in-out infinite;
+  }
+
+  :global(html.js) .tab {
+    animation: tab-cycle 6s var(--dl) infinite;
+  }
+
+  :global(html.js) .connectors path {
+    animation: dash-flow 1.4s linear infinite;
+  }
+
+  :global(html.js) .depositTarget em {
+    animation: bob 3s ease-in-out infinite;
+  }
+
+  :global(html.js) .sheetError {
+    animation: blink 1.2s steps(2) infinite;
+  }
+
+  :global(html.js) .fraudRow[data-bad] {
+    animation: bad-pulse 2.4s ease-in-out infinite;
+  }
+
+  :global(html.js) .rule[data-editing] strong::after {
+    animation: blink 1s steps(2) infinite;
+  }
+
+  :global(html.js) .publishers i {
+    animation: twinkle 3s ease-in-out var(--dl) infinite;
+  }
+
+  :global(html.js) .reconChip,
+  :global(html.js) .notEqual {
+    animation: blink-soft 2.4s ease-in-out infinite;
+  }
+}
+
+@keyframes q-bob {
+  50% {
+    height: calc(var(--h) + 14px);
+  }
+}
+
+@keyframes restart {
+  0% {
+    width: 0;
+  }
+
+  55%,
+  75% {
+    width: 28%;
+  }
+
+  100% {
+    width: 0;
+  }
+}
+
+@keyframes hot {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 81, 58, 0.55);
+  }
+
+  80%,
+  100% {
+    box-shadow: 0 0 0 9px rgba(255, 81, 58, 0);
+  }
+}
+
+@keyframes bob {
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* The active tab hops between the four tools. */
+@keyframes tab-cycle {
+  0%,
+  22% {
+    border-color: var(--color-brand-indigo);
+    background: var(--color-brand-indigo);
+    color: var(--color-white);
+  }
+
+  25%,
+  100% {
+    border-color: var(--color-line-default);
+    background: var(--color-bg-raised);
+    color: var(--color-text-secondary);
+  }
+}
+
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@keyframes blink-soft {
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes bad-pulse {
+  50% {
+    border-color: rgba(255, 81, 58, 0.5);
+    background: rgba(255, 81, 58, 0.08);
+  }
+}
+
+@keyframes twinkle {
+  50% {
+    opacity: 0.3;
+  }
+}

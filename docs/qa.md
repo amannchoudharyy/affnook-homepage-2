@@ -6,6 +6,27 @@ Three audience routes (`/`, `/brands`, `/affiliate-networks`), all 14 homepage s
 Forms, newsletter, CRM and backend lead processing are out of scope for the current milestone
 and are not counted as defects.
 
+## Section completion
+
+Figma order. ✅ implemented and tested · ⏳ not started.
+
+| #   | Section                                   | Operators | Brands | Affiliate networks |
+| --- | ----------------------------------------- | --------- | ------ | ------------------ |
+| 1   | Hero (nav, copy, switcher, product stage) | ✅        | ✅     | ✅                 |
+| 2   | Logos + awards                            | ✅        | ✅     | ✅                 |
+| 3   | Problem                                   | ✅        | ✅     | ✅                 |
+| 4   | Stakes                                    | ✅        | ✅     | ✅                 |
+| 5   | Turn — Affnook as your guide              | ⏳        | ⏳     | ⏳                 |
+| 6   | Affnook MCP — AI assistant                | ⏳        | ⏳     | ⏳                 |
+| 7   | Proof — case studies                      | ⏳        | ⏳     | ⏳                 |
+| 8   | How it works + capability tabs            | ⏳        | ⏳     | ⏳                 |
+| 9   | Customization bento                       | ⏳        | ⏳     | ⏳                 |
+| 10  | Testimonials                              | ⏳        | ⏳     | ⏳                 |
+| 11  | Objections + FAQ                          | ⏳        | ⏳     | ⏳                 |
+| 12  | Resources                                 | ⏳        | ⏳     | ⏳                 |
+| 13  | Final CTA                                 | ⏳        | ⏳     | ⏳                 |
+| 14  | Footer                                    | ✅        | ✅     | ✅                 |
+
 ## Viewport matrix (CSS px)
 
 | Tier    | Widths                     |
@@ -43,8 +64,9 @@ Playwright reports some tests as skipped by design; none are skipped because the
 
 Record command, date, commit, environment and result. "Not run" is recorded as such.
 
-| Date       | Commit    | Check                                                                                                                                                                                                                                         | Environment                                         | Result |
-| ---------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- | ------ |
-| 2026-10-19 | e1747ba   | format, lint, typecheck, unit (12), build, e2e (57 passed / 27 skipped)                                                                                                                                                                       | local, Chromium 1440 + Pixel 7 emulation            | Pass   |
-| 2026-10-19 | (Phase 1) | format, lint, typecheck, unit (17), build, e2e (87 passed / 73 skipped by design), screenshots 3 audiences × 7 widths reviewed                                                                                                                | local prod build, Chromium 1440 + Pixel 7 emulation | Pass   |
-| 2026-10-19 | (Phase 2) | format, lint, typecheck, unit (21), build, e2e (143 passed / 115 skipped by design), CLS ≤ 0.0008 all routes, muted-H1 contrast ≥ 3.59:1, 39/39 external links 200, screenshots 3 audiences × 7 widths + Figma-width stage close-ups reviewed | local prod build, Chromium 1440 + Pixel 7 emulation | Pass   |
+| Date       | Commit    | Check                                                                                                                                                                                                                                                                                   | Environment                                         | Result |
+| ---------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- | ------ |
+| 2026-10-19 | e1747ba   | format, lint, typecheck, unit (12), build, e2e (57 passed / 27 skipped)                                                                                                                                                                                                                 | local, Chromium 1440 + Pixel 7 emulation            | Pass   |
+| 2026-10-19 | (Phase 1) | format, lint, typecheck, unit (17), build, e2e (87 passed / 73 skipped by design), screenshots 3 audiences × 7 widths reviewed                                                                                                                                                          | local prod build, Chromium 1440 + Pixel 7 emulation | Pass   |
+| 2026-10-19 | (Phase 2) | format, lint, typecheck, unit (21), build, e2e (143 passed / 115 skipped by design), CLS ≤ 0.0008 all routes, muted-H1 contrast ≥ 3.59:1, 39/39 external links 200, screenshots 3 audiences × 7 widths + Figma-width stage close-ups reviewed                                           | local prod build, Chromium 1440 + Pixel 7 emulation | Pass   |
+| 2026-10-19 | (Phase 3) | format, lint, typecheck, unit (21), build, e2e (190 passed / 142 skipped by design) incl. axe on all routes (desktop + mobile), CLS 0.0000 all routes, CTA destination titles verified, mobile type audit (body ≥13px), screenshots 3 audiences × 7 widths + section close-ups reviewed | local prod build, Chromium 1440 + Pixel 7 emulation | Pass   |

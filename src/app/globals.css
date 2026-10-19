@@ -160,3 +160,34 @@ html[data-audience-swap] main {
   --tone: var(--color-status-error);
   --tone-bg: rgba(255, 81, 58, 0.14);
 }
+
+/* Reveal-on-scroll (see components/motion/Reveal.tsx). Elements are only hidden once the
+   reveal root has armed itself after hydration, so content never depends on JavaScript. */
+[data-reveal='armed'] [data-reveal] {
+  transition:
+    opacity 1s var(--ease-out),
+    transform 1.2s var(--ease-out);
+  transition-delay: var(--d, 0ms);
+}
+
+[data-reveal='armed'] [data-reveal]:not([data-in]) {
+  opacity: 0;
+  transform: translate3d(0, 48px, 0);
+}
+
+/* Word-by-word scroll highlight (see components/motion/ScrubWords.tsx). */
+[data-scrub='armed'] [data-word] {
+  color: rgba(243, 245, 255, 0.16);
+  transition: color 0.4s var(--ease-out);
+}
+
+[data-scrub='armed'] [data-word][data-lit] {
+  color: inherit;
+}
+
+/* Pause decorative loops while their section is off screen. */
+[data-offscreen] *,
+[data-offscreen] *::before,
+[data-offscreen] *::after {
+  animation-play-state: paused !important;
+}

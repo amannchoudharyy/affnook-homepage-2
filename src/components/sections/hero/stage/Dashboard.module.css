@@ -85,16 +85,6 @@
   white-space: nowrap;
 }
 
-.sample {
-  display: flex;
-  flex: none;
-  align-items: center;
-  gap: 8px;
-  color: var(--color-text-muted);
-  font-weight: var(--weight-demibold);
-  white-space: nowrap;
-}
-
 .livePill {
   display: inline-flex;
   flex: none;
@@ -106,6 +96,11 @@
   color: var(--color-accent-mint);
   font-weight: var(--weight-demibold);
   line-height: 1.2;
+}
+
+.samplePill {
+  flex: none;
+  white-space: nowrap;
 }
 
 .livePill[data-outlined] {
@@ -544,7 +539,7 @@
     font-size: 12px;
   }
 
-  .sample > span:first-child {
+  .samplePill {
     font-size: 12px;
   }
 }

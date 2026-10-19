@@ -73,9 +73,15 @@ export function CountUp({ delay = 0, duration = 1700, className, ...count }: Cou
     };
   }, [value, decimals, prefix, suffix, delay, duration]);
 
+  const final = formatCount(count);
   return (
-    <span ref={ref} className={className}>
-      {formatCount(count)}
+    // Reserve the final width so intermediate values never re-wrap neighbours (no CLS).
+    <span
+      ref={ref}
+      className={className}
+      style={{ display: 'inline-block', minWidth: `${final.length}ch` }}
+    >
+      {final}
     </span>
   );
 }

@@ -10,6 +10,13 @@ import { ROUTES } from './fixtures';
  */
 const WIDTHS = [320, 390, 768, 1024, 1440, 1920, 2560];
 const OUT = `.screenshots-local/${process.env.SCREENSHOT_SET ?? 'review'}`;
+/** Section close-ups at the Figma width (1512px): CSS selector → file suffix. */
+const SECTIONS: [string, string][] = [
+  ['#product-stage', 'stage'],
+  ['main section[aria-labelledby="logos-title"]', 'logos'],
+  ['main section[aria-labelledby^="problem-title"]', 'problem'],
+  ['main section[aria-labelledby^="stakes-title"]', 'stakes'],
+];
 
 test.skip(!process.env.SCREENSHOTS, 'Set SCREENSHOTS=1 to capture review screenshots');
 test.skip(({ isMobile }) => isMobile, 'Desktop project only');
@@ -24,14 +31,19 @@ for (const route of ROUTES) {
     });
   }
 
-  test(`capture ${route.id} stage @ 1512 (Figma width)`, async ({ page }) => {
+  test(`capture ${route.id} sections @ 1512 (Figma width)`, async ({ page }) => {
     await page.setViewportSize({ width: 1512, height: 982 });
     await page.goto(route.path, { waitUntil: 'networkidle' });
-    const stage = page.locator('main figure');
-    await stage.scrollIntoViewIfNeeded();
-    await page.screenshot({
-      path: `${OUT}/${route.id}-stage-1512.png`,
-      clip: { x: 0, y: (await stage.boundingBox())!.y, width: 1512, height: 840 },
-    });
+    for (const [selector, name] of SECTIONS) {
+      const el = page.locator(selector);
+      await el.scrollIntoViewIfNeeded();
+      const box = (await el.boundingBox())!;
+      // Full-viewport-width clip: the product stage intentionally extends past its figure box.
+      await page.screenshot({
+        path: `${OUT}/${route.id}-${name}-1512.png`,
+        fullPage: true,
+        clip: { x: 0, y: box.y, width: 1512, height: box.height },
+      });
+    }
   });
 }

@@ -1,5 +1,8 @@
 import { AudienceSwapReset } from '@/components/audience/AudienceSwapReset';
 import { Hero } from '@/components/sections/hero/Hero';
+import { LogosAwards } from '@/components/sections/logos/LogosAwards';
+import { Problem } from '@/components/sections/problem/Problem';
+import { Stakes } from '@/components/sections/stakes/Stakes';
 import { getAudience, type AudienceId } from '@/content/audiences';
 
 /**
@@ -14,6 +17,9 @@ export function AudienceHomePage({ audience: id }: { audience: AudienceId }) {
     <main id="main" tabIndex={-1}>
       <AudienceSwapReset />
       <Hero audience={audience} />
+      <LogosAwards />
+      <Problem audience={audience.id} />
+      <Stakes audience={audience.id} />
     </main>
   );
 }

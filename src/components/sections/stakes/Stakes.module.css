@@ -1,0 +1,122 @@
+/* Figma "Stakes" (1512×820, sunken background, red glow at the top). */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(72px, 9vw, 120px) 0 clamp(64px, 6vw, 80px);
+  border-top: 1px solid var(--color-line-default);
+  background: var(--color-bg-sunken);
+}
+
+.glow {
+  position: absolute;
+  top: -320px;
+  left: calc(50% - 630px);
+  width: 1260px;
+  height: 720px;
+  background: url('/images/glow-error-section.svg') center / 100% 100% no-repeat;
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: calc(var(--container-max) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.inner > h2 {
+  max-width: 1000px;
+  margin-top: 20px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 48px;
+  width: 100%;
+  margin: clamp(48px, 5vw, 74px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stat {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 36px;
+  border-top: 1px solid var(--color-line-strong);
+}
+
+.rule {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 120px;
+  height: 2px;
+  background: var(--tone);
+  transform-origin: left center;
+}
+
+.value {
+  color: var(--color-text-primary);
+  font-size: clamp(4rem, 2.6rem + 4.4vw, 6rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.text {
+  max-width: 380px;
+  color: var(--color-text-secondary);
+  font-size: clamp(1.0625rem, 0.95rem + 0.45vw, 1.25rem);
+  line-height: 1.5;
+}
+
+.source {
+  color: var(--color-text-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.footnote {
+  margin: 40px 0 0;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Rules draw left → right as each stat is revealed. */
+  :global([data-reveal='armed']) .stat .rule {
+    transition: transform 1.4s var(--ease-out) calc(var(--d, 0ms) + 200ms);
+  }
+
+  :global([data-reveal='armed']) .stat:not([data-in]) .rule {
+    transform: scaleX(0);
+  }
+}
+
+@media (max-width: 1023.98px) {
+  .stats {
+    gap: 32px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .stats {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  .stat {
+    padding-top: 28px;
+  }
+}

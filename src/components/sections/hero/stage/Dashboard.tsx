@@ -32,12 +32,11 @@ export function DashboardWindow({
           <i />
         </span>
         <span className={styles.url}>{shell.url}</span>
-        <span className={styles.sample}>
-          <span>Sample data</span>
-          <span className={styles.livePill}>
-            <i className={styles.ping} />
-            Live
-          </span>
+        {/* Figma pairs "Sample data" with a "Live" pill; a single label avoids implying the
+            figures are real-time customer data. */}
+        <span className={`${styles.livePill} ${styles.samplePill}`}>
+          <i className={styles.ping} />
+          Sample data
         </span>
       </div>
       <div className={styles.body}>
@@ -151,11 +150,12 @@ export function FloatCard({
   );
 }
 
+/** Badge for the simulated feeds ("Live" in Figma; worded so it is not mistaken for real data). */
 export function LiveBadge({ outlined = false }: { outlined?: boolean }) {
   return (
     <span className={styles.livePill} data-outlined={outlined || undefined}>
       <i className={styles.ping} />
-      Live
+      Demo feed
     </span>
   );
 }

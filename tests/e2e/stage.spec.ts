@@ -38,7 +38,7 @@ for (const stage of STAGES) {
       page,
     }) => {
       await page.goto(stage.path);
-      const figure = page.locator('main figure');
+      const figure = page.locator('#product-stage');
       await expect(figure).toHaveCount(1);
       await expect(figure.locator('figcaption')).toHaveText(stage.caption);
       await expect(figure.locator('figcaption')).toHaveText(/Illustrative data/);
@@ -57,7 +57,7 @@ for (const stage of STAGES) {
 test.describe('stage motion', () => {
   test('KPI count-ups finish on the exact Figma values', async ({ page }) => {
     await page.goto('/');
-    const figure = page.locator('main figure');
+    const figure = page.locator('#product-stage');
     await page.waitForTimeout(3500);
     for (const value of ['$1.24M', '3,482', '21,760', '12,906']) {
       await expect(figure.getByText(value, { exact: true }).first()).toBeVisible();
@@ -67,7 +67,7 @@ test.describe('stage motion', () => {
   test('live activity inserts new rows while visible and keeps five rows', async ({ page }) => {
     await page.goto('/');
     const feed = page
-      .locator('main figure [class*="floatCard"]', { hasText: 'Live activity' })
+      .locator('#product-stage [class*="floatCard"]', { hasText: 'Live activity' })
       .locator('ul');
     // The cards bob continuously, so scroll via the DOM rather than waiting for stability.
     await feed.evaluate((el) => el.scrollIntoView({ block: 'center' }));
@@ -81,7 +81,7 @@ test.describe('stage motion', () => {
   test('postback log rotates on the networks dashboard', async ({ page }) => {
     await page.goto('/affiliate-networks');
     const log = page
-      .locator('main figure [class*="floatCard"]', { hasText: 'Postback log' })
+      .locator('#product-stage [class*="floatCard"]', { hasText: 'Postback log' })
       .locator('ul');
     await log.evaluate((el) => el.scrollIntoView({ block: 'center' }));
     const first = await log.locator('li').first().textContent();
@@ -94,7 +94,7 @@ test.describe('stage motion', () => {
   test('stage is marked off screen when scrolled away (animations pause)', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 600 });
     await page.goto('/');
-    const region = page.locator('main figure > div');
+    const region = page.locator('#product-stage > div');
     await region.scrollIntoViewIfNeeded();
     await expect(region).not.toHaveAttribute('data-offscreen');
     await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
@@ -107,14 +107,14 @@ test.describe('stage with reduced motion', () => {
 
   test('shows final values, no feed rotation and no scroll-linked transforms', async ({ page }) => {
     await page.goto('/');
-    const figure = page.locator('main figure');
+    const figure = page.locator('#product-stage');
     await expect(figure.getByText('$1.24M', { exact: true }).first()).toBeVisible();
     const feed = figure.locator('[class*="floatCard"]', { hasText: 'Live activity' }).locator('ul');
     const before = await feed.textContent();
     await page.waitForTimeout(3200);
     expect(await feed.textContent()).toBe(before);
     const animations = await page.evaluate(() =>
-      [...document.querySelectorAll('main figure *')]
+      [...document.querySelectorAll('#product-stage *')]
         .map((el) => getComputedStyle(el).animationName)
         .filter((name) => name !== 'none'),
     );
@@ -127,7 +127,7 @@ test.describe('stage without JavaScript', () => {
 
   test('dashboard content renders statically with final values', async ({ page }) => {
     await page.goto('/brands');
-    const figure = page.locator('main figure');
+    const figure = page.locator('#product-stage');
     await expect(figure.getByText('Player journey by partner')).toBeVisible();
     await expect(figure.getByText('42,610', { exact: true })).toBeVisible();
     await expect(figure.getByText('$182,400', { exact: true })).toBeVisible();
@@ -150,7 +150,7 @@ test.describe('stage responsive layout', () => {
         await page.waitForTimeout(2600);
         const problems = await page.evaluate(() => {
           const vw = document.documentElement.clientWidth;
-          const figure = document.querySelector('main figure')!;
+          const figure = document.querySelector('#product-stage')!;
           const boxes = [
             ...figure.querySelectorAll<HTMLElement>('[class*="window"], [class*="floatCard"]'),
           ].map((el) => el.getBoundingClientRect());

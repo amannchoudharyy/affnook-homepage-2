@@ -1,0 +1,190 @@
+/* Figma "Logos + awards" (1512×360). */
+
+.section {
+  padding: 40px 0 24px;
+  text-align: center;
+}
+
+.heading {
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+  color: var(--color-text-muted);
+  font: var(--weight-demibold) 12px/1.5 var(--font-body);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.marquee {
+  position: relative;
+  overflow: hidden;
+  margin-top: 38px;
+  /* Figma "Fade left/right": 200px fades into the background at each edge. */
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 min(200px, 15%),
+    #000 calc(100% - min(200px, 15%)),
+    transparent
+  );
+}
+
+.track {
+  display: flex;
+  width: max-content;
+}
+
+.set {
+  display: flex;
+  align-items: center;
+  gap: 72px;
+  margin: 0;
+  padding: 0 72px 0 0;
+  list-style: none;
+  color: rgba(122, 132, 176, 0.75);
+  font: var(--weight-demibold) 28px/1.2 var(--font-display);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.awards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin: 24px 0 0;
+  padding: 0 var(--gutter);
+  list-style: none;
+}
+
+.award {
+  display: grid;
+  gap: 14px;
+  width: 212px;
+  padding: 12px;
+  border: 1px solid var(--color-line-strong);
+  border-radius: 18px;
+  background: rgba(10, 22, 56, 0.9);
+  text-align: left;
+}
+
+.logoCard {
+  display: grid;
+  place-items: center;
+  height: 108px;
+  border-radius: 12px;
+  background: #f6f7fb;
+}
+
+.logoCard img {
+  width: auto;
+  height: 80px;
+  object-fit: contain;
+}
+
+.caption {
+  display: grid;
+  gap: 2px;
+  padding: 0 6px 4px;
+}
+
+.caption strong {
+  color: var(--color-text-primary);
+  font-size: 15px;
+  font-weight: var(--weight-demibold);
+  letter-spacing: -0.01em;
+}
+
+.caption span {
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :global(html.js) .track {
+    animation: marquee 40s linear infinite;
+  }
+
+  .marquee:hover .track {
+    animation-play-state: paused;
+  }
+}
+
+/* Reduced motion or no JavaScript: a static, wrapping row — every name visible. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    mask-image: none;
+  }
+
+  .track {
+    width: auto;
+    justify-content: center;
+    padding-inline: var(--gutter);
+  }
+
+  .set {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px 40px;
+    padding: 0;
+    white-space: normal;
+  }
+
+  .set[aria-hidden='true'] {
+    display: none;
+  }
+}
+
+:global(html:not(.js)) .marquee {
+  mask-image: none;
+}
+
+:global(html:not(.js)) .track {
+  width: auto;
+  justify-content: center;
+  padding-inline: var(--gutter);
+}
+
+:global(html:not(.js)) .set {
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px 40px;
+  padding: 0;
+  white-space: normal;
+}
+
+:global(html:not(.js)) .set[aria-hidden='true'] {
+  display: none;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 767.98px) {
+  .marquee {
+    margin-top: 28px;
+  }
+
+  .set {
+    gap: 48px;
+    padding-right: 48px;
+    /* At 22px the wordmarks are "normal" text for WCAG; Figma's 75% muted is 3.49:1, the
+       solid muted colour is 5.3:1. (At 28px on larger screens the Figma value passes.) */
+    color: var(--color-text-muted);
+    font-size: 22px;
+  }
+
+  .award {
+    width: min(212px, calc(50% - 7px));
+  }
+
+  .logoCard {
+    height: 92px;
+  }
+
+  .logoCard img {
+    height: 64px;
+  }
+}
