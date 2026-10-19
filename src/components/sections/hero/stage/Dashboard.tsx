@@ -25,20 +25,7 @@ export function DashboardWindow({
 }) {
   return (
     <div className={`${styles.window} ${className ?? ''}`}>
-      <div className={styles.chrome}>
-        <span className={styles.lights} aria-hidden="true">
-          <i />
-          <i />
-          <i />
-        </span>
-        <span className={styles.url}>{shell.url}</span>
-        {/* Figma pairs "Sample data" with a "Live" pill; a single label avoids implying the
-            figures are real-time customer data. */}
-        <span className={`${styles.livePill} ${styles.samplePill}`}>
-          <i className={styles.ping} />
-          Sample data
-        </span>
-      </div>
+      <WindowChrome url={shell.url} />
       <div className={styles.body}>
         <Sidebar shell={shell} />
         <div className={styles.main}>
@@ -53,6 +40,26 @@ export function DashboardWindow({
           {children}
         </div>
       </div>
+    </div>
+  );
+}
+
+/** Window title bar: traffic lights, URL and a single "Sample data" label. */
+export function WindowChrome({ url }: { url: string }) {
+  return (
+    <div className={styles.chrome}>
+      <span className={styles.lights} aria-hidden="true">
+        <i />
+        <i />
+        <i />
+      </span>
+      <span className={styles.url}>{url}</span>
+      {/* Figma pairs "Sample data" with a "Live" pill; a single label avoids implying the
+          figures are real-time customer data. */}
+      <span className={`${styles.livePill} ${styles.samplePill}`}>
+        <i className={styles.ping} />
+        Sample data
+      </span>
     </div>
   );
 }

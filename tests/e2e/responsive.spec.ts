@@ -7,9 +7,7 @@ test.skip(({ isMobile }) => isMobile, 'Width matrix runs in the desktop project 
 
 for (const route of ROUTES) {
   for (const width of QA_WIDTHS) {
-    test(`${route.path} at ${width}px: no overflow or clipped header/hero content`, async ({
-      page,
-    }) => {
+    test(`${route.path} at ${width}px: no overflow or clipped content`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(route.path);
       await page.waitForTimeout(1800); // entrance animations settle
@@ -27,6 +25,8 @@ for (const route of ROUTES) {
         const clipped = selectors.flatMap((sel) =>
           [...document.querySelectorAll<HTMLElement>(sel)]
             .filter((el) => el.offsetParent !== null)
+            // Carousel slides waiting off screen inside their scroller are clipped by design.
+            .filter((el) => !el.closest('[data-slide]:not([data-active])'))
             .map((el) => ({ sel, r: el.getBoundingClientRect() }))
             .filter(({ r }) => r.left < -0.5 || r.right > vw + 0.5)
             .map(({ sel, r }) => `${sel} [${Math.round(r.left)}, ${Math.round(r.right)}]`),

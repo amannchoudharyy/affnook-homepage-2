@@ -231,7 +231,11 @@ test.describe('section responsive layout', () => {
           const scope = 'main section:not([aria-labelledby="hero-title"])';
           const sel = ['article', 'li', 'figure', 'h2'].map((t) => `${scope} ${t}`).join(', ');
           const els = [...document.querySelectorAll<HTMLElement>(sel)].filter(
-            (el) => !el.closest('[aria-labelledby="logos-title"] ul') && el.offsetParent !== null,
+            (el) =>
+              !el.closest('[aria-labelledby="logos-title"] ul') &&
+              // Carousel slides waiting off screen inside their scroller are clipped by design.
+              !el.closest('[data-slide]:not([data-active])') &&
+              el.offsetParent !== null,
           );
           const outside = els
             .map((el) => el.getBoundingClientRect())

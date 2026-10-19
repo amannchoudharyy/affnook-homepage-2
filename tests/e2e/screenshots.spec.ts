@@ -18,6 +18,8 @@ const SECTIONS: [string, string][] = [
   ['main section[aria-labelledby^="stakes-title"]', 'stakes'],
   ['main section[aria-labelledby^="turn-title"]', 'turn'],
   ['main section[aria-labelledby^="mcp-title"]', 'mcp'],
+  ['main section[aria-labelledby^="proof-title"]', 'proof'],
+  ['main section[aria-labelledby^="how-title"]', 'how'],
 ];
 /** Narrow-width close-ups of the sections added in the current phase (reflow review). */
 const REFLOW: [string, string][] = SECTIONS.slice(-2);
@@ -52,9 +54,11 @@ for (const route of ROUTES) {
     await page.setViewportSize({ width: 1512, height: 982 });
     await page.goto(route.path, { waitUntil: 'networkidle' });
     for (const [selector, name] of SECTIONS) {
-      const el = page.locator(selector);
-      await el.scrollIntoViewIfNeeded();
-      const box = (await el.boundingBox())!;
+      // Page coordinates (a full-page clip ignores the current scroll position).
+      const box = await page.locator(selector).evaluate((el) => {
+        const r = el.getBoundingClientRect();
+        return { y: r.top + window.scrollY, height: r.height };
+      });
       // Full-viewport-width clip: the product stage intentionally extends past its figure box.
       await page.screenshot({
         path: `${OUT}/${route.id}-${name}-1512.png`,

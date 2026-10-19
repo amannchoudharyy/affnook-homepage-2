@@ -16,8 +16,9 @@ JavaScript. Interactivity and motion are added on top as small client components
 
 In development for QA/staging. Implemented for all three audiences: header and navigation,
 hero with the audience-specific product dashboards, logos + awards, problem, stakes, Turn
-("Affnook as your guide"), the Affnook MCP assistant demo and footer. Sections 7–13 (Proof, How it
-works, Customization, Testimonials, Objections + FAQ, Resources, Final CTA) are in progress. The live per-section status is in
+("Affnook as your guide"), the Affnook MCP assistant demo, Proof (case studies), How it works
+with capability tabs, and footer. Sections 9–13 (Customization, Testimonials, Objections + FAQ,
+Resources, Final CTA) are in progress. Staging deployment steps: [docs/deployment.md](docs/deployment.md). The live per-section status is in
 [docs/qa.md](docs/qa.md); see also [docs/architecture.md](docs/architecture.md) and
 [docs/decisions.md](docs/decisions.md).
 

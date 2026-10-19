@@ -1,7 +1,9 @@
 import { AudienceSwapReset } from '@/components/audience/AudienceSwapReset';
 import { Hero } from '@/components/sections/hero/Hero';
 import { Mcp } from '@/components/sections/mcp/Mcp';
+import { HowItWorks } from '@/components/sections/how/HowItWorks';
 import { LogosAwards } from '@/components/sections/logos/LogosAwards';
+import { Proof } from '@/components/sections/proof/Proof';
 import { Problem } from '@/components/sections/problem/Problem';
 import { Stakes } from '@/components/sections/stakes/Stakes';
 import { Turn } from '@/components/sections/turn/Turn';
@@ -24,6 +26,8 @@ export function AudienceHomePage({ audience: id }: { audience: AudienceId }) {
       <Stakes audience={audience.id} />
       <Turn audience={audience.id} />
       <Mcp audience={audience.id} />
+      <Proof audience={audience.id} />
+      <HowItWorks audience={audience.id} />
     </main>
   );
 }

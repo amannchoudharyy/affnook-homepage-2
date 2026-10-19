@@ -95,7 +95,8 @@ export const RESOURCE_FEATURE = {
   title: 'How Unicon365 grew NGR 200% across 9+ brands',
   text: 'Tracking, fraud checks and payouts in one Affnook dashboard.',
   cta: 'Read the story',
-  href: af('/success-stories-case-study'),
+  /** Unicon365 case study (page title "Online Casino Brand Case Study | Unicon365"). */
+  href: af('/customer-success-story-online-casino-brand/'),
 } as const;
 
 /* ------------------------------------------------------------------ footer */

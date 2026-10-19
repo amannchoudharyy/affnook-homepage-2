@@ -44,19 +44,22 @@ src/app/                      layout (header, footer, skip link, js flag), one p
 src/components/page/          AudienceHomePage — composes the sections in Figma order
 src/components/layout/        SiteHeader (HeaderShell, DesktopNav, MobileMenu), SiteFooter
 src/components/sections/      hero/ (+ stage/ product dashboards), logos/, problem/, stakes/,
-                              turn/, mcp/ (scripted assistant demo)
+                              turn/, mcp/ (scripted assistant demo), proof/ (case
+                              carousel, before/after slider), how/ (step explorer,
+                              flow diagram, capability tabs)
 src/components/audience/      AudienceSwitcher, AudienceLink, AudienceSwapReset
 src/components/motion/        client islands: CountUp, LiveFeed, MotionRegion, Reveal, ScrubWords,
                               StagedSequence
 src/components/ui/            ButtonLink, Eyebrow, SectionHeading, icons
 src/components/brand/         Logo, GiantLogo (path data from Figma)
 src/content/                  audiences, navigation, links, dashboards (sample data), sections,
-                              guide (Turn + MCP copy and demo data)
+                              guide (Turn + MCP), proof (cases), how (steps, tabs)
 src/lib/                      site/SEO helpers, audience transition, motion helpers
 ```
 
 Client components are limited to the files under `motion/`, `audience/`, the header shell, the
-dashboard feeds, the MCP assistant demo and the header menus; everything else renders on the server.
+dashboard feeds, the MCP assistant demo, the case carousel and slider, the step explorer, the capability tabs
+and the header menus; everything else renders on the server.
 
 ## Styling
 
