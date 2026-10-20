@@ -1,9 +1,11 @@
 # Staging deployment (Vercel)
 
-Status: **not deployed**. Nothing has been pushed to a remote or deployed. Items marked
-"owner" need an account, access or an approval the project does not have yet. Lighthouse
-has **not** been measured; it needs a deployed URL. Last pre-deployment audit: 2026-10-21
-(results in [qa.md](qa.md)).
+Status: **deployed to staging** on 2026-10-21 — https://affnook-homepage-staging.vercel.app
+(Vercel project `affnook-homepage-staging` on a personal Hobby account, connected to the
+GitHub repository `amannchoudharyy/affnook-homepage-2`, branch `main`). Not production: no
+custom domain, DNS or cutover. Pre-deployment audit, staging checks and Lighthouse results are
+in [qa.md](qa.md). Moving the repository and project to company-owned GitHub/Vercel accounts
+(Vercel's Hobby plan is for non-commercial use) is an open owner decision.
 
 ## 1. Prerequisites (owner)
 
@@ -109,8 +111,7 @@ braces`); `npm audit --omit=dev` reports 0 and runs in CI. Assessment in decisio
 shown disabled with a "coming soon" note), CRM (HubSpot/Salesforce), lead APIs, analytics and
 consent tooling. Components are structured so they can be added in the production phase.
 
-**Known limitations**: Lighthouse not yet measured; Safari/Firefox and real devices not yet
-tested; carousel controls and FAQ/tab switching need JavaScript (without it all content is
+**Known limitations**: Safari/Firefox and real devices not yet tested; carousel controls and FAQ/tab switching need JavaScript (without it all content is
 shown in full); headshot, logos, share image and favicon pending.
 
 ## 6. Rollback

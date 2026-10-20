@@ -238,7 +238,8 @@ test('unknown URLs get a branded 404 inside the site layout', async ({ page }) =
 
 test('if the JavaScript bundles fail to load, the no-JS layout takes over', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.route(/\/_next\/static\/chunks\/.*\.js/, (route) => route.abort());
+  // Local builds serve /_next/static/chunks/, Vercel /_next/static/immutable/chunks/.
+  await page.route(/\/_next\/static\/(immutable\/)?chunks\/.*\.js/, (route) => route.abort());
   await page.goto('/');
   await expect(page.locator('html')).not.toHaveClass(/(^|\s)js(\s|$)/);
   await expect(page.locator('header a[href="#site-footer"]')).toBeVisible();

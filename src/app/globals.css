@@ -177,9 +177,10 @@ html[data-audience-swap] main {
   transform: translate3d(0, 48px, 0);
 }
 
-/* Word-by-word scroll highlight (see components/motion/ScrubWords.tsx). */
+/* Word-by-word scroll highlight (see components/motion/ScrubWords.tsx). Words not yet lit
+   stay at 50% white (4.99:1 on the page background), so even dimmed text meets WCAG AA. */
 [data-scrub='armed'] [data-word] {
-  color: rgba(243, 245, 255, 0.16);
+  color: rgba(243, 245, 255, 0.5);
   transition: color 0.4s var(--ease-out);
 }
 
