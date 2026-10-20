@@ -166,7 +166,7 @@ export function CaseCarousel({ header, label, slides }: CaseCarouselProps) {
       className={styles.carousel}
       role="region"
       aria-roledescription="carousel"
-      aria-label={label}
+      aria-label={`Case studies: ${label}`}
     >
       <div className={styles.head}>
         {header}
@@ -175,8 +175,9 @@ export function CaseCarousel({ header, label, slides }: CaseCarouselProps) {
             type="button"
             className={styles.arrow}
             aria-label="Previous case study"
-            disabled={index === 0}
-            onClick={() => goTo(index - 1)}
+            // aria-disabled (not disabled) keeps keyboard focus on the button at either end.
+            aria-disabled={index === 0}
+            onClick={() => index > 0 && goTo(index - 1)}
           >
             <ArrowGlyph />
           </button>
@@ -184,8 +185,8 @@ export function CaseCarousel({ header, label, slides }: CaseCarouselProps) {
             type="button"
             className={styles.arrow}
             aria-label="Next case study"
-            disabled={index === last}
-            onClick={() => goTo(index + 1)}
+            aria-disabled={index === last}
+            onClick={() => index < last && goTo(index + 1)}
           >
             <ArrowGlyph flip />
           </button>

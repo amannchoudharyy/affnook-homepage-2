@@ -1,8 +1,9 @@
 /*
  * Design tokens.
  * Colour values are the Figma variables from file m9O0fqjhbMCf9BjfRuu1aC
- * (collection used by the three homepage frames). Spacing, radius and type
- * scale tokens are added as sections are implemented and measured in Figma.
+ * (collection used by the three homepage frames), plus accessibility variants of
+ * text/muted. Spacing, radius and type scales are not tokenised yet: modules use the
+ * values measured in Figma (see docs/architecture.md, "Styling").
  */
 
 :root {
@@ -30,6 +31,11 @@
   --color-text-primary: #f3f5ff;
   --color-text-secondary: #aeb6d9;
   --color-text-muted: #7a84b0;
+  /* Accessibility variants of Figma text/muted (#7A84B0 is 4.39-4.46:1 on raised surfaces and
+     below 4.5:1 over the hero glow). Components re-point --color-text-muted to these. */
+  --color-text-muted-raised: #7f89b5; /* >= 4.5:1 on bg-raised / bg-surface cards */
+  --color-text-muted-strong: #8b95c0; /* darkest raised windows (How it works stage) */
+  --color-text-muted-glow: #949dc6; /* small text over the hero glow */
   --color-text-on-light: #060a1f;
   --color-white: #ffffff;
 
@@ -65,9 +71,6 @@
   /* Motion (easing curves from the approved motion prototype) */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
-  --duration-fast: 150ms;
-  --duration-base: 300ms;
-  --duration-slow: 600ms;
 
   /* Focus */
   --focus-ring: 0 0 0 3px var(--color-brand-indigo-soft);

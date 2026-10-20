@@ -69,7 +69,7 @@ export function FaqExplorer({ categories }: FaqExplorerProps) {
         ))}
       </div>
 
-      <div className={styles.panels}>
+      <div>
         {categories.map((cat, c) => (
           <div
             key={cat.category}

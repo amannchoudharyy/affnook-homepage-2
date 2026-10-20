@@ -1,0 +1,80 @@
+/* 404 / error page: same tokens as the homepage, centred single column. */
+
+.main {
+  display: grid;
+  place-items: center;
+  min-height: min(100svh, 860px);
+  padding: calc(var(--header-offset) + var(--header-height) + 64px) var(--gutter) 96px;
+  background: var(--color-bg-base);
+  text-align: center;
+}
+
+.main:focus {
+  outline: none;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 640px;
+}
+
+.code {
+  margin: 0;
+  color: var(--color-accent-mint);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.12em;
+}
+
+.title {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem);
+  font-weight: var(--weight-demibold);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.text {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.audiences ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 24px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.audiences a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--color-text-secondary);
+  font-size: 15px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.audiences a:hover {
+  color: var(--color-text-primary);
+}

@@ -23,7 +23,10 @@ export function CapabilityTabs({ label, tabs }: CapabilityTabsProps) {
   const focusTab = (i: number) => {
     const next = (i + tabs.length) % tabs.length;
     setActive(next);
-    tabRefs.current[next]?.focus();
+    const tab = tabRefs.current[next];
+    tab?.focus();
+    // On phones the tab list scrolls sideways: bring the newly selected tab into view.
+    tab?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   };
 
   const onKeyDown = (event: KeyboardEvent<HTMLButtonElement>, i: number) => {

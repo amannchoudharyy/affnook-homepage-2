@@ -19,7 +19,7 @@ export function Mcp({ audience }: { audience: AudienceId }) {
   const titleId = `mcp-title-${audience}`;
 
   return (
-    <section className={styles.section} aria-labelledby={titleId}>
+    <section id="mcp" className={styles.section} aria-labelledby={titleId}>
       <div className={styles.glow} aria-hidden="true" />
       <Reveal className={styles.inner}>
         <AssistantDemo>

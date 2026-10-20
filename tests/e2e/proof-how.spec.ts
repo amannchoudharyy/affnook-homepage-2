@@ -50,7 +50,7 @@ const CASE_LINKS: Record<string, RegExp> = {
   Unicon365: /customer-success-story-online-casino-brand\/$/,
   Gamegram: /customer-success-story-gamegram\/$/,
   'Slot Bunny': /customer-success-story-slot-bunny\/$/,
-  'What Affnook runs today': /why-choose-affnook$/,
+  'What Affnook runs today': /why-choose-affnook\/$/,
 };
 
 const STEPS = [

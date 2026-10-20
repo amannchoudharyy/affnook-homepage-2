@@ -43,7 +43,7 @@ export function FlowDiagram() {
         </ul>
       </div>
 
-      <div className={`${styles.flowGap} ${styles.flowIn}`} aria-hidden="true">
+      <div className={styles.flowGap} aria-hidden="true">
         <svg viewBox="0 0 100 460" preserveAspectRatio="none" focusable="false">
           {IN_PATHS.map(([y0, y1]) => (
             <path key={y0} className={styles.flowLine} d={curve(y0, y1)} />
@@ -83,7 +83,7 @@ export function FlowDiagram() {
         </ul>
       </div>
 
-      <div className={`${styles.flowGap} ${styles.flowOut}`} aria-hidden="true">
+      <div className={styles.flowGap} aria-hidden="true">
         <svg viewBox="0 0 100 460" preserveAspectRatio="none" focusable="false">
           {OUT_Y.map((y) => (
             <path key={y} className={styles.flowLine} d={`M0 ${y} L100 ${y}`} />

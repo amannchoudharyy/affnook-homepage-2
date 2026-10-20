@@ -4,7 +4,7 @@
 .box {
   /* Same accessibility adjustment as the hero dashboards: Figma text/muted is 4.38:1 on
      the raised surfaces used here; this value reaches ≥4.69:1. */
-  --color-text-muted: #7f89b5;
+  --color-text-muted: var(--color-text-muted-raised);
 
   position: relative;
   overflow: hidden;

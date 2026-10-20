@@ -44,6 +44,8 @@ export function LiveFeed<T>({
   useEffect(() => {
     const list = listRef.current;
     if (!list || prefersReducedMotion() || rows.length <= visible) return;
+    // Very old browsers: keep the static rows rather than throwing.
+    if (typeof IntersectionObserver === 'undefined') return;
     let onScreen = false;
     let next = visible;
     let key = visible;

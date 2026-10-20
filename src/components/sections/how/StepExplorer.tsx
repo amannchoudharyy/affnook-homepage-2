@@ -13,6 +13,11 @@ interface StepExplorerProps {
   initial?: number;
 }
 
+/** Fixed header bottom edge plus a little air (px). */
+const HEADER_CLEARANCE = 104;
+/** Minimum scroll distance over which the four steps advance (px). */
+const MIN_RANGE = 400;
+
 /**
  * Four-step "How it works" explorer.
  *
@@ -41,8 +46,18 @@ export function StepExplorer({ layout, steps, windows, initial = 2 }: StepExplor
       if (manual.current || !desktop.matches) return;
       const rect = root.getBoundingClientRect();
       const vh = window.innerHeight;
-      // 0 when the block's top reaches 75% of the viewport, 1 when its bottom reaches 60%.
-      const progress = (vh * 0.75 - rect.top) / (rect.height + vh * 0.15);
+      // Step through the range where the block is (as near as possible) fully on screen:
+      // from its bottom meeting the viewport bottom to its top meeting the fixed header.
+      // At least MIN_RANGE px of scrolling, centred on that range, so each step gets time.
+      const bottomIn = vh - rect.height;
+      let start = Math.max(bottomIn, HEADER_CLEARANCE);
+      let end = Math.min(bottomIn, HEADER_CLEARANCE);
+      if (start - end < MIN_RANGE) {
+        const mid = (start + end) / 2;
+        start = mid + MIN_RANGE / 2;
+        end = mid - MIN_RANGE / 2;
+      }
+      const progress = (start - rect.top) / (start - end);
       const next = Math.max(0, Math.min(steps.length - 1, Math.floor(progress * steps.length)));
       setActive(next);
     };

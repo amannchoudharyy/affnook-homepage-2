@@ -25,7 +25,7 @@
 .floatCard {
   /* Accessibility: Figma's text/muted (#7A84B0) is 4.39–4.46:1 on the raised dashboard
      surfaces; this minimally lighter value reaches ≥4.69:1 (WCAG AA for 12–13px text). */
-  --color-text-muted: #7f89b5;
+  --color-text-muted: var(--color-text-muted-raised);
 }
 
 .window {
@@ -269,13 +269,16 @@
 }
 
 .kpi {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: space-between;
+  /* Label on its own row; value and delta always share the second row (Figma), so values
+     line up across the KPI row instead of the delta wrapping under some of them. */
+  display: grid;
+  /* 1fr value track: the spanning label then cannot inflate the delta column. */
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-content: start;
   align-items: center;
-  justify-content: space-between;
   gap: 14px 8px;
   min-height: var(--kpi-h, 92px);
+  container: kpi / inline-size;
   padding: 15px 17px;
   border: 1px solid var(--color-line-default);
   border-radius: 14px;
@@ -283,7 +286,7 @@
 }
 
 .kpiLabel {
-  flex-basis: 100%;
+  grid-column: 1 / -1;
   color: var(--color-text-muted);
   font-weight: var(--weight-demibold);
 }
@@ -298,7 +301,7 @@
 }
 
 .delta {
-  margin-left: auto;
+  justify-self: end;
   padding: 3px 8px;
   border-radius: var(--radius-pill);
   background: var(--tone-bg);
@@ -544,6 +547,19 @@
   }
 }
 
+/* Narrow KPI cards (e.g. 4 across at laptop widths): smaller value so value + delta fit. */
+@container kpi (max-width: 168px) {
+  .kpiValue {
+    font-size: 19px;
+    letter-spacing: -0.02em;
+  }
+
+  .delta {
+    padding: 2px 6px;
+    font-size: 12px;
+  }
+}
+
 /* ------------------------------------------------------------- container: main */
 
 @container main (max-width: 720px) {
@@ -560,7 +576,9 @@
     gap: 10px;
   }
 
+  /* Phones: every card stacks value above delta, so the cards still line up. */
   .kpi {
+    grid-template-columns: minmax(0, 1fr);
     gap: 10px 6px;
     padding: 13px 14px;
   }
@@ -570,7 +588,7 @@
   }
 
   .delta {
-    margin-left: 0;
+    justify-self: start;
   }
 
   .panel {

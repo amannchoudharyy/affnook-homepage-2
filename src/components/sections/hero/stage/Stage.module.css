@@ -63,13 +63,15 @@
   /* The stage spans the full viewport (up to the 1512px design width), not the gutter. */
   .stage {
     width: min(1512px, 100vw);
-    height: 780px;
+    /* Figma height, but grows if the window reflows taller (e.g. Networks at 1280-1454px),
+       so the dashboard is never cut off by the hero's bottom edge. */
+    min-height: 780px;
     margin-left: calc(50% - min(756px, 50vw));
   }
 
+  /* In flow (offset with left/width per audience) so the stage height follows the window. */
   .tilt {
-    position: absolute;
-    top: 0;
+    position: relative;
   }
 
   .floats {

@@ -148,6 +148,13 @@ test.describe('stage responsive layout', () => {
         await page.setViewportSize({ width, height: 900 });
         await page.goto(path);
         await page.waitForTimeout(2600);
+        // Measure layout, not the scroll-linked 3D tilt (decision C17): at the top of the page
+        // the tilted window's bottom corners project slightly past the edge, where the hero
+        // clips them, and they flatten as the page scrolls. Page scroll width is still checked.
+        await page.addStyleTag({
+          content:
+            '#product-stage [class*="tilt"] { animation: none !important; transform: none !important; }',
+        });
         const problems = await page.evaluate(() => {
           const vw = document.documentElement.clientWidth;
           const figure = document.querySelector('#product-stage')!;

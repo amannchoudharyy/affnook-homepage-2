@@ -51,12 +51,12 @@
     opacity 0.3s ease;
 }
 
-.arrow:hover:not(:disabled) {
+.arrow:hover:not([aria-disabled='true']) {
   border-color: #46579c;
   background: rgba(255, 255, 255, 0.08);
 }
 
-.arrow:disabled {
+.arrow[aria-disabled='true'] {
   cursor: default;
   opacity: 0.4;
 }
@@ -144,7 +144,8 @@
   width: 6px;
   height: 6px;
   border-radius: 3px;
-  background: rgba(122, 132, 176, 0.5);
+  /* Opaque mix so inactive dots reach 3:1 against the page (WCAG 1.4.11). */
+  background: color-mix(in srgb, var(--color-text-muted) 76%, var(--color-bg-base));
   transition:
     width 0.4s var(--ease-out),
     background-color 0.4s ease;
@@ -167,7 +168,7 @@
 /* -------------------------------------------------------------------- slide */
 
 .case {
-  --color-text-muted: #7f89b5;
+  --color-text-muted: var(--color-text-muted-raised);
 
   display: grid;
   grid-template-columns: minmax(0, 440px) minmax(0, 520px);

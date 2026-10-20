@@ -2,7 +2,10 @@
 
 .section {
   position: relative;
+  /* clip, not hidden: hidden creates a scroll container, which stops the Networks statement
+     from sticking to the viewport. `hidden` stays as the fallback for older browsers. */
   overflow: hidden;
+  overflow: clip;
   padding: clamp(72px, 9vw, 120px) 0;
 }
 
@@ -176,7 +179,7 @@
 }
 
 .funnel {
-  --color-text-muted: #7f89b5;
+  --color-text-muted: var(--color-text-muted-raised);
 
   display: flex;
   flex-direction: column;
@@ -407,7 +410,8 @@
     grid-template-areas: none;
   }
 
-  .brands .cards > * {
+  /* Same specificity as the nth-child placements above, so this reset wins. */
+  .brands .cards > :nth-child(n) {
     grid-area: auto;
   }
 

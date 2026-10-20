@@ -2,6 +2,7 @@ import { AudienceLink } from '@/components/audience/AudienceLink';
 import { GiantLogo } from '@/components/brand/GiantLogo';
 import { Logo } from '@/components/brand/Logo';
 import { FacebookIcon, InstagramIcon, LinkedInIcon, YouTubeIcon } from '@/components/ui/icons';
+import { NewTabHint } from '@/components/ui/NewTabHint';
 import { listAudiences } from '@/content/audiences';
 import type { NavLink } from '@/content/links';
 import { API_DOC_LINKS, FOOTER_COLUMNS, LEGAL_LINKS, SOCIAL_LINKS } from '@/content/navigation';
@@ -23,6 +24,7 @@ function FooterLink({ link }: { link: NavLink }) {
   return (
     <a href={link.href} target="_blank" rel="noopener">
       {link.label}
+      <NewTabHint />
     </a>
   );
 }

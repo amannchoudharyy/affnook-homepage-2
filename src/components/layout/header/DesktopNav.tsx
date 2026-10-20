@@ -36,6 +36,8 @@ export function DesktopNav({ dropdowns, links }: DesktopNavProps) {
   const navRef = useRef<HTMLElement>(null);
   const closeTimer = useRef<number | undefined>(undefined);
   const triggerRefs = useRef(new Map<string, HTMLButtonElement>());
+  /** Panel opened by mouse hover: the click that usually follows must not toggle it shut. */
+  const hoverOpened = useRef<string | null>(null);
   const { setDropdownOpen } = useHeader();
   const baseId = useId();
 
@@ -106,6 +108,7 @@ export function DesktopNav({ dropdowns, links }: DesktopNavProps) {
               onPointerEnter={(event) => {
                 if (event.pointerType !== 'mouse' || !hasFinePointer()) return;
                 cancelClose();
+                hoverOpened.current = item.id;
                 setOpenId(item.id);
               }}
               onPointerLeave={(event) => {
@@ -122,7 +125,14 @@ export function DesktopNav({ dropdowns, links }: DesktopNavProps) {
                 className={styles.navTrigger}
                 aria-expanded={open}
                 aria-controls={panelId}
-                onClick={() => setOpenId(open ? null : item.id)}
+                onClick={(event) => {
+                  // A mouse click on a panel the pointer has just opened keeps it open;
+                  // keyboard activation (detail 0) and later clicks toggle as usual.
+                  const keepHoverOpen = event.detail > 0 && hoverOpened.current === item.id;
+                  hoverOpened.current = null;
+                  if (keepHoverOpen) return setOpenId(item.id);
+                  setOpenId(open ? null : item.id);
+                }}
               >
                 {item.label}
                 <ChevronDownIcon className={styles.chevron} />

@@ -4,7 +4,7 @@
   "private": true,
   "description": "Affnook marketing homepage with Operators, Brands and Affiliate Networks audience variants.",
   "engines": {
-    "node": ">=22.13.0"
+    "node": "22.x"
   },
   "scripts": {
     "dev": "next dev",

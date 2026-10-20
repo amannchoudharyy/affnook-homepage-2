@@ -167,7 +167,7 @@
 }
 
 .window {
-  --color-text-muted: #7f89b5;
+  --color-text-muted: var(--color-text-muted-raised);
 
   container-type: inline-size;
   display: flex;

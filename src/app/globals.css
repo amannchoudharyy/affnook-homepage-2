@@ -8,6 +8,8 @@
 
 html {
   color-scheme: dark;
+  /* Anchor jumps and focus scrolling stop below the fixed header (WCAG 2.4.11). */
+  scroll-padding-top: calc(var(--header-offset) + var(--header-height) + 16px);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }

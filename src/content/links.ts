@@ -27,7 +27,7 @@ export const CTA_LINKS = {
   contactSales: af('/contact-sales/'),
   /** Product tour video. */
   takeTour: 'https://vimeo.com/1152140502/62c8d0ebe9',
-  whyAffnook: af('/why-choose-affnook'),
+  whyAffnook: af('/why-choose-affnook/'),
   /** The prototype links "Pricing" to the contact-sales page; no separate pricing page exists. */
   pricing: af('/contact-sales/'),
   award: 'https://affpapa.com/affpapa-awards-2024/client-satisfaction-of-the-year/',

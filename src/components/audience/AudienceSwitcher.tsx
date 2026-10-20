@@ -5,7 +5,12 @@ import { useLayoutEffect, useRef, useState, type CSSProperties, type MouseEvent 
 
 import { AudienceIcon } from '@/components/ui/icons';
 import { listAudiences, type AudienceId } from '@/content/audiences';
-import { isModifiedClick, useAudienceNavigation } from '@/lib/audience-transition';
+import {
+  cancelAudienceSwap,
+  isModifiedClick,
+  rememberKeyboardSwitch,
+  useAudienceNavigation,
+} from '@/lib/audience-transition';
 
 import styles from './AudienceSwitcher.module.css';
 
@@ -36,6 +41,7 @@ export function AudienceSwitcher({ current, labelledBy }: AudienceSwitcherProps)
       if (active) setIndicator({ x: active.offsetLeft, w: active.offsetWidth });
     };
     measure();
+    if (typeof ResizeObserver === 'undefined') return;
     const observer = new ResizeObserver(measure);
     observer.observe(list);
     return () => observer.disconnect();
@@ -44,8 +50,11 @@ export function AudienceSwitcher({ current, labelledBy }: AudienceSwitcherProps)
   function handleClick(event: MouseEvent<HTMLAnchorElement>, id: AudienceId, href: string) {
     if (isModifiedClick(event)) return;
     event.preventDefault();
-    if (id === current) return;
     setSelected(id);
+    // Back to the audience on screen while a swap is still fading out: cancel that swap.
+    if (id === current) return cancelAudienceSwap();
+    // Keyboard activation (detail 0): put focus back on this switcher on the new page.
+    if (event.detail === 0) rememberKeyboardSwitch(id);
     navigate(href);
   }
 

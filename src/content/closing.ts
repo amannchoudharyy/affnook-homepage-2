@@ -281,7 +281,7 @@ const R = {
 export const RESOURCES_COPY = {
   eyebrow: 'Resources',
   headline: 'Read before you decide.',
-  all: { label: 'All resources', href: affnookUrl('/blog') },
+  all: { label: 'All resources', href: affnookUrl('/blog/') },
 } as const;
 
 type ResourceSpec = { tag: string; key: keyof typeof R };

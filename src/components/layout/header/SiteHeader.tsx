@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import { Logo } from '@/components/brand/Logo';
 import { ButtonLink } from '@/components/ui/Button';
+import { NewTabHint } from '@/components/ui/NewTabHint';
 import { CTA_LINKS } from '@/content/links';
 import { PLATFORM_FEATURE, PLATFORM_GROUPS, RESOURCE_GROUPS } from '@/content/navigation';
 
@@ -22,6 +23,7 @@ function ExternalNavLink({ href, children }: { href: string; children: string })
     <li>
       <a className={styles.navLink} href={href} target="_blank" rel="noopener">
         {children}
+        <NewTabHint />
       </a>
     </li>
   );
@@ -61,6 +63,7 @@ export function SiteHeader() {
             rel="noopener"
           >
             Contact sales
+            <NewTabHint />
           </a>
           <ButtonLink href={CTA_LINKS.bookDemo} size="nav" className={styles.navCta}>
             Book a free demo
@@ -96,9 +99,11 @@ export function SiteHeader() {
           <>
             <a className={styles.mmLink} href={CTA_LINKS.whyAffnook} target="_blank" rel="noopener">
               Why Affnook
+              <NewTabHint />
             </a>
             <a className={styles.mmLink} href={CTA_LINKS.pricing} target="_blank" rel="noopener">
               Pricing
+              <NewTabHint />
             </a>
             <div className={styles.mmCtas}>
               <ButtonLink href={CTA_LINKS.bookDemo} block>

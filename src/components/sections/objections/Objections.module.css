@@ -8,7 +8,7 @@
 }
 
 .inner {
-  --color-text-muted: #7f89b5;
+  --color-text-muted: var(--color-text-muted-raised);
 
   position: relative;
   width: 100%;
@@ -178,7 +178,8 @@
 }
 
 .category[aria-selected='true'] {
-  border-color: var(--color-line-strong);
+  /* Accent border: the selected state needs a 3:1 indicator (WCAG 1.4.11). */
+  border-color: var(--color-brand-indigo-soft);
   background: rgba(255, 255, 255, 0.06);
   color: var(--color-text-primary);
 }

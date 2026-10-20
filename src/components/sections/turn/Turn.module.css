@@ -70,7 +70,7 @@
 /* Raised surfaces: muted text lightened to keep ≥4.5:1 (see docs/decisions.md). */
 .chat,
 .uptime {
-  --color-text-muted: #7f89b5;
+  --color-text-muted: var(--color-text-muted-raised);
 }
 
 .chat {

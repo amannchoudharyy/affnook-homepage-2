@@ -21,7 +21,8 @@
   }
 }
 
-/* Letters rise into view as the footer scrolls in (staggered per letter). */
+/* Letters rise into view as the footer scrolls in (staggered per letter). Ranges end within
+   the entry phase, which always completes at the bottom of the page, so no letter stays sunk. */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .letter {
@@ -30,31 +31,31 @@
     }
 
     .letter:nth-child(1) {
-      animation-range: entry 0% cover 30%;
+      animation-range: entry 0% entry 70%;
     }
 
     .letter:nth-child(2) {
-      animation-range: entry 5% cover 33%;
+      animation-range: entry 5% entry 75%;
     }
 
     .letter:nth-child(3) {
-      animation-range: entry 10% cover 36%;
+      animation-range: entry 10% entry 80%;
     }
 
     .letter:nth-child(4) {
-      animation-range: entry 15% cover 39%;
+      animation-range: entry 15% entry 85%;
     }
 
     .letter:nth-child(5) {
-      animation-range: entry 20% cover 42%;
+      animation-range: entry 20% entry 90%;
     }
 
     .letter:nth-child(6) {
-      animation-range: entry 25% cover 45%;
+      animation-range: entry 25% entry 95%;
     }
 
     .letter:nth-child(7) {
-      animation-range: entry 30% cover 48%;
+      animation-range: entry 30% entry 100%;
     }
   }
 }

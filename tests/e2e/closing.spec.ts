@@ -100,7 +100,7 @@ test.describe('closing sections content', () => {
       }
       await expect(res.getByRole('link', { name: /All resources/ })).toHaveAttribute(
         'href',
-        /affnook\.com\/blog$/,
+        /affnook\.com\/blog\/$/,
       );
 
       const cta = section(page, 'cta');

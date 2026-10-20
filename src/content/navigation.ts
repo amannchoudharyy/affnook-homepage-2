@@ -57,7 +57,7 @@ export const PLATFORM_GROUPS: readonly LinkGroup[] = [
   },
 ];
 
-/** Featured promo in the Platform dropdown; links to the MCP section once it exists. */
+/** Featured promo in the Platform dropdown; links to the MCP section (`#mcp`) on the current page. */
 export const PLATFORM_FEATURE = {
   badge: 'New',
   title: 'Affnook MCP.',
@@ -70,8 +70,8 @@ export const RESOURCE_GROUPS: readonly LinkGroup[] = [
   {
     heading: 'Learn',
     links: [
-      { label: 'Blogs', href: af('/blog') },
-      { label: 'Guides', href: af('/guides') },
+      { label: 'Blogs', href: af('/blog/') },
+      { label: 'Guides', href: af('/guides/') },
       { label: 'Industry reports', href: af('/industry-reports/') },
       { label: 'Whitepapers', href: af('/whitepapers/') },
       { label: 'Glossary', href: af('/glossary/') },
@@ -80,12 +80,12 @@ export const RESOURCE_GROUPS: readonly LinkGroup[] = [
   {
     heading: 'Explore',
     links: [
-      { label: 'Case studies', href: af('/success-stories-case-study') },
+      { label: 'Case studies', href: af('/success-stories-case-study/') },
       { label: 'Ask Affnook', href: af('/ask-affnook/') },
-      { label: 'News & events', href: af('/news-events') },
+      { label: 'News & events', href: af('/news-events/') },
       { label: 'Checklists', href: af('/igaming-checklist/') },
-      { label: 'Product updates', href: af('/product-updates') },
-      { label: 'Compare us', href: af('/compare-us') },
+      { label: 'Product updates', href: af('/product-updates/') },
+      { label: 'Compare us', href: af('/compare-us/') },
     ],
   },
 ];
@@ -121,22 +121,22 @@ export const FOOTER_COLUMNS: readonly FooterColumn[] = [
   {
     heading: 'Resources',
     links: [
-      { label: 'Blog', href: af('/blog') },
-      { label: 'Guides', href: af('/guides') },
+      { label: 'Blog', href: af('/blog/') },
+      { label: 'Guides', href: af('/guides/') },
       { label: 'Industry reports', href: af('/industry-reports/') },
-      { label: 'Case studies', href: af('/success-stories-case-study') },
-      { label: 'Glossary', href: af('/glossary') },
-      { label: 'Compare us', href: af('/compare-us') },
+      { label: 'Case studies', href: af('/success-stories-case-study/') },
+      { label: 'Glossary', href: af('/glossary/') },
+      { label: 'Compare us', href: af('/compare-us/') },
     ],
   },
   {
     heading: 'Company',
     links: [
-      { label: 'Why Affnook', href: af('/why-choose-affnook') },
+      { label: 'Why Affnook', href: af('/why-choose-affnook/') },
       { label: 'About us', href: af('/about/') },
       { label: 'Contact sales', href: af('/contact-sales/') },
       { label: '24/7 support', href: af('/24-7-support/') },
-      { label: 'Product updates', href: af('/product-updates') },
+      { label: 'Product updates', href: af('/product-updates/') },
       { label: 'Career', href: af('/career/') },
     ],
   },
@@ -158,9 +158,12 @@ export const SOCIAL_LINKS = [
   { network: 'youtube', label: 'YouTube', href: 'https://www.youtube.com/@Affnook' },
 ] as const;
 
+/* Live pages as of 2026-10-21: /billing-policy and /terms-of-service return 404 (although still
+   in affnook.com's sitemap); the published pages are /payment-policy/ ("Billing policy") and
+   /terms-of-use/ ("Terms of Service"). Owner to confirm the slugs. */
 export const LEGAL_LINKS: readonly ExternalLink[] = [
-  { label: 'Billing policy', href: af('/billing-policy') },
-  { label: 'Privacy policy', href: af('/privacy-policy') },
-  { label: 'Terms', href: af('/terms-of-service') },
-  { label: 'GDPR · CCPA', href: af('/gdpr-ccpa-compliance') },
+  { label: 'Billing policy', href: af('/payment-policy/') },
+  { label: 'Privacy policy', href: af('/privacy-policy/') },
+  { label: 'Terms', href: af('/terms-of-use/') },
+  { label: 'GDPR · CCPA', href: af('/gdpr-ccpa-compliance/') },
 ];

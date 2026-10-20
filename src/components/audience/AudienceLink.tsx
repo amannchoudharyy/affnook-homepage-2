@@ -6,7 +6,11 @@ import type { ComponentProps, MouseEvent } from 'react';
 
 import { audienceFromPathname, audiencePath, isAudiencePath } from '@/content/audience-routes';
 import type { AudienceId } from '@/content/audiences';
-import { isModifiedClick, useAudienceNavigation } from '@/lib/audience-transition';
+import {
+  cancelAudienceSwap,
+  isModifiedClick,
+  useAudienceNavigation,
+} from '@/lib/audience-transition';
 
 type AudienceLinkProps = Omit<ComponentProps<typeof Link>, 'href'> & {
   audience: AudienceId;
@@ -30,6 +34,7 @@ export function AudienceLink({ audience, onNavigate, onClick, ...props }: Audien
     event.preventDefault();
     onNavigate?.();
     if (isCurrent) {
+      cancelAudienceSwap();
       window.scrollTo({ top: 0 });
       return;
     }

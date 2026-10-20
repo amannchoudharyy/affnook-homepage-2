@@ -8,7 +8,7 @@
 }
 
 .inner {
-  --color-text-muted: #7f89b5;
+  --color-text-muted: var(--color-text-muted-raised);
 
   position: relative;
   width: 100%;

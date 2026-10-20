@@ -20,12 +20,14 @@ jobs:
       SITE_ENV: staging
       SITE_URL: http://127.0.0.1:3100
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+      # Runtime dependencies only; the accepted dev-only advisory is documented in docs/decisions.md.
+      - run: npm audit --omit=dev --audit-level=high
       - run: npm run format:check
       - run: npm run lint
       - run: npm run typecheck
@@ -33,7 +35,7 @@ jobs:
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: playwright-report

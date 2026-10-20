@@ -1,12 +1,5 @@
 /* Shared section primitives (Figma "Eyebrow" and two-line section headings). */
 
-.container {
-  width: 100%;
-  max-width: calc(var(--container-max) + 2 * var(--gutter));
-  margin-inline: auto;
-  padding-inline: var(--gutter);
-}
-
 .eyebrow {
   display: inline-flex;
   align-items: center;

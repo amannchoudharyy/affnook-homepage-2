@@ -47,7 +47,7 @@ test.describe('turn and MCP content', () => {
       await expect(section.getByRole('heading', { level: 2 })).toHaveAccessibleName(copy.heading);
       await expect(section.getByRole('link', { name: new RegExp(copy.cta) })).toHaveAttribute(
         'href',
-        /affnook\.com\/why-choose-affnook$/,
+        /affnook\.com\/why-choose-affnook\/$/,
       );
       // Sample conversation: described for assistive tech, labelled as sample on screen.
       await expect(section.locator('figcaption')).toContainText(copy.question);

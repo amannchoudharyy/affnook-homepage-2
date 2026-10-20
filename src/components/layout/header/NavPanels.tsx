@@ -1,5 +1,6 @@
 import { AudienceLink } from '@/components/audience/AudienceLink';
 import { AudienceIcon } from '@/components/ui/icons';
+import { NewTabHint } from '@/components/ui/NewTabHint';
 import { AUDIENCES } from '@/content/audiences';
 import {
   PLATFORM_FEATURE,
@@ -22,6 +23,7 @@ function ExternalMenuLink({ href, label, index }: { href: string; label: string;
       rel="noopener"
     >
       {label}
+      <NewTabHint />
     </a>
   );
 }
@@ -31,7 +33,7 @@ function LinkColumns({ groups }: { groups: readonly LinkGroup[] }) {
   return (
     <>
       {groups.map((group) => (
-        <div key={group.heading} className={styles.menuColumn}>
+        <div key={group.heading}>
           <p className={styles.menuHeading}>{group.heading}</p>
           <ul className={styles.menuList}>
             {group.links.map((link) => (
@@ -113,6 +115,7 @@ export function ResourcesPanel() {
           <span className={styles.caseText}>{RESOURCE_FEATURE.text}</span>
         </span>
         <span className={styles.featureCta}>{RESOURCE_FEATURE.cta} →</span>
+        <NewTabHint />
       </a>
     </div>
   );
@@ -147,6 +150,7 @@ export function MobileGroupLinks({
           <li key={link.href}>
             <a className={styles.menuLink} href={link.href} target="_blank" rel="noopener">
               {link.label}
+              <NewTabHint />
             </a>
           </li>
         )),

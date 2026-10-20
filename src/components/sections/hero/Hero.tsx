@@ -1,4 +1,5 @@
 import { AudienceSwitcher } from '@/components/audience/AudienceSwitcher';
+import { MotionRegion } from '@/components/motion/MotionRegion';
 import { ButtonLink } from '@/components/ui/Button';
 import { ArrowUpRightIcon } from '@/components/ui/icons';
 import type { Audience } from '@/content/audiences';
@@ -16,7 +17,8 @@ import { ProductStage } from './stage/ProductStage';
 export function Hero({ audience }: { audience: Audience }) {
   return (
     <section className={styles.hero} aria-labelledby="hero-title">
-      <div className={styles.backdrop} aria-hidden="true">
+      {/* MotionRegion: the breathing glows pause while the hero is off screen. */}
+      <MotionRegion className={styles.backdrop} aria-hidden="true">
         <div className={styles.stage}>
           {/* Figma glow exports (blur baked into the SVG); decorative. */}
           {/* eslint-disable-next-line @next/next/no-img-element -- static decorative SVG */}
@@ -44,7 +46,7 @@ export function Hero({ audience }: { audience: Audience }) {
             height={640}
           />
         </div>
-      </div>
+      </MotionRegion>
 
       <div className={styles.copy}>
         <a
@@ -91,12 +93,12 @@ export function Hero({ audience }: { audience: Audience }) {
       </div>
 
       {/* Data landscape starts just below the copy (Figma: y=760, under the switcher). */}
-      <div className={styles.landscapeAnchor} aria-hidden="true">
+      <MotionRegion className={styles.landscapeAnchor} aria-hidden="true">
         <div className={styles.landscape}>
           {/* eslint-disable-next-line @next/next/no-img-element -- static decorative SVG */}
           <img src="/images/hero/landscape.svg" alt="" width={1573} height={760} />
         </div>
-      </div>
+      </MotionRegion>
       <ProductStage audience={audience.id} />
       <div className={styles.bottomFade} aria-hidden="true" />
     </section>

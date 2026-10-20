@@ -185,7 +185,7 @@ export function AssistantDemo({ children }: { children: ReactNode }) {
 
   return (
     <div ref={rootRef} className={styles.grid}>
-      <div className={styles.copy}>
+      <div>
         {children}
         <div className={styles.try} data-reveal="" style={{ '--d': '300ms' } as CSSProperties}>
           <p className={styles.tryLabel} id={`${captionId}-try`}>

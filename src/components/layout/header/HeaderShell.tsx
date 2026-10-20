@@ -61,6 +61,13 @@ export function HeaderShell({ children }: { children: ReactNode }) {
     setMenuOpenState(false);
   }
 
+  // Hydrated: tell the inline failsafe in layout.tsx that React is running (and restore the
+  // `js` flag if the failsafe already removed it on a slow start).
+  useEffect(() => {
+    window.__affnookHydrated = true;
+    document.documentElement.classList.add('js');
+  }, []);
+
   // Scroll state.
   const pinned = menuOpen || dropdownOpen;
   const pinnedRef = useRef(pinned);
@@ -160,4 +167,11 @@ export function HeaderShell({ children }: { children: ReactNode }) {
       </header>
     </HeaderContext.Provider>
   );
+}
+
+declare global {
+  interface Window {
+    /** Set once the app has hydrated; read by the inline failsafe script in layout.tsx. */
+    __affnookHydrated?: boolean;
+  }
 }
