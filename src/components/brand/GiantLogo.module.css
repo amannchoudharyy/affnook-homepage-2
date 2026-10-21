@@ -2,7 +2,10 @@
   display: block;
   width: 100%;
   height: auto;
-  overflow: hidden;
+  /* Clip only the bottom edge (letters rise in from below it); leave room above for the
+     hover lift. `overflow: hidden` cut the lifted letters off at the top. */
+  overflow: visible;
+  clip-path: inset(-20% 0 0 0);
   color: var(--color-text-primary);
   user-select: none;
 }

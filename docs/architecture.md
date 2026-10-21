@@ -50,7 +50,7 @@ src/components/sections/      hero/ (+ stage/ product dashboards), logos/, probl
                               testimonials/, objections/ (FAQ explorer), resources/,
                               final-cta/
 src/components/audience/      AudienceSwitcher, AudienceLink, AudienceSwapReset
-src/components/motion/        client islands: CountUp, LiveFeed, MotionRegion, Reveal, ScrubWords,
+src/components/motion/        client islands: CountUp, LineField, LiveFeed, MotionRegion, Reveal, ScrubWords,
                               StagedSequence
 src/components/ui/            ButtonLink, Eyebrow, SectionHeading, NewTabHint, icons
 src/components/brand/         Logo, GiantLogo (path data from Figma)
@@ -87,6 +87,8 @@ the FAQ explorer, the header menus and the error boundaries (`app/error.tsx`,
 
 - CSS transitions/keyframes where sufficient; small IntersectionObserver-based islands for
   scroll-triggered effects (`Reveal`, `ScrubWords`, `CountUp`, `LiveFeed`, `MotionRegion`).
+  The Final CTA line field (`LineField`) is a canvas drawn with requestAnimationFrame only
+  while it is on screen; the Proof carousel pins and follows the page scroll on desktop.
   Scroll-linked tilt, parallax, progress bar and footer wordmark use CSS scroll-driven
   animations. No animation library.
 - Reveal and word-highlight effects arm only after hydration, and reveal anything already on

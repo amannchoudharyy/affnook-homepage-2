@@ -47,11 +47,29 @@ export function Reveal(props: ComponentPropsWithoutRef<'div'>) {
       if (rect.top < vh && rect.bottom > 0) el.dataset.in = '';
       else reveal.observe(el);
     }
+    // Character-rise headings (SectionHeading `rise`): the prototype's trigger, 8% of the
+    // heading visible above the bottom 10% of the viewport; plays once.
+    const rise = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          (entry.target as HTMLElement).dataset.in = '';
+          rise.unobserve(entry.target);
+        }
+      },
+      { rootMargin: '0px 0px -10% 0px', threshold: 0.08 },
+    );
+    for (const el of root.querySelectorAll<HTMLElement>('[data-rise]')) {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < vh && rect.bottom > 0) el.dataset.in = '';
+      else rise.observe(el);
+    }
     root.dataset.reveal = 'armed';
 
     return () => {
       visibility.disconnect();
       reveal.disconnect();
+      rise.disconnect();
       delete root.dataset.reveal;
     };
   }, []);

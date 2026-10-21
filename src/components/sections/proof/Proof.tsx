@@ -56,9 +56,11 @@ export function Proof({ audience }: { audience: AudienceId }) {
         <CaseCarousel
           label={content.headline}
           header={
-            <div className={styles.heading} data-reveal="">
-              <Eyebrow>{PROOF_EYEBROW}</Eyebrow>
-              <SectionHeading id={titleId} lines={[content.headline]} />
+            <div className={styles.heading}>
+              <div data-reveal="">
+                <Eyebrow>{PROOF_EYEBROW}</Eyebrow>
+              </div>
+              <SectionHeading id={titleId} lines={[content.headline]} rise />
             </div>
           }
           slides={content.cases.map((id) => ({

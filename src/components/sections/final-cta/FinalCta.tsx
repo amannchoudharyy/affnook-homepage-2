@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 
+import { LineField } from '@/components/motion/LineField';
 import { Reveal } from '@/components/motion/Reveal';
 import { ButtonLink } from '@/components/ui/Button';
 import type { AudienceId } from '@/content/audiences';
@@ -29,8 +30,9 @@ function Tick() {
 }
 
 /**
- * Final CTA (Figma: one screen; the data landscape drifts; the glow breathes on an 8s
- * loop). Headline and subline differ per audience.
+ * Final CTA (Figma: one screen; the glow breathes on an 8s loop). The background lines are
+ * the prototype's animated canvas line field; without JavaScript Figma's static landscape
+ * is shown instead. Headline and subline differ per audience.
  */
 export function FinalCta({ audience }: { audience: AudienceId }) {
   const content = FINAL_CTA[audience];
@@ -57,10 +59,15 @@ export function FinalCta({ audience }: { audience: AudienceId }) {
             loading="lazy"
             decoding="async"
           />
-          <span className={styles.landscape}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/cta/landscape.svg" alt="" loading="lazy" decoding="async" />
-          </span>
+          {/* The prototype's animated line field; Figma's static landscape is the no-JS
+              fallback (inside noscript, so it is never requested when JS runs). */}
+          <LineField className={styles.lines} />
+          <noscript>
+            <span className={styles.landscape}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/cta/landscape.svg" alt="" loading="lazy" decoding="async" />
+            </span>
+          </noscript>
         </div>
 
         <div className={styles.copy}>

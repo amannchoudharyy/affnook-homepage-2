@@ -2,7 +2,9 @@
 
 .section {
   position: relative;
+  /* clip, not hidden: the pinned carousel uses position: sticky (A12). */
   overflow: hidden;
+  overflow: clip;
   padding: clamp(72px, 8vw, 120px) 0 clamp(64px, 6vw, 72px);
   background: var(--color-bg-base);
 }
@@ -65,6 +67,76 @@
 
 .carousel {
   --slide-w: min(1100px, calc(100vw - 2 * var(--gutter) - 40px));
+}
+
+/* Pinned-mode progress (prototype `.proof-prog`): hidden in carousel mode. */
+.pinProgress {
+  display: none;
+  align-items: center;
+  gap: 14px;
+  margin-right: 12px;
+  color: var(--color-text-muted);
+  font: var(--weight-medium) 13px/1 var(--font-mono);
+}
+
+.pinProgress i {
+  width: 160px;
+  height: 2px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--color-line-default);
+}
+
+.pinProgress i::before {
+  content: '';
+  display: block;
+  height: 100%;
+  background: var(--color-accent-mint);
+  transform: scaleX(var(--pin-p, 0));
+  transform-origin: left;
+}
+
+/* Pinned horizontal scroll (prototype `.proof-pin`), wide screens at least 860px tall (so
+   the heading, card and dots fit the pinned viewport) with motion allowed. The extra height (the track's travel) is pure CSS, so it is in place at first
+   paint; CaseCarousel's PINNED_QUERY must match this media query. */
+@media (min-width: 901px) and (min-height: 860px) and (prefers-reduced-motion: no-preference) {
+  :global(html.js) .carousel {
+    height: calc((var(--slides) - 1) * (var(--slide-w) + 24px) + 100vh);
+  }
+
+  :global(html.js) .pinStage {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    padding: 72px 0 24px;
+  }
+
+  :global(html.js) .pinProgress {
+    display: inline-flex;
+  }
+
+  :global(html.js) .viewport {
+    margin-top: clamp(24px, 4vh, 56px);
+  }
+
+  :global(html.js) .track {
+    overflow: visible;
+    scroll-snap-type: none;
+    border-radius: 0;
+    transform: translate3d(var(--pin-x, 0px), 0, 0);
+    touch-action: pan-y;
+  }
+
+  :global(html.js) .case {
+    min-height: clamp(420px, calc(100vh - 400px), 560px);
+  }
+
+  :global(html.js) .dots {
+    margin-top: 14px;
+  }
 }
 
 /* The viewport bleeds to the right edge so the next case peeks in (Figma). */

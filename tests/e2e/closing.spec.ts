@@ -210,19 +210,54 @@ test.describe('closing sections motion', () => {
   });
 });
 
-test('final CTA glow breathes and landscape drifts only while on screen', async ({ page }) => {
+/** Cheap fingerprint of the CTA line-field canvas pixels. */
+const canvasHash = (page: Page) =>
+  section(page, 'cta')
+    .locator('canvas')
+    .evaluate((c: HTMLCanvasElement) => {
+      const data = c.getContext('2d')!.getImageData(0, 0, c.width, c.height).data;
+      let h = 0;
+      for (let i = 0; i < data.length; i += 97) h = (h * 31 + data[i]!) >>> 0;
+      return h;
+    });
+
+test('final CTA: glow breathes and the line field animates only while on screen', async ({
+  page,
+}) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/brands');
   const cta = section(page, 'cta');
   const glow = cta.locator('img[src*="glow-indigo"]');
-  const land = cta.locator('img[src*="landscape"]');
   await cta.evaluate((el) => el.scrollIntoView());
   await expect(glow).toHaveCSS('animation-name', /cta-breathe/);
   await expect(glow).toHaveCSS('animation-play-state', 'running');
-  await expect(land).toHaveCSS('animation-play-state', 'running');
+  await expect(cta.locator('canvas[data-ready]')).toHaveCount(1);
+  const a = await canvasHash(page);
+  await page.waitForTimeout(400);
+  expect(await canvasHash(page)).not.toBe(a);
+  // The canvas never covers the buttons.
+  await expect(cta.locator('canvas')).toHaveCSS('pointer-events', 'none');
   await page.evaluate(() => window.scrollTo(0, 0));
   await expect(glow).toHaveCSS('animation-play-state', 'paused');
-  await expect(land).toHaveCSS('animation-play-state', 'paused');
+  await page.waitForTimeout(200);
+  const b = await canvasHash(page);
+  await page.waitForTimeout(400);
+  expect(await canvasHash(page)).toBe(b);
+});
+
+test.describe('final CTA under reduced motion', () => {
+  test.use({ reducedMotion: 'reduce' });
+
+  test('the line field is a still frame', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/');
+    await section(page, 'cta').evaluate((el) => el.scrollIntoView());
+    await expect(section(page, 'cta').locator('canvas[data-ready]')).toHaveCount(1);
+    const a = await canvasHash(page);
+    expect(a).not.toBe(0);
+    await page.waitForTimeout(500);
+    expect(await canvasHash(page)).toBe(a);
+  });
 });
 
 test.describe('closing sections without JavaScript', () => {

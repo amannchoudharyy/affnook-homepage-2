@@ -40,6 +40,16 @@
   height: 580px;
 }
 
+/* Prototype `.cta .lines`: canvas across the bottom 60% of the section, behind the copy. */
+.lines {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  opacity: 0.95;
+}
+
 /* Figma: 520px tall from y=520 of the 982px frame, running off the bottom edge. */
 .landscape {
   position: absolute;
@@ -55,7 +65,7 @@
   inset: 0 0 0 -4%;
   width: 104%;
   height: 100%;
-  /* Oversized for the drift; the global img reset would cap it at 100%. */
+  /* Slightly oversized as in Figma; the global img reset would cap it at 100%. */
   max-width: none;
 }
 
@@ -137,10 +147,6 @@
   :global(html.js) .glowMint {
     animation-delay: -4s;
   }
-
-  :global(html.js) .landscape img {
-    animation: cta-drift 20s ease-in-out infinite alternate;
-  }
 }
 
 @keyframes cta-breathe {
@@ -153,12 +159,6 @@
   50% {
     opacity: 1;
     transform: scale(1.06);
-  }
-}
-
-@keyframes cta-drift {
-  to {
-    transform: translateX(3.8%);
   }
 }
 

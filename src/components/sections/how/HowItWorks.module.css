@@ -917,6 +917,36 @@ button.stepButton:hover {
   color: var(--color-text-primary);
 }
 
+/* Auto-advance timer (prototype `.ftab .pr`): 2px bar along the active tab's bottom edge,
+   filling left to right over 7s; the pill shape clips it. */
+.tabs[data-autoplay] .tab {
+  position: relative;
+  overflow: hidden;
+}
+
+.tabProgress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-brand-indigo);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: tab-progress 7s linear forwards;
+  pointer-events: none;
+}
+
+.tabs[data-paused] .tabProgress {
+  animation-play-state: paused;
+}
+
+@keyframes tab-progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
 .tab[aria-selected='true'] {
   border-color: var(--color-white);
   background: var(--color-white);

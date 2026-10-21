@@ -192,7 +192,8 @@ test.describe('proof and how-it-works interactions', () => {
 
   test('carousel can be dragged with the mouse', async ({ page, isMobile }) => {
     test.skip(isMobile, 'Touch swipes natively; mouse drag is a desktop enhancement');
-    await page.setViewportSize({ width: 1440, height: 900 });
+    // 900px: carousel mode (the pinned horizontal scroll starts above 900px).
+    await page.setViewportSize({ width: 900, height: 900 });
     await page.goto('/brands');
     const story = proof(page).locator('[data-slide]').first().locator('p').first();
     await story.evaluate((el) => el.scrollIntoView({ block: 'center' }));
@@ -203,6 +204,31 @@ test.describe('proof and how-it-works interactions', () => {
     await page.mouse.move(box.x + box.width / 2 - 300, box.y + 10, { steps: 6 });
     await page.mouse.up();
     await expect.poll(() => activeSlide(page)).toBe(1);
+  });
+
+  test('pinned mode: dragging the track moves it and the page scroll together', async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(isMobile, 'Pinned mode needs a viewport wider than 900px');
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/brands');
+    const root = proof(page).locator('[data-pin-root]');
+    await root.evaluate((el) => window.scrollTo(0, el.getBoundingClientRect().top + scrollY + 200));
+    const track = proof(page).locator('[class*="track"]').first();
+    const pinX = () => track.evaluate((el) => new DOMMatrix(getComputedStyle(el).transform).m41);
+    await expect.poll(pinX).toBeLessThan(0);
+    const x0 = await pinX();
+    const y0 = await page.evaluate(() => scrollY);
+    const story = proof(page).locator('[data-slide] p').first();
+    const box = (await story.boundingBox())!;
+    await page.mouse.move(box.x + box.width / 2, box.y + 10);
+    await page.mouse.down();
+    await page.mouse.move(box.x + box.width / 2 - 150, box.y + 10, { steps: 6 });
+    await page.mouse.move(box.x + box.width / 2 - 300, box.y + 10, { steps: 6 });
+    await page.mouse.up();
+    await expect.poll(async () => Math.round(x0 - (await pinX()))).toBeGreaterThan(270);
+    expect(await page.evaluate(() => scrollY)).toBeGreaterThan(y0 + 200);
   });
 
   test('before/after slider follows the pointer and sweeps once on enter', async ({ page }) => {

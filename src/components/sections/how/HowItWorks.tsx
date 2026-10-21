@@ -50,7 +50,7 @@ export function HowItWorks({ audience }: { audience: AudienceId }) {
         <div data-reveal="">
           <Eyebrow>{HOW_EYEBROW}</Eyebrow>
         </div>
-        <SectionHeading id={titleId} lines={[content.headline]} className={styles.title} />
+        <SectionHeading id={titleId} lines={[content.headline]} className={styles.title} rise />
 
         {content.layout === 'flow' ? (
           <>

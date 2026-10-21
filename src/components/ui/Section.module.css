@@ -75,3 +75,29 @@
 .muted {
   color: var(--color-text-muted);
 }
+
+/* Character rise (SectionHeading `rise`): each word clips its characters so they can rise
+   from below the baseline (prototype `.wd` / `.ch`). */
+.word {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+  vertical-align: top;
+}
+
+.char {
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Armed by Reveal after hydration; [data-in] once 8% of the heading is in view. */
+  :global([data-reveal='armed']) [data-rise] .char {
+    transition: transform 1.1s var(--ease-out);
+    transition-delay: calc(var(--i) * 16ms);
+  }
+
+  :global([data-reveal='armed']) [data-rise]:not([data-in]) .char {
+    transform: translate3d(0, 112%, 0) rotate(7deg);
+  }
+}
