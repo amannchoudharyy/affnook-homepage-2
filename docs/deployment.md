@@ -125,12 +125,13 @@ shown in full); headshot, logos, share image and favicon pending.
 
 ## 7. Troubleshooting
 
-| Symptom                                                              | Fix                                                                                                                                                          |
-| -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Build fails in `next/font/google` ("queries have exactly one entry") | A stale Turbopack build cache (seen locally on 2026-10-20). On Vercel: Redeploy without "Use existing Build Cache". Locally: delete `.next/cache/turbopack`. |
-| Build fails fetching Google Fonts                                    | The JetBrains Mono download needs network access at build time; retry, or switch to `next/font/local` with the OFL files                                     |
-| Build fails with "SITE_ENV=production requires SITE_URL …"           | Intended guard: use `SITE_ENV=staging` on staging; production needs the https production origin                                                              |
-| Pages indexable / canonicals point to the wrong host                 | Check `SITE_ENV`/`SITE_URL` for that environment, then redeploy (build-time variables)                                                                       |
+| Symptom                                                                           | Fix                                                                                                                                                                                                                                                           |
+| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Build fails in `next/font/google` ("queries have exactly one entry")              | A stale Turbopack build cache (seen locally on 2026-10-20). On Vercel: Redeploy without "Use existing Build Cache". Locally: delete `.next/cache/turbopack`.                                                                                                  |
+| Build fails fetching Google Fonts                                                 | The JetBrains Mono download needs network access at build time; retry, or switch to `next/font/local` with the OFL files                                                                                                                                      |
+| Build fails with "SITE_ENV=production requires SITE_URL …"                        | Intended guard: use `SITE_ENV=staging` on staging; production needs the https production origin                                                                                                                                                               |
+| Pages indexable / canonicals point to the wrong host                              | Check `SITE_ENV`/`SITE_URL` for that environment, then redeploy (build-time variables)                                                                                                                                                                        |
+| Vercel: "Deployment Blocked — the commit author did not have contributing access" | Hobby plan + private repository: only commits authored by the Vercel account owner deploy. This repo sets a repo-only Git author (`git config --local user.name/user.email`) to the owner's GitHub account; a company Vercel Pro team removes the restriction |
 
 ## 8. Maintenance
 
