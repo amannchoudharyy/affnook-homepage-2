@@ -67,6 +67,7 @@
 
 .carousel {
   --slide-w: min(1100px, calc(100vw - 2 * var(--gutter) - 40px));
+  --next-w: min(420px, 80vw);
 }
 
 /* Pinned-mode progress (prototype `.proof-prog`): hidden in carousel mode. */
@@ -100,8 +101,17 @@
    the heading, card and dots fit the pinned viewport) with motion allowed. The extra height (the track's travel) is pure CSS, so it is in place at first
    paint; CaseCarousel's PINNED_QUERY must match this media query. */
 @media (min-width: 901px) and (min-height: 860px) and (prefers-reduced-motion: no-preference) {
+  /* Travel = slides + gaps + invitation - the carousel's own width (see pinGeometry). */
   :global(html.js) .carousel {
-    height: calc((var(--slides) - 1) * (var(--slide-w) + 24px) + 100vh);
+    height: calc(
+      var(--slides) * (var(--slide-w) + 24px) + var(--next-w) -
+        min(100vw - 2 * var(--gutter), var(--container-max)) + 100vh
+    );
+  }
+
+  /* The right-edge fade clears as the travel ends, so the invitation is fully visible. */
+  :global(html.js) .edgeFade {
+    opacity: calc(1 - var(--pin-p, 0));
   }
 
   :global(html.js) .pinStage {
@@ -172,15 +182,31 @@
   }
 }
 
-.trackEnd {
-  flex: none;
-  width: max(0px, calc(100% - var(--slide-w) - 24px));
-}
-
 .slide {
   flex: none;
   width: var(--slide-w);
   scroll-snap-align: start;
+}
+
+/* Closing invitation after the last case (prototype `.case-next`): no card, vertically
+   centred, 32-48px display headline above the primary demo button. */
+.next {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 24px;
+  width: var(--next-w);
+  padding: 40px;
+  scroll-snap-align: end;
+}
+
+.nextTitle {
+  margin: 0;
+  color: var(--color-text-primary);
+  font: var(--weight-demibold) clamp(2rem, 3.6vw, 3rem) / 1.05 var(--font-display);
+  letter-spacing: -0.03em;
 }
 
 .edgeFade {
@@ -601,12 +627,12 @@
     --slide-w: calc(100vw - 2 * var(--gutter) - 24px);
   }
 
-  .track {
-    gap: 12px;
+  .next {
+    padding: 24px 20px;
   }
 
-  .trackEnd {
-    width: max(0px, calc(100% - var(--slide-w) - 12px));
+  .track {
+    gap: 12px;
   }
 
   .case {

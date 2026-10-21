@@ -25,8 +25,9 @@ for (const route of ROUTES) {
         const clipped = selectors.flatMap((sel) =>
           [...document.querySelectorAll<HTMLElement>(sel)]
             .filter((el) => el.offsetParent !== null)
-            // Carousel slides waiting off screen inside their scroller are clipped by design.
-            .filter((el) => !el.closest('[data-slide]:not([data-active])'))
+            // Carousel slides (and the closing invitation after them) waiting off screen inside
+            // their scroller are clipped by design.
+            .filter((el) => !el.closest('[data-slide]:not([data-active]), [data-case-next]'))
             .map((el) => ({ sel, r: el.getBoundingClientRect() }))
             .filter(({ r }) => r.left < -0.5 || r.right > vw + 0.5)
             .map(({ sel, r }) => `${sel} [${Math.round(r.left)}, ${Math.round(r.right)}]`),

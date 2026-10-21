@@ -9,6 +9,8 @@ import styles from './Proof.module.css';
 interface CaseCarouselProps {
   /** Eyebrow + heading, rendered on the server. */
   header: ReactNode;
+  /** Closing invitation after the last case (prototype `.case-next`), server-rendered. */
+  after?: ReactNode;
   /** Accessible name of the carousel region. */
   label: string;
   slides: { key: string; name: string; content: ReactNode }[];
@@ -38,6 +40,33 @@ const PINNED_QUERY =
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
 
 /**
+ * Pinned-mode geometry. The track travels until the closing invitation (prototype
+ * `.case-next`; else the last slide) meets the carousel's right edge; `offsets` are each
+ * slide's travel position, `range` the page-scroll length of the pinned section.
+ */
+function pinGeometry(root: HTMLElement, track: HTMLElement) {
+  const slides = Array.from(track.querySelectorAll<HTMLElement>('[data-slide]'));
+  const first = slides[0]?.offsetLeft ?? 0;
+  const endEl = track.querySelector<HTMLElement>('[data-case-next]') ?? slides[slides.length - 1];
+  const end = endEl ? endEl.offsetLeft + endEl.offsetWidth : 0;
+  return {
+    slides,
+    dist: Math.max(0, end - first - root.clientWidth),
+    offsets: slides.map((el) => el.offsetLeft - first),
+    range: Math.max(1, root.offsetHeight - window.innerHeight),
+    top: root.getBoundingClientRect().top + window.scrollY,
+  };
+}
+
+/** Page scroll at which slide `i` (or, past the last slide, the invitation) is in view. */
+function pinScrollFor(root: HTMLElement, track: HTMLElement, i: number) {
+  const g = pinGeometry(root, track);
+  if (i >= g.slides.length) return g.top + g.range;
+  const p = g.dist > 0 ? clamp01((g.offsets[Math.max(0, i)] ?? 0) / g.dist) : 0;
+  return g.top + p * g.range;
+}
+
+/**
  * Case-study carousel (Figma: drag / arrows; next case peeks in from the right).
  *
  * Built on a native horizontal scroll container with scroll snapping, so touch swipe,
@@ -49,10 +78,9 @@ const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
  * progress through the section. Arrows, dots and drag then move the page scroll to the
  * matching slide, and focusing something inside an off-screen slide brings it into view.
  */
-export function CaseCarousel({ header, label, slides }: CaseCarouselProps) {
+export function CaseCarousel({ header, after, label, slides }: CaseCarouselProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const progressRef = useRef<HTMLSpanElement>(null);
   const [index, setIndex] = useState(0);
   const last = slides.length - 1;
 
@@ -61,18 +89,11 @@ export function CaseCarousel({ header, label, slides }: CaseCarouselProps) {
 
   const pinned = () => window.matchMedia(PINNED_QUERY).matches;
 
-  /** Page scroll position at which slide `i` is aligned in pinned mode. */
-  const pinnedScrollFor = (i: number) => {
-    const root = rootRef.current;
-    if (!root) return window.scrollY;
-    const top = root.getBoundingClientRect().top + window.scrollY;
-    const range = Math.max(0, root.offsetHeight - window.innerHeight);
-    return top + (last > 0 ? (Math.max(0, Math.min(last, i)) / last) * range : 0);
-  };
-
   const goTo = (i: number) => {
-    if (pinned()) {
-      window.scrollTo({ top: pinnedScrollFor(i), behavior: 'smooth' });
+    const root = rootRef.current;
+    if (pinned() && root && trackRef.current) {
+      const top = pinScrollFor(root, trackRef.current, Math.max(0, Math.min(last, i)));
+      window.scrollTo({ top, behavior: 'smooth' });
       return;
     }
     const track = trackRef.current;
@@ -98,14 +119,14 @@ export function CaseCarousel({ header, label, slides }: CaseCarouselProps) {
       frame = 0;
       if (!query.matches) {
         track.style.removeProperty('--pin-x');
+        root.style.removeProperty('--pin-p');
         return;
       }
-      const els = Array.from(track.querySelectorAll<HTMLElement>('[data-slide]'));
-      const dist = els.length > 1 ? els[els.length - 1]!.offsetLeft - els[0]!.offsetLeft : 0;
-      const range = Math.max(1, root.offsetHeight - window.innerHeight);
+      const { slides: els, dist, range } = pinGeometry(root, track);
       const p = clamp01(-root.getBoundingClientRect().top / range);
       track.style.setProperty('--pin-x', `${(-p * dist).toFixed(1)}px`);
-      progressRef.current?.style.setProperty('--pin-p', p.toFixed(4));
+      // Drives the progress bar and fades the right-edge fade out at the end of the travel.
+      root.style.setProperty('--pin-p', p.toFixed(4));
       // Prototype counter: 01 for the first third of the scroll, 02 for the second, …
       const active = Math.min(count - 1, Math.floor(p * count * 0.999));
       els.forEach((el, i) => {
@@ -210,10 +231,8 @@ export function CaseCarousel({ header, label, slides }: CaseCarouselProps) {
       startY = window.scrollY;
       if (pinnedDrag) {
         const root = track.closest<HTMLElement>('[data-pin-root]');
-        const els = Array.from(track.querySelectorAll<HTMLElement>('[data-slide]'));
-        const dist = els.length > 1 ? els[els.length - 1]!.offsetLeft - els[0]!.offsetLeft : 0;
-        const range = root ? Math.max(0, root.offsetHeight - window.innerHeight) : 0;
-        ratio = dist > 0 ? range / dist : 0;
+        const g = root ? pinGeometry(root, track) : null;
+        ratio = g && g.dist > 0 ? g.range / g.dist : 0;
       }
       track.setPointerCapture(e.pointerId);
     };
@@ -265,18 +284,22 @@ export function CaseCarousel({ header, label, slides }: CaseCarouselProps) {
         moved = false;
       }
     };
-    // Pinned: keyboard focus inside an off-screen slide scrolls the page to that slide.
+    // Pinned: keyboard focus inside an off-screen slide (or the closing invitation) scrolls
+    // the page so that it is in view.
     const onFocusIn = (e: FocusEvent) => {
       if (!window.matchMedia(PINNED_QUERY).matches) return;
-      const slide = (e.target as HTMLElement).closest<HTMLElement>('[data-slide]');
-      if (!slide) return;
-      const i = Array.from(track.querySelectorAll('[data-slide]')).indexOf(slide);
       const root = track.closest<HTMLElement>('[data-pin-root]');
-      if (i < 0 || !root) return;
-      const top = root.getBoundingClientRect().top + window.scrollY;
-      const range = Math.max(0, root.offsetHeight - window.innerHeight);
-      const count = track.querySelectorAll('[data-slide]').length;
-      window.scrollTo({ top: top + (count > 1 ? (i / (count - 1)) * range : 0) });
+      const target = e.target as HTMLElement;
+      if (!root) return;
+      const slides = Array.from(track.querySelectorAll('[data-slide]'));
+      const slide = target.closest('[data-slide]');
+      const i = slide
+        ? slides.indexOf(slide)
+        : target.closest('[data-case-next]')
+          ? slides.length
+          : -1;
+      if (i < 0) return;
+      window.scrollTo({ top: pinScrollFor(root, track, i) });
     };
     track.addEventListener('focusin', onFocusIn);
     track.addEventListener('pointerdown', onDown);
@@ -309,7 +332,7 @@ export function CaseCarousel({ header, label, slides }: CaseCarouselProps) {
           {header}
           <div className={styles.controls}>
             {/* Prototype progress (pinned mode only): 01 ── 03, filling with the scroll. */}
-            <span ref={progressRef} className={styles.pinProgress} aria-hidden="true">
+            <span className={styles.pinProgress} aria-hidden="true">
               <span>{String(index + 1).padStart(2, '0')}</span>
               <i />
               <span>{String(slides.length).padStart(2, '0')}</span>
@@ -351,7 +374,11 @@ export function CaseCarousel({ header, label, slides }: CaseCarouselProps) {
                 {slide.content}
               </div>
             ))}
-            <span className={styles.trackEnd} aria-hidden="true" />
+            {after ? (
+              <div className={styles.next} data-case-next="">
+                {after}
+              </div>
+            ) : null}
           </div>
           <span className={styles.edgeFade} aria-hidden="true" />
         </div>

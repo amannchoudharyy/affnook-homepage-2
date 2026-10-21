@@ -79,7 +79,11 @@ test.describe('proof and how-it-works content', () => {
         'aria-roledescription',
         'carousel',
       );
-      await expect(p.getByRole('heading', { level: 3 })).toHaveText([...a.cases]);
+      // Case names, then the closing invitation.
+      await expect(p.getByRole('heading', { level: 3 })).toHaveText([
+        ...a.cases,
+        'Your brand could be the next story.',
+      ]);
       for (const name of a.cases) {
         await expect(p.getByRole('link', { name: new RegExp(`about ${name}`) })).toHaveAttribute(
           'href',

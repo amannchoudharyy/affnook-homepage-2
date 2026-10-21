@@ -213,3 +213,119 @@ test.describe('footer wordmark', () => {
     });
   }
 });
+
+test.describe('big velocity marquee between Resources and the Final CTA', () => {
+  const track = (page: Page) => page.locator('[data-bigmq] [data-mq-track]');
+  const x = (page: Page) =>
+    track(page).evaluate((el) => new DOMMatrix(getComputedStyle(el).transform).m41);
+
+  for (const route of ROUTES) {
+    test(`${route.path}: placed before the CTA, decorative, loops while on screen`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 1440, height: 900 });
+      await page.goto(route.path);
+      const mq = page.locator('[data-bigmq]');
+      await expect(mq).toHaveAttribute('aria-hidden', 'true');
+      // Directly after Resources, directly before the Final CTA.
+      const order = await page.evaluate(() => {
+        const sections = [...document.querySelectorAll('main > *')];
+        const at = (sel: string) => sections.findIndex((el) => el.matches(sel));
+        return [
+          at('section[aria-labelledby^="resources-title"]'),
+          at('[data-bigmq]'),
+          at('section[aria-labelledby^="cta-title"]'),
+        ];
+      });
+      expect(order[1]).toBe(order[0]! + 1);
+      expect(order[2]).toBe(order[1]! + 1);
+      await expect(mq).toContainText('Book a free demo');
+      await mq.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+      const a = await x(page);
+      await page.waitForTimeout(500);
+      expect(await x(page)).toBeLessThan(a - 20); // moves left
+    });
+  }
+
+  test('slows to a quarter on hover and pauses off screen', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/');
+    const mq = page.locator('[data-bigmq]');
+    await mq.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+    await page.mouse.move(5, 5);
+    let a = await x(page);
+    await page.waitForTimeout(1000);
+    const free = a - (await x(page));
+    const box = (await mq.boundingBox())!;
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    a = await x(page);
+    await page.waitForTimeout(1000);
+    const hovered = a - (await x(page));
+    expect(hovered).toBeLessThan(free * 0.5);
+    expect(hovered).toBeGreaterThan(0);
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.waitForTimeout(200);
+    a = await x(page);
+    await page.waitForTimeout(600);
+    expect(await x(page)).toBe(a);
+  });
+});
+
+test.describe('big velocity marquee under reduced motion', () => {
+  test.use({ reducedMotion: 'reduce' });
+  test('is a static strip', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/brands');
+    const track = page.locator('[data-bigmq] [data-mq-track]');
+    await track.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+    await page.waitForTimeout(600);
+    await expect(track).toHaveCSS('transform', 'none');
+    await expect(page.locator('[data-bigmq] svg').first()).toHaveCSS('animation-name', 'none');
+  });
+});
+
+test.describe('Proof invitation after the last case', () => {
+  for (const route of ROUTES) {
+    test(`${route.path}: text, real demo link, and in view at the end of the pinned travel`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width: 1440, height: 900 });
+      await page.goto(route.path);
+      const invitation = page.locator('[data-case-next]');
+      await expect(invitation.getByRole('heading', { level: 3 })).toHaveText(
+        'Your brand could be the next story.',
+      );
+      const link = invitation.getByRole('link', { name: /Book a free demo/ });
+      await expect(link).toHaveAttribute('href', 'https://affnook.com/book-free-demo/');
+      await expect(link).toHaveAttribute('target', '_blank');
+      // Keyboard focus brings it into view while pinned.
+      await link.focus();
+      await expect
+        .poll(() =>
+          invitation.evaluate((el) => {
+            const r = el.getBoundingClientRect();
+            return r.left >= 0 && r.right <= innerWidth && r.top >= 0 && r.bottom <= innerHeight;
+          }),
+        )
+        .toBe(true);
+    });
+  }
+
+  test('is the last stop of the swipe carousel on phones', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+    const track = page.locator('[data-pin-root] [class*="track"]').first();
+    await track.evaluate((el) => {
+      el.scrollIntoView({ block: 'center' });
+      el.scrollLeft = el.scrollWidth;
+    });
+    await expect
+      .poll(() =>
+        page.locator('[data-case-next]').evaluate((el) => {
+          const r = el.getBoundingClientRect();
+          return r.left >= 0 && r.right <= innerWidth + 1;
+        }),
+      )
+      .toBe(true);
+  });
+});

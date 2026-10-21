@@ -86,6 +86,12 @@ export const CASES: Record<CaseId, CaseStudy> = {
 
 export const PROOF_EYEBROW = 'Proof';
 
+/** Closing invitation after the last case (prototype `.case-next`; same on every route). */
+export const PROOF_INVITATION = {
+  title: 'Your brand could be the next story.',
+  cta: { label: 'Book a free demo', href: CTA_LINKS.bookDemo },
+} as const;
+
 export const PROOF: Record<AudienceId, { headline: string; cases: readonly CaseId[] }> = {
   operators: {
     headline: 'Operators who made the switch.',

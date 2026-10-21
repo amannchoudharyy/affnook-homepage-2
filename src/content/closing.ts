@@ -348,3 +348,14 @@ export const FINAL_CTA_SHARED = {
     '24/7 customer support',
   ],
 } as const;
+
+/**
+ * Velocity marquee between Resources and the Final CTA (prototype `secBigMq`, identical on
+ * every audience route). Decorative: the phrases repeat claims made elsewhere on the page.
+ */
+export const BIG_MARQUEE: readonly { text: string; style: 'solid' | 'outline' | 'violet' }[] = [
+  { text: 'Book a free demo', style: 'solid' },
+  { text: 'Real-time reports', style: 'outline' },
+  { text: 'Zero downtime', style: 'violet' },
+  { text: '24/7 support', style: 'outline' },
+];

@@ -5,6 +5,7 @@ import { Hero } from '@/components/sections/hero/Hero';
 import { Mcp } from '@/components/sections/mcp/Mcp';
 import { HowItWorks } from '@/components/sections/how/HowItWorks';
 import { LogosAwards } from '@/components/sections/logos/LogosAwards';
+import { BigMarquee } from '@/components/sections/marquee/BigMarquee';
 import { Proof } from '@/components/sections/proof/Proof';
 import { Objections } from '@/components/sections/objections/Objections';
 import { Problem } from '@/components/sections/problem/Problem';
@@ -37,6 +38,7 @@ export function AudienceHomePage({ audience: id }: { audience: AudienceId }) {
       <Testimonials audience={audience.id} />
       <Objections audience={audience.id} />
       <Resources audience={audience.id} />
+      <BigMarquee />
       <FinalCta audience={audience.id} />
     </main>
   );

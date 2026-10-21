@@ -1,10 +1,11 @@
 import { CountUp } from '@/components/motion/CountUp';
 import { Reveal } from '@/components/motion/Reveal';
+import { ButtonLink } from '@/components/ui/Button';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { ArrowUpRightIcon } from '@/components/ui/icons';
 import type { AudienceId } from '@/content/audiences';
-import { CASES, PROOF, PROOF_EYEBROW, type CaseStudy } from '@/content/proof';
+import { CASES, PROOF, PROOF_EYEBROW, PROOF_INVITATION, type CaseStudy } from '@/content/proof';
 
 import { BeforeAfter } from './BeforeAfter';
 import { CaseCarousel } from './CaseCarousel';
@@ -62,6 +63,12 @@ export function Proof({ audience }: { audience: AudienceId }) {
               </div>
               <SectionHeading id={titleId} lines={[content.headline]} rise />
             </div>
+          }
+          after={
+            <>
+              <h3 className={styles.nextTitle}>{PROOF_INVITATION.title}</h3>
+              <ButtonLink href={PROOF_INVITATION.cta.href}>{PROOF_INVITATION.cta.label}</ButtonLink>
+            </>
           }
           slides={content.cases.map((id) => ({
             key: id,

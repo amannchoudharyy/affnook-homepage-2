@@ -43,7 +43,7 @@ src/app/                      layout (header, footer, skip link, js flag + fails
                               audience, not-found.tsx, error.tsx, global-error.tsx, robots.ts, sitemap.ts
 src/components/page/          AudienceHomePage — composes the sections in Figma order; StatusPage (404/error)
 src/components/layout/        SiteHeader (HeaderShell, DesktopNav, MobileMenu), SiteFooter
-src/components/sections/      hero/ (+ stage/ product dashboards), logos/, problem/, stakes/,
+src/components/sections/      hero/ (+ stage/ product dashboards), logos/, marquee/ (velocity marquee), problem/, stakes/,
                               turn/, mcp/ (scripted assistant demo), proof/ (case
                               carousel, before/after slider), how/ (step explorer,
                               flow diagram, capability tabs), customization/,
@@ -51,6 +51,7 @@ src/components/sections/      hero/ (+ stage/ product dashboards), logos/, probl
                               final-cta/
 src/components/audience/      AudienceSwitcher, AudienceLink, AudienceSwapReset
 src/components/motion/        client islands: CountUp, LineField, LiveFeed, MotionRegion, Reveal, ScrubWords,
+                              VelocityMarquee,
                               StagedSequence
 src/components/ui/            ButtonLink, Eyebrow, SectionHeading, NewTabHint, icons
 src/components/brand/         Logo, GiantLogo (path data from Figma)
