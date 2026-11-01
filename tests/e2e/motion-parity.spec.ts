@@ -269,6 +269,19 @@ test.describe('big velocity marquee between Resources and the Final CTA', () => 
     await page.waitForTimeout(600);
     expect(await x(page)).toBe(a);
   });
+
+  test('outline words hide overlapping glyph contours', async ({ page }) => {
+    // Host Grotesk's variable glyphs overlap themselves and each other: the outline style
+    // paints the stroke first and fills with the strip background, leaving only the edge.
+    await page.goto('/');
+    const outline = page.locator('[data-bigmq] [data-mq-word]', { hasText: 'Real-time reports' });
+    await expect(outline.first()).toHaveCSS('paint-order', 'stroke');
+    await expect(outline.first()).toHaveCSS('-webkit-text-stroke-width', '3px');
+    const background = await page
+      .locator('[data-bigmq]')
+      .evaluate((el) => getComputedStyle(el).backgroundColor);
+    await expect(outline.first()).toHaveCSS('color', background);
+  });
 });
 
 test.describe('big velocity marquee under reduced motion', () => {

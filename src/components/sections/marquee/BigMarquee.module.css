@@ -50,6 +50,18 @@
   -webkit-text-stroke: 1.5px var(--color-line-strong);
 }
 
+/* Host Grotesk's variable glyphs are built from overlapping shapes, and the tight tracking
+   makes neighbouring letters overlap, so a bare stroke shows lines inside and between letters.
+   Stroke first, then fill with the strip's background: the fill covers everything but the
+   outer edge. The stroke is doubled because the fill hides its inner half (1.5px visible). */
+@supports (paint-order: stroke fill) {
+  .outline {
+    color: var(--color-bg-base);
+    -webkit-text-stroke-width: 3px;
+    paint-order: stroke fill;
+  }
+}
+
 .violet {
   color: var(--color-brand-indigo-soft);
 }
