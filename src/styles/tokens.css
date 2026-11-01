@@ -39,10 +39,10 @@
   --color-text-on-light: #060a1f;
   --color-white: #ffffff;
 
-  /* Typography. The display face (TT Firs Neue) is pending a webfont licence;
-     until licensed files are supplied the stack falls back to system fonts. */
-  --font-display: 'TT Firs Neue', var(--font-fallback);
-  --font-body: 'TT Firs Neue', var(--font-fallback);
+  /* Typography. Host Grotesk (self-hosted by next/font, src/app/fonts.ts) for display and body
+     text; the system stack only shows if the font file fails to load. */
+  --font-display: var(--font-host-grotesk), var(--font-fallback);
+  --font-body: var(--font-host-grotesk), var(--font-fallback);
   --font-fallback:
     ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;

@@ -106,10 +106,11 @@ the FAQ explorer, the header menus and the error boundaries (`app/error.tsx`,
 
 - Images and illustrations are exported from Figma, optimised, and stored under `public/`.
   No runtime references to Figma URLs; no large base64 payloads in source.
-- JetBrains Mono comes from `next/font/google`: it is downloaded **at build time** and then
-  served from this site (no runtime request to Google), so the build needs network access to
-  Google Fonts. The display face (TT Firs Neue) will be loaded via `next/font/local` once
-  licensed webfont files are available; system fonts are used until then.
+- Fonts: Host Grotesk (display and body text, variable 300–800) and JetBrains Mono (labels and
+  code-style details), both SIL Open Font License, come from `next/font/google`
+  (`src/app/fonts.ts`). They are downloaded **at build time** and then served from this site
+  (no runtime request to Google), so the build needs network access to Google Fonts. next/font
+  also generates a size-adjusted fallback face, which limits layout shift while the font loads.
 
 ## SEO and environments
 

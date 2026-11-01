@@ -1,12 +1,17 @@
-import { JetBrains_Mono } from 'next/font/google';
+import { Host_Grotesk, JetBrains_Mono } from 'next/font/google';
 
 /**
- * JetBrains Mono (SIL Open Font License). next/font downloads it at build time
- * and serves it from this site, so no request goes to Google at runtime.
- *
- * The display/body face, TT Firs Neue, is a commercial font. It will be loaded
- * with next/font/local once licensed webfont files are supplied.
+ * Both faces are SIL Open Font License fonts from Google Fonts. next/font downloads them at
+ * build time and serves them from this site, so no request goes to Google at runtime.
  */
+
+/** Display and body face (variable, weights 300–800). */
+export const hostGrotesk = Host_Grotesk({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-host-grotesk',
+});
+
 export const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   weight: ['400', '500'],

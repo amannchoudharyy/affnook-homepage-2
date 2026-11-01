@@ -5,7 +5,7 @@ import { SiteFooter } from '@/components/layout/footer/SiteFooter';
 import { SiteHeader } from '@/components/layout/header/SiteHeader';
 import { getSiteUrl } from '@/lib/site';
 
-import { jetbrainsMono } from './fonts';
+import { hostGrotesk, jetbrainsMono } from './fonts';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -36,7 +36,11 @@ const JS_FLAG_SCRIPT = `(function(){var r=document.documentElement;r.classList.a
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     // suppressHydrationWarning: the inline script adds the `js` class before React hydrates.
-    <html lang="en" className={jetbrainsMono.variable} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${hostGrotesk.variable} ${jetbrainsMono.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: JS_FLAG_SCRIPT }} />
       </head>

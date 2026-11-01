@@ -76,8 +76,6 @@ only.
 **Design differences from Figma** (full list with reasons: [decisions.md](decisions.md),
 "Figma vs. motion prototype" and "Responsive interpretations"):
 
-- Display font TT Firs Neue is not licensed here; headings use a system fallback, so line
-  breaks and weight differ from Figma (R2). This is the largest visual gap.
 - "Sample data" / "Demo feed" labels instead of "Live" (C21, C43); product demo caption on
   the MCP assistant (C30).
 - Contrast-driven colour tweaks: muted-text tokens on raised surfaces and over the hero glow,
@@ -93,7 +91,8 @@ in decisions.md (case-study metrics, stakes statistics, AffPapa award and testim
 objection and FAQ answers including the free-trial contradiction, uptime/integration claims,
 client logos, SEO copy, share image and favicon).
 
-**Font licensing**: TT Firs Neue webfont licence and files (owner).
+**Fonts**: Host Grotesk and JetBrains Mono are SIL Open Font License fonts, self-hosted at
+build time; no licence purchase is needed.
 
 **External destinations** (checked 2026-10-21, 54 unique external links on the three
 routes): 53 return 200; Facebook rejects scripted requests (HTTP 400) and was checked
